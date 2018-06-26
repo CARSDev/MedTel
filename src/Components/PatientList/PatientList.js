@@ -90,6 +90,12 @@ export default class PatientList extends Component {
                         <option value='patient_phone_number'>Phone</option>
                         <option value='patient_email'>Email</option>
                     </select>
+                    <input onChange={(e) => this.filterHandler(e.target.value)}
+                        type='search'
+                        placeholder='Search...' />
+                </div>
+                <div>
+                    {patients}
                 </div>
             </div>
         )
