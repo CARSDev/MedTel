@@ -4,6 +4,7 @@ require('dotenv').config()
       , bodyParser = require('body-parser')
       , massive = require('massive')
 
+const pc = require('./controllers/patients_controller');
 
 const {
   SERVER_PORT,
@@ -25,3 +26,7 @@ massive(CONNECTION_STRING).then((db) => {
   console.log('Connected to database')
   app.listen(SERVER_PORT, console.log(`🏥 💉  Saving lives on port ${SERVER_PORT} 💉 🏥`))
 })
+
+
+////////////Endpoints////////////////
+app.get('/patients', pc.all_patients);
