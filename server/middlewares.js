@@ -52,7 +52,7 @@ exports.default = function addMiddlewaresTo(app) {
             employee_email: "degs@gmail.com",
             employee_username: "Degs"
         }
-        next();
+        next()
     });
 
 }
