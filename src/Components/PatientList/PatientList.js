@@ -3,6 +3,7 @@ import axios from 'axios';
 import Link from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import './PatientList.css';
 
 export default class PatientList extends Component {
     constructor() {
@@ -12,10 +13,13 @@ export default class PatientList extends Component {
             search: '',
             criteria: 'all'
         }
+        this.filterHandler = this.filterHandler.bind(this);
+        this.selectHandler = this.selectHandler.bind(this);
     }
 
     componentDidMount() {
         axios.get('/patients').then(res => {
+            // console.log(res.data)
             this.setState({
                 patients: res.data
             })
@@ -38,47 +42,57 @@ export default class PatientList extends Component {
     render() {
         let patients = this.state.patients.filter((el, i) => {
             switch (this.state.criteria) {
-                case 'all':
-                    if (el === null) {
+                // case 'all':
+                //     if (el === null) {
+                //         return false;
+                //     }
+                //     if (el.includes(this.state.search)) {
+                //         return true;
+                //     } else {
+                //         return false;
+                //     }
+                //     break;
+                case 'patient_id':
+                    if (el.patient_id.includes(this.state.search)) {
+                        // console.log(el.patient_id)
+                        return true;
+                    }
+                    else {
                         return false;
                     }
-                    if (el.includes(this.state.search)) {
+                    break;
+                case 'patient_full_name':
+                    if (el.patient_full_name.includes(this.state.search)) {
                         return true;
                     } else {
                         return false;
                     }
                     break;
-                case 'Patient_id':
-                    if (el.patient_id.includes(this.state.search)) {
-                        return true;
-                    }
-                    break;
-                case 'Patient_full_name':
-                    if (el.patient_full_name.includes(this.state.search)) {
-                        return true;
-                    }
-                    break;
-                case 'Patient_phone_number':
+                case 'patient_phone_number':
                     if (el.patient_phone_number.includes(this.state.search)) {
                         return true;
+                    } else {
+                        return false;
                     }
                     break;
-                case 'Patient_email':
+                case 'patient_email':
                     if (el.patient_email.includes(this.state.search)) {
                         return true;
+                    } else {
+                        return false;
                     }
                     break;
                 default:
                     return true;
             }
-        }).map(el => {
+        }).map((el, i) => {
             return (
-                <div key={el.patient_id}>
+                <div key={el.patient_id} className="patientsList">
                     <ul>
-                        <li><p>Patient Id {el.patient_id}</p><br />
-                            <p>Name: {el.patient_full_name}</p><br />
-                            <p>Phone: {el.patient_phone_number}</p><br />
-                            <p>Email: {el.patient_email}</p><br />
+                        <li><p>{el.patient_id}</p><br />
+                            <p>{el.patient_full_name}</p><br />
+                            <p>{el.patient_phone_number}</p><br />
+                            <p>{el.patient_email}</p><br />
                         </li>
                     </ul>
                 </div>
@@ -89,9 +103,10 @@ export default class PatientList extends Component {
             <div>
                 <ToastContainer />
                 <div>
-                    <select onChange={(e) => this.selectHandler(e.target.value)}>
-                        <option value='all'>All</option>
+                    <select onChange={(e) => this.selectHandler(e.target.value)} name='searchCriteria'>
+                        {/* <option value='all'>All</option> */}
                         <option value='patient_id'>Patient Id</option>
+                        <option value='patient_full_name'>Name</option>
                         <option value='patient_phone_number'>Phone</option>
                         <option value='patient_email'>Email</option>
                     </select>
@@ -100,6 +115,13 @@ export default class PatientList extends Component {
                         placeholder='Search...' />
                 </div>
                 <div>
+                    {this.state.search}
+                    <div className="listHeaders">
+                        <p>Patient Id</p>
+                        <p>Name</p>
+                        <p>Phone</p>
+                        <p>Email</p>
+                    </div>
                     {patients}
                 </div>
             </div>
