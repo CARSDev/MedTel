@@ -20,24 +20,24 @@ exports.default = function addMiddlewaresTo(app) {
         saveUninitialized: false
     }));
 
+    
     //DESERIALIZE
     app.use((req, res, next) => {
-        console.log('hit deserialize');
+        // console.log('hit deserialize');
         let user_id = req.session.user;
         if (user_id) {
             console.log('Getting user' + user_id);
             req.db.read_user([user_id])
-                .then(user => {
-                    console.log(user.employee_id, user.company_id, user.role_id);
-                })
+            .then(user => {
+                console.log(user.employee_id, user.company_id, user.role_id);
+            })
             
         } else {
-            console.log('no user_id')
+            // console.log('no user_id')
             next();
         }
     });
-
-
+    
     //SUPERUUUUUUUSER!!!
     app.use((req, res, next) => {
         req.user = {
@@ -52,6 +52,7 @@ exports.default = function addMiddlewaresTo(app) {
             employee_email: "degs@gmail.com",
             employee_username: "Degs"
         }
+        next();
     });
 
 }
