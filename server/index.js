@@ -1,22 +1,3 @@
-<<<<<<< HEAD
-require('dotenv').config()
-  const express = require('express')
-      , session = require('express-session')
-      , bodyParser = require('body-parser')
-      , massive = require('massive')
-
-const pc = require('./controllers/patients_controller');
-
-const {
-  SERVER_PORT,
-  CONNECTION_STRING,
-
-} = process.env
-
-const app = express()
-
-app.use(bodyParser.json())
-=======
 //DEPENDENCIES
 const express = require('express');
 //MIDDLEWARES
@@ -27,7 +8,6 @@ const addAllEndpointsTo = require('./endpoints');
 const connectDbTo = require('./database');
 //ENV
 require('dotenv').config();
->>>>>>> master
 
 //APP
 const app = express();
@@ -49,11 +29,6 @@ massive(CONNECTION_STRING).then((db) => {
   console.log('Connected to database')
 })
 
-<<<<<<< HEAD
-
-////////////Endpoints////////////////
-app.get('/patients', pc.all_patients);
-=======
 //SERVE REACT
 // const path = require('path');
 // app.get('*', (req, res) => {
@@ -62,4 +37,3 @@ app.get('/patients', pc.all_patients);
 
 //LISTEN
 app.listen(process.env.SERVER_PORT, console.log(`🏥 💉  Saving lives on port ${process.env.SERVER_PORT} 💉 🏥`))
->>>>>>> master
