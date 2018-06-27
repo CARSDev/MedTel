@@ -24,11 +24,6 @@ connectDbTo(app);
 //ENDPOINTS
 addAllEndpointsTo(app);
 
-massive(CONNECTION_STRING).then((db) => {
-  app.set('db', db)
-  console.log('Connected to database')
-})
-
 //SERVE REACT
 // const path = require('path');
 // app.get('*', (req, res) => {
