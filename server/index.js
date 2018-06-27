@@ -24,7 +24,6 @@ connectDbTo(app);
 //ENDPOINTS
 addAllEndpointsTo(app);
 
-
 //SERVE REACT
 // const path = require('path');
 // app.get('*', (req, res) => {
