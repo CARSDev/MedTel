@@ -1,16 +1,9 @@
-<<<<<<< HEAD
-import React, { Component } from 'react';
-import DatePicker from 'react-date-picker';
-import './Schedule.css';
-import Day from './Day';
-=======
 import React, { Component } from 'react'
 import DatePicker from 'react-date-picker'
 import moment from 'moment'
 import axios from 'axios'
 import './Schedule.css'
 import Day from './Day'
->>>>>>> master
 
 export default class Schedule extends Component {
     constructor() {

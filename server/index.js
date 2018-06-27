@@ -9,6 +9,11 @@ const connectDbTo = require('./database');
 //ENV
 require('dotenv').config();
 
+const {
+  SERVER_PORT,
+  
+} = process.env
+
 //APP
 const app = express();
 
@@ -31,4 +36,4 @@ addAllEndpointsTo(app);
 // });
 
 //LISTEN
-app.listen(process.env.SERVER_PORT, console.log(`🏥 💉  Saving lives on port ${process.env.SERVER_PORT} 💉 🏥`))
+app.listen(SERVER_PORT, console.log(`🏥 💉  Saving lives on port ${SERVER_PORT} 💉 🏥`))

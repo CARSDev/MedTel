@@ -1,3 +1,3 @@
 SELECT *
 FROM employees
-WHERE employee_id = 1;
+WHERE employee_id = $1;
