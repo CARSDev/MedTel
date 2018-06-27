@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import Nav from './Components/Nav/Nav'
 import './reset.css'
 import './App.css';
-import Schedule from './Components/Schedule/Schedule'
+import routes from './routes'
 
 
 class App extends Component {
@@ -11,8 +11,7 @@ class App extends Component {
     return (
       <div className="App">
       <Nav/>
-        It's MEDTEL!!!
-          <Schedule />
+        {routes}
       </div>
     );
   }
