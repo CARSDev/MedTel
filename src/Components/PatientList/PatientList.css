@@ -1,0 +1,29 @@
+.listHeaders{
+    display: flex;
+    flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: center;
+	align-items: center;
+    align-content: stretch;
+    background: #25A9A0;
+    height: 50px;
+    font-family: roboto;
+    color: #F6F6F6;
+}
+.listHeaders>p{
+    padding: 10px;
+}
+.patientsList li{
+    display: flex;
+    flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: center;
+	align-items: center;
+    align-content: stretch;
+    height: 50px;
+    font-family: roboto;
+    color: black;
+}
+.patientsList p {
+    padding: 10px;
+}
