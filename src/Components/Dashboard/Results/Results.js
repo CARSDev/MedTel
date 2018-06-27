@@ -27,6 +27,8 @@ class Results extends Component {
         expanded: null,
     };
 
+
+    
     handleChange = panel => (event, expanded) => {
         this.setState({
             expanded: expanded ? panel : false,
