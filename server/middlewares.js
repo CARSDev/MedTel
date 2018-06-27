@@ -37,4 +37,21 @@ exports.default = function addMiddlewaresTo(app) {
         }
     });
 
+
+    //SUPERUUUUUUUSER!!!
+    app.use((req, res, next) => {
+        req.user = {
+            employee_id: 2,
+            company_id: null,
+            employee_full_name: "Donna Schmiphflingherr",
+            employee_first_name: "Donna",
+            employee_last_name: "Schmiphflingherr",
+            employee_picture: null,
+            role_id: 1,
+            employee_hashed_password: "",
+            employee_email: "degs@gmail.com",
+            employee_username: "Degs"
+        }
+    });
+
 }
