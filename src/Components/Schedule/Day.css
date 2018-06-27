@@ -1,6 +1,6 @@
 .dayList{
     display:flex;
-    justify-content: space-around;
+    justify-content: center;
 }
 
 .timesColumn h3{
