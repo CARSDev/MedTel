@@ -20,7 +20,8 @@ export default class PatientList extends Component {
                 patients: res.data
             })
             toast.success("Successfully got Instruments", { position: toast.POSITION.TOP_CENTER })
-        }).catch(() => toast.error("Failed to Fetch Patient List"))
+        })
+        .catch(() => toast.error("Failed to Fetch Patient List"))
     }
 
     filterHandler(filter) {

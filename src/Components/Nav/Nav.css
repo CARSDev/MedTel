@@ -6,7 +6,7 @@
   box-sizing: border-box;
   padding-left: 10px;
   height: 55px;
-  background: linear-gradient(#74BAEC , #3a85bb ) ;
+  background: linear-gradient(#84b7db, #3e8ec7 ) ;
   color: #F6F6F6;
 }
 
@@ -22,16 +22,46 @@
   align-items: center;
 }
 
+a {
+  display: flex;
+  height: 99%;
+  text-decoration: none;
+  align-items: center
+
+}
+
+a:visited {
+  color: inherit;
+}
+
+a:hover {
+  background: linear-gradient(#95c1e0,#4f98cc) 
+}
+
+a:focus {
+  box-shadow: inset 0px 0px 7px 2px #3e8ec7;
+  
+}
+
 .vr {
   height:100%;
   width:1px;
   display:table-cell;
-  background-color: #3375a3;
+  background: linear-gradient(#a7cbe5,#3e8ec7)
 }
 
 .centerBs {
   width: 100px;
 
+}
+
+.nameDropdown {
+  cursor: pointer;
+}
+
+.menu {
+  
+  
 }
 
 .rightNav {
@@ -57,6 +87,7 @@
   border-right: 7px solid transparent;
   border-top: 7px solid #E9F7FA;
   margin-left: 5px;
+  cursor: pointer
 }
 
 .logo {
