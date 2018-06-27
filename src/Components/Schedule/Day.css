@@ -1,0 +1,16 @@
+.dayList{
+    display:flex;
+    justify-content: space-around;
+}
+
+.timesColumn h3{
+    border: 1px black solid;
+}
+
+.namesColumn h3{
+    border: 1px black solid;
+}
+
+.reasonsColumn h3{
+    border: 1px black solid;
+}
