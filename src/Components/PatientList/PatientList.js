@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import Link from 'react-router-dom';
+// import Link from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -47,22 +47,27 @@ export default class PatientList extends Component {
                     } else {
                         return false;
                     }
+                    break;
                 case 'Patient_id':
                     if (el.patient_id.includes(this.state.search)) {
                         return true;
                     }
+                    break;
                 case 'Patient_full_name':
                     if (el.patient_full_name.includes(this.state.search)) {
                         return true;
                     }
+                    break;
                 case 'Patient_phone_number':
                     if (el.patient_phone_number.includes(this.state.search)) {
                         return true;
                     }
+                    break;
                 case 'Patient_email':
                     if (el.patient_email.includes(this.state.search)) {
                         return true;
                     }
+                    break;
                 default:
                     return true;
             }

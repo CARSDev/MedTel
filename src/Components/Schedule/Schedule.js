@@ -15,7 +15,6 @@ export default class Schedule extends Component {
 
 
     render() {
-        const { selectedDate } = this.state
         return (
             <div className='schedule'>
                 <DatePicker
