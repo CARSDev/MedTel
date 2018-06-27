@@ -1,16 +1,31 @@
 .dayList{
     display:flex;
     justify-content: center;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: #F6F6F6 2px solid;
+    box-shadow: 3px 3px 19px -4px rgba(0,0,0,0.75);
+    width: 790px
 }
 
-.timesColumn h3{
-    border: 1px black solid;
+.dayList h3{
+    padding: 15px;
+    width: 200px;
 }
 
-.namesColumn h3{
-    border: 1px black solid;
+.dayList h1{
+        padding: 15px;
+        background: #25A9A0;
+        color: #F6F6F6;
+        font-weight: bold;
+        font-size: 1.25em;
+}
+
+.dayList h3:nth-child(odd){
+    background: #E9F7FA;
 }
 
 .reasonsColumn h3{
-    border: 1px black solid;
+    width: 300px;
 }
