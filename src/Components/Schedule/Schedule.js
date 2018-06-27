@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import DatePicker from 'react-date-picker'
-import './Schedule.css'
-import Day from './Day'
+import DatePicker from 'react-date-picker';
+import './Schedule.css';
+import Day from './Day';
 
 export default class Schedule extends Component {
     constructor() {
