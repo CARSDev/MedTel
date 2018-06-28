@@ -1,7 +1,7 @@
-
 import React, { Component } from 'react'
 import PatientInfo from './PatientInfo/PatientInfo'
 import Results from './Results/Results';
+import './Dashboard.css';
 
 export default class Dashboard extends Component {
   constructor() {
@@ -22,12 +22,12 @@ export default class Dashboard extends Component {
         
         <div className="dashboardLeftColumn">
           <PatientInfo />
-          <Results/>
         </div>
         
         <div className="dashboardRightColumn">
           <PatientInfo />
         </div>
+        <Results />
         
 
       </div>

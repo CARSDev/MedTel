@@ -23,9 +23,9 @@ export default class PatientList extends Component {
             this.setState({
                 patients: res.data
             })
-            toast.success("Successfully got Instruments", { position: toast.POSITION.TOP_CENTER })
+            toast.success("Successfully got Instruments", { position: toast.POSITION.BOTTOM_RIGHT })
         })
-        .catch(() => toast.error("Failed to Fetch Patient List"))
+            .catch(() => toast.error("Failed to Fetch Patient List", { position: toast.POSITION.BOTTOM_RIGHT }))
     }
 
     filterHandler(filter) {
@@ -103,7 +103,7 @@ export default class PatientList extends Component {
         return (
             <div>
                 <ToastContainer />
-                <div>
+                <div className="searchBar">
                     <select onChange={(e) => this.selectHandler(e.target.value)} name='searchCriteria'>
                         {/* <option value='all'>All</option> */}
                         <option value='patient_id'>Patient Id</option>
@@ -115,7 +115,7 @@ export default class PatientList extends Component {
                         type='search'
                         placeholder='Search...' />
                 </div>
-                <div>
+                <div className="list">
                     {this.state.search}
                     <div className="listHeaders">
                         <p>Patient Id</p>
@@ -123,7 +123,9 @@ export default class PatientList extends Component {
                         <p>Phone</p>
                         <p>Email</p>
                     </div>
-                    {patients}
+                    <div>
+                        {patients}
+                    </div>    
                 </div>
             </div>
         )

@@ -1,29 +1,58 @@
+.searchBar{
+    margin: 3vh;
+    display: flex;
+    justify-content: center;
+}
+.list{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: #F6F6F6 2px solid;
+    box-shadow: 3px 3px 19px -4px rgba(0,0,0,0.75);
+    width: 60vw;
+}
 .listHeaders{
     display: flex;
-    flex-direction: row;
+	flex-direction: row;
 	flex-wrap: nowrap;
-	justify-content: center;
+	justify-content: flex-start;
 	align-items: center;
-    align-content: stretch;
+	align-content: stretch;
+    padding: 15px;
+    /* padding-right: 150px; */
     background: #25A9A0;
-    height: 50px;
-    font-family: roboto;
     color: #F6F6F6;
+    font-weight: bold;
+    font-size: 1.25em;
+    font-family: roboto;
 }
 .listHeaders>p{
-    padding: 10px;
+    padding: 0.5vw;
+    width: 20vw;
 }
 .patientsList li{
-    display: flex;
-    flex-direction: row;
+  display: flex;
+	flex-direction: row;
 	flex-wrap: nowrap;
-	justify-content: center;
+	justify-content: flex-start;
 	align-items: center;
     align-content: stretch;
     height: 50px;
+    width: 60vw;
     font-family: roboto;
     color: black;
 }
 .patientsList p {
-    padding: 10px;
+    /* padding: 10px; */
+    /* padding-left: 2vw;
+    padding-right: 8vw; */
+    width: 20vw;
+    
+}
+
+.patientsList li:nth-child(odd){
+    background: #E9F7FA;
 }
