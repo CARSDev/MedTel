@@ -88,7 +88,7 @@ export default class PatientList extends Component {
             }
         }).map((el, i) => {
             return (
-                <div key={el.patient_id} className="patientsList">
+                <div key={el} className="patientsList">
                     <ul>
                         <li><p>{el.patient_id}</p><br />
                             <p>{el.patient_full_name}</p><br />

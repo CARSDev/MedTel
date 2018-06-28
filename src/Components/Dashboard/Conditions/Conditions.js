@@ -1,27 +1,41 @@
 import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
-import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card';
-import FlatButton from 'material-ui/FlatButton';
+import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from '@material-ui/core/Card';
+// import FlatButton from 'material-ui/FlatButton';
 import { withStyles } from '@material-ui/core/styles';
-import './Card2.css';
 import Add from '@material-ui/icons/Add';
 import Edit from '@material-ui/icons/Edit';
+import axios from 'axios';
 
 
 export default class Conditions extends Component {
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
         this.state = {
-            conditions: []
+           conditions: []
         }
     }
 
     componentDidMount() {
-        
+        axios.get(`/condition/${this.props.patient_id}`).then(res => {
+            this.setState({
+                conditions: []
+            })
+        })
     }
 
     render() {
-
+        let conditionList = this.conditions.map((el) => {
+            return (
+                <div key={el}>
+                    <ul>
+                        <li>{el.condition_name}</li><br />
+                        <p>-{el.condition_date_diagnosed}</p>
+                        </ul>
+                </div>
+                
+                )
+            })
 
         return (
             <div>
@@ -36,7 +50,7 @@ export default class Conditions extends Component {
                         title="Conditions">
                     </CardHeader>
                     <CardText>
-                        Conditions generated from the db
+                        {conditionList}
                     </CardText>
                     <Button style={{
                         display: 'flex',
