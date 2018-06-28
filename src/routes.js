@@ -11,7 +11,7 @@ const routes = (
         <Route path='/' component={Login} exact />
         <Route path='/schedule' component={Schedule} />
         <Route path='/patients' component={PatientList} />
-        <Route path='/dashboard' component={Dashboard} />
+        <Route path='/dashboard/:id' component={Dashboard} />
         <Route path='/admin' component={Admin} />
     </Switch>
 )
