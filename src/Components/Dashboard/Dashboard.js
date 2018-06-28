@@ -1,6 +1,7 @@
 
 import React, { Component } from 'react'
 import PatientInfo from './PatientInfo/PatientInfo'
+import Visits from './Visits/Visits'
 import './Dashboard.css';
 
 export default class Dashboard extends Component {
@@ -8,12 +9,18 @@ export default class Dashboard extends Component {
     super()
 
     this.state = {
-
+      patient_id: null
     }
   }
 
   componentDidMount() {
-    
+    this.setUser();
+  }
+
+  setUser = () => {
+    this.setState({
+      patient_id: Number(this.props.match.params.id)
+    })
   }
   
   render() {
@@ -21,11 +28,11 @@ export default class Dashboard extends Component {
       <div className = "dashboard">
         
         <div className="dashboardLeftColumn">
-          <PatientInfo />
+          <PatientInfo patient_id={this.state.patient_id}/>
         </div>
         
         <div className="dashboardRightColumn">
-          <PatientInfo />
+          <Visits patient_id={this.state.patient_id}/>
         </div>
         
       </div>
