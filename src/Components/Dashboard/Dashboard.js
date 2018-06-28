@@ -25,7 +25,7 @@ export default class Dashboard extends Component {
         </div>
         
         <div className="dashboardRightColumn">
-          <PatientInfo />
+          
         </div>
         
       </div>

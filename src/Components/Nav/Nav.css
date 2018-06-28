@@ -22,18 +22,18 @@
   align-items: center;
 }
 
-a {
+.centerNav a {
   display: flex;
   height: 99%;
   text-decoration: none;
   /* align-items: center */
 }
 
-a:visited {
+.centerNav a:visited {
   color: inherit;
 }
 
-a:hover {
+.centerNav a:hover {
   background: linear-gradient(#95c1e0,#4f98cc) 
 }
 
