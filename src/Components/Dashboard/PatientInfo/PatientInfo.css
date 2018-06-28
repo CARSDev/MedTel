@@ -2,6 +2,5 @@
 .mainPatientInfo {
   background-color: #3e8ec7;
   height: 300px;
-  width: 60%; 
-  margin: 30px;
+  width: 100%; 
 }
