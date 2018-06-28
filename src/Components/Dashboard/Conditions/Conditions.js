@@ -6,36 +6,42 @@ import { withStyles } from '@material-ui/core/styles';
 import Add from '@material-ui/icons/Add';
 import Edit from '@material-ui/icons/Edit';
 import axios from 'axios';
+import moment from 'moment';
+import { ToastContainer, toast } from 'react-toastify';
+
 
 
 export default class Conditions extends Component {
     constructor(props) {
         super(props)
         this.state = {
-           conditions: []
+            conditions: []
         }
     }
 
     componentDidMount() {
-        axios.get(`/condition/${this.props.patient_id}`).then(res => {
+        axios.get(`/condition/1`).then(res => {
             this.setState({
-                conditions: []
+                conditions: res.data
             })
+            toast.success("Successfully got Conditions", { position: toast.POSITION.BOTTOM_RIGHT })
         })
+            .catch(() => toast.error("Failed to Fetch Conditions", { position: toast.POSITION.BOTTOM_RIGHT }))
+
     }
 
     render() {
-        let conditionList = this.conditions.map((el) => {
-            return (
-                <div key={el}>
-                    <ul>
-                        <li>{el.condition_name}</li><br />
-                        <p>-{el.condition_date_diagnosed}</p>
-                        </ul>
-                </div>
-                
-                )
-            })
+        // let conditionList = this.conditions.map((el, i) => {
+        //     return (
+        //         <div key={el + i}>
+        //             <ul>
+        //                 <li>{el.condition_name}</li><br />
+        //                 <p>-{el.condition_date_diagnosed}</p>
+        //             </ul>
+        //         </div>
+
+        //     )
+        // })
 
         return (
             <div>
@@ -50,7 +56,6 @@ export default class Conditions extends Component {
                         title="Conditions">
                     </CardHeader>
                     <CardText>
-                        {conditionList}
                     </CardText>
                     <Button style={{
                         display: 'flex',

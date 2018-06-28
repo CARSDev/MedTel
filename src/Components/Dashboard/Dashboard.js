@@ -36,7 +36,7 @@ export default class Dashboard extends Component {
           <Visits patient_id={this.state.patient_id}/>
         </div>
         <Results />
-      
+        <Conditions patient_id={this.state.patient_id}/>
         
 
       </div>
