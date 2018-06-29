@@ -115,7 +115,8 @@ CREATE TABLE patient_visits(
     employee_id INTEGER REFERENCES employees(employee_id),
     patient_visit_date TIMESTAMPTZ,
     patient_visit_note_time_recorded TIMESTAMPTZ,
-    patient_visit_note VARCHAR(10000)
+    patient_visit_note VARCHAR(10000),
+    Patient_visit_reason VARCHAR(250)
 );
 
 CREATE TABLE available_tests(

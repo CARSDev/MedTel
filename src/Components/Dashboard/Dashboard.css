@@ -1,0 +1,12 @@
+.dashboard{
+    min-height: calc( 100vh - 135px );
+    margin: 0;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    padding: 40px 80px;
+    background: #f6f6f6;
+}
+
+.dashboardLeftColumn{
+    padding-right: 40px;
+}

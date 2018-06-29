@@ -14,5 +14,6 @@ module.exports = function addAllEndpointsTo(app) {
     addDrewEndpointsTo(app)
 
     addRachelEndpointsTo(app)
+    
     addShanEndpointsTo(app)
 }
