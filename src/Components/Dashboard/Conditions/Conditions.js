@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
-import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from '@material-ui/core/Card';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
+import CardHeader from '@material-ui/core/CardHeader';
 // import FlatButton from 'material-ui/FlatButton';
 import { withStyles } from '@material-ui/core/styles';
 import Add from '@material-ui/icons/Add';
@@ -55,8 +58,9 @@ export default class Conditions extends Component {
                     }}
                         title="Conditions">
                     </CardHeader>
-                    <CardText>
-                    </CardText>
+                    <CardContent>
+                        Map conditions here
+                    </CardContent>
                     <Button style={{
                         display: 'flex',
                         flexDirection: 'row',
