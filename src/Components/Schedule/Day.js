@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import './Day.css'
-import moment from 'moment'
 import axios from 'axios'
+import moment from 'moment'
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import Autocomplete from './Autocomplete'
@@ -21,9 +20,11 @@ export default class Day extends Component {
         super()
         this.state = {
             times: [],
-            patients: ['Add Appointment', 'Add Appointment', 'Add Appointment', 'Add Appointment', 'Add Appointment', 'Add Appointment', 'Add Appointment', 'Add Appointment', 'Add Appointment', 'Add Appointment', 'Add Appointment', 'Add Appointment', 'Add Appointment', 'Add Appointment', 'Add Appointment', 'Add Appointment', 'Add Appointment', 'Add Appointment'],
-            open: false,
-            search: ''
+            patients: [{ message: 'Add Appointment' }, { message: 'Add Appointment' }, { message: 'Add Appointment' }, { message: 'Add Appointment' }, { message: 'Add Appointment' }, { message: 'Add Appointment' }, { message: 'Add Appointment' }, { message: 'Add Appointment' }, { message: 'Add Appointment' }, { message: 'Add Appointment' }, { message: 'Add Appointment' }, { message: 'Add Appointment' }, { message: 'Add Appointment' }, { message: 'Add Appointment' }, { message: 'Add Appointment' }, { message: 'Add Appointment' }, { message: 'Add Appointment' }, { message: 'Add Appointment' },],
+            open: false, 
+            selectedTime: '', 
+            reason: '',
+            selectedID:''
         }
     }
 
@@ -54,29 +55,47 @@ export default class Day extends Component {
         }
     }
 
-    handleClickOpen = () => {
-        this.setState({ open: true });
+    handleClickOpen = (time) => {
+        this.setState({ open: true, selectedTime: time });
+        console.log(time)
     };
 
     handleClose = () => {
+        console.log('hi')
         this.setState({ open: false });
     };
+    
+    getName = (name) => {
+        this.setState({selectedID:name})
+}
 
-    filterHandler = filter => {
-        this.setState({search:filter})
+    submit = (time, id, reason) => {
+        let utc_time = moment.utc(time).format()
+        axios.post('/appointment', { utc_time, id, reason }).then(res => {
+            console.log('submitted & recorded')
+        })
+        this.handleClose()
+    }
+
+    setReason = (reason) => {
+        this.setState({reason})
     }
 
     render() {
         const { date, morning, schedule } = this.props
-        const { times, patients, reasons } = this.state
+        const { times, patients, reasons, selectedTime, selectedID, reason } = this.state
+
+        console.log(schedule)
 
         times.map((time, ti) => {
             schedule.map(visit => {
                 if (moment(visit.patient_visit_date)._d.toString() === time.toString()) {
                     patients.splice(ti, 1, { name: visit.patient_full_name, reason: visit.patient_visit_reason })
-                } else { patients.splice(ti, 1, 'Add Appointment') }
+                }
             })
         })
+
+        console.log(patients)
 
         return (
             <div className='dayList'>
@@ -98,7 +117,8 @@ export default class Day extends Component {
                             {patients.map((val, i) => {
                                 return (
                                     <div key={i} className='ptAndReason'>
-                                        <h3 className='schedName' onClick={!val.name ? this.handleClickOpen: null} >{val.name ? val.name : 'Add Patient'}</h3>
+                                        <h3 className='schedName' onClick={!val.name ?
+                                            ()=>this.handleClickOpen(times[i]) : null} >{val.name ? val.name : val.message}</h3>
                                         <h3 id='schedReason'>{val.reason ? val.reason : '-'}</h3>
                                     </div>
                                 )
@@ -121,23 +141,23 @@ export default class Day extends Component {
                         {/* <input onChange={(e) => this.filterHandler(e.target.value)}
                             type='search'
                             placeholder='Search...' /> */}
-                        <Autocomplete />
+                        <Autocomplete getName={this.getName} />
                         <TextField
                             autoFocus
                             margin="dense"
                             id="name"
                             label="Reason for visit"
                             type="email"
-                            fullWidth
-                            
+                            fullWidth 
+                            onChange={e=>this.setReason(e.target.value)}
                         />
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={this.handleClose} color="primary">
-                            Disagree
+                            Cancel
                         </Button>
-                        <Button onClick={this.handleClose} color="primary">
-                            Agree
+                        <Button onClick={()=>this.submit(selectedTime, selectedID, reason)} color="primary">
+                            Schedule
                         </Button>
                     </DialogActions>
                 </Dialog>

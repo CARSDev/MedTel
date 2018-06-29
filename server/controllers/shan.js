@@ -1,5 +1,6 @@
 module.exports = function addShanEndpointsTo(app) {
     app.get('/schedule/:morning/:night', getSchedule)
+    app.post('/appointment', addAppointment)
 }
 
 function getSchedule(req, res) {
@@ -9,4 +10,10 @@ function getSchedule(req, res) {
         console.log(schedule)
     res.status(200).send(schedule)
     })
+}
+
+function addAppointment(req, res) {
+    const { utc_time, id, reason } = req.body
+    req.db.add_appointment([id, utc_time, reason]).then(appts =>
+    res.status(200).send())
 }

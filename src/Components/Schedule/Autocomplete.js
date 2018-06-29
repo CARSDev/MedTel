@@ -21,11 +21,14 @@ class Autosuggest extends Component {
             })
             this.setState({ list })
         })
+        // console.log(this.props)
     }
 
     chooseDropdownItem = (e, valueSelected, valueObject) => {
         e.preventDefault()
         this.setState({ showDropdown: false, searchValue: valueSelected })
+        // console.log(valueObject)
+        this.props.getName(valueObject.patient_id)
     }
 
     updateSearchValue = e => {
@@ -38,6 +41,7 @@ class Autosuggest extends Component {
     }
 
     render() {
+        // console.log(this.state.list)
         return (
             <div className='App'>
                 <ReactAutoSuggestDropdown
