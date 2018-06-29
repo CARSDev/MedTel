@@ -1,0 +1,77 @@
+.visits{
+    background: #fff;
+    width: 100%;
+    border-radius: 5px;
+    border: 1px solid rgba(0,0,0,0.3);
+    -webkit-box-shadow: 0px 3px 3px 0px rgba(0,0,0,0.3);
+    -moz-box-shadow: 0px 3px 3px 0px rgba(0,0,0,0.3);
+    box-shadow: 0px 3px 3px 0px rgba(0,0,0,0.3);
+}
+
+.visitsHeader{
+    background: #E9F7FA;
+    padding: 10px;
+    border-bottom: 1px solid rgba(0,0,0,0.3);
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    font-family: 'Roboto';
+    text-transform: uppercase;
+}
+
+.visitsContent{
+    max-height: 200px;
+    overflow: auto;
+}
+
+.visitTopRow{
+    display: flex;
+    justify-content: space-between;
+}
+
+.visitEmployee{
+    color: #3E8EC7;
+}
+
+.visitsButtons{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.visitDetails{
+    padding: 5px;
+    border-bottom: 1px solid rgba(0,0,0,0.3);
+    font-family: 'Roboto';
+    cursor: pointer;
+}
+
+.visitDetails:hover{
+    background: #E9F7FA;
+}
+
+.visitReason{
+    font-size: 12px;
+    padding-left: 10px;
+    padding-top: 5px;
+    color: rgba(0,0,0,0.7)
+}
+
+.dialogTitle{
+    background: #E9F7FA;
+    min-width: 600px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 20px;
+    box-sizing: border-box;
+}
+
+.dialogTitle > h3{
+    font-family: 'Roboto';
+    font-size: 22px;
+}
+
+.dialogSubtitle{
+    margin: 20px;
+    font-family: 'Roboto';
+    font-size: 22px;
+}

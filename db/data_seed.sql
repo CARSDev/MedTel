@@ -15,9 +15,10 @@ VALUES
 ('female');
 
 INSERT INTO employees
-(company_id, employee_full_name, employee_first_name, employee_last_name, role_id, employee_email, employee_hashed_password, employee_username)
+(company_id, employee_full_name, employee_first_name, employee_last_name, role_id, employee_email, employee_hashed_password, employee_username, employee_picture)
 VALUES
-(1, 'John Smith', 'John', 'Smith', 1, 'johnsmith@me.com', 'password', 'jsmith');
+(1, 'John Smith', 'John', 'Smith', 1, 'johnsmith@me.com', 'password', 'jsmith', ''),
+(1, 'Donna Schmiphflingherr', 'Donna', 'Schmiphflingherr', 1, 'degs@gmail.com"', 'password', 'Degs', 'https://img.etsystatic.com/il/8f3c6d/818346854/il_570xN.818346854_r3b9.jpg?version=0');
 
 INSERT INTO patients
 (company_id, patient_full_name, patient_first_name, patient_last_name, patient_gender, patient_address, patient_phone_number, patient_email, patient_emergency_contact_name, patient_emergency_contact_number, patient_emergency_contact_relationship )
@@ -74,9 +75,9 @@ VALUES
 ('Primary Care');
 
 INSERT INTO patient_visits
-(visit_type_id, patient_id, employee_id, patient_visit_note)
+(visit_type_id, patient_id, employee_id, patient_visit_note, patient_visit_reason, patient_visit_date)
 VALUES
-(1, 1, 1, 'This was a great visit and I totally loved it!');
+(1, 1, 1, 'This was a great visit and I totally loved it!', 'Im 85 and dont have anyhting else to do.', '2018-06-27T15:00:00.000Z');
 
 INSERT INTO available_tests
 (test_name)
