@@ -18,36 +18,36 @@ export default class Conditions extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            conditions: []
+            conditions: [],
         }
     }
 
     componentDidMount() {
         axios.get(`/condition/1`).then(res => {
+            // console.log("performing get conditions")
             this.setState({
                 conditions: res.data
             })
             toast.success("Successfully got Conditions", { position: toast.POSITION.BOTTOM_RIGHT })
-        })
-            .catch(() => toast.error("Failed to Fetch Conditions", { position: toast.POSITION.BOTTOM_RIGHT }))
+        }).catch(() => toast.error("Failed to Fetch Conditions", { position: toast.POSITION.BOTTOM_RIGHT }))
 
     }
 
     render() {
-        // let conditionList = this.conditions.map((el, i) => {
-        //     return (
-        //         <div key={el + i}>
-        //             <ul>
-        //                 <li>{el.condition_name}</li><br />
-        //                 <p>-{el.condition_date_diagnosed}</p>
-        //             </ul>
-        //         </div>
+        let conditionList = this.state.conditions.map((el, i) => {
+            return (
+                <div key={el + i}>
+                    <ul>
+                        <li>{el.condition_name}</li><br />
+                        <p>-{el.condition_date_diagnosed}</p>
+                    </ul>
+                </div>
 
-        //     )
-        // })
-
+            )
+        })
         return (
             <div>
+                <ToastContainer/>
                 <Card>
                     <CardHeader style={{
                         width: '100%',
@@ -59,16 +59,16 @@ export default class Conditions extends Component {
                         title="Conditions">
                     </CardHeader>
                     <CardContent>
-                        Map conditions here
+                        {conditionList}
                     </CardContent>
-                    <Button style={{
-                        display: 'flex',
-                        flexDirection: 'row',
+                    <Button
+                        style={{
                         width: '100%',
                         borderRadius: 0,
                         borderTop: '1px solid rgba(0,0,0,0.3)',
                         borderRight: '1px solid rgba(0,0,0,0.3)'
-                    }} >
+                        }}
+                    >
                         Add
                         <Add style={{
                             marginLeft: '5px'
@@ -76,8 +76,6 @@ export default class Conditions extends Component {
                     </Button>
 
                     <Button style={{
-                        display: 'flex',
-                        flexDirection: 'row',
                         width: '100%',
                         borderRadius: 0,
                         borderTop: '1px solid rgba(0,0,0,0.3)',
