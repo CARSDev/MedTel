@@ -58,177 +58,83 @@ export default class Conditions extends Component {
             })
             toast.success("Successfully got Patient Conditions", { position: toast.POSITION.BOTTOM_RIGHT })
         }).catch(() => toast.error("Failed to Fetch Patient Conditions", { position: toast.POSITION.BOTTOM_RIGHT }))
-
-        axios.get(`/conditions`).then(res => {
-            this.setState({
-                conditions: res.data
-            })
-            toast.success("Successfully got Conditions", { position: toast.POSITION.BOTTOM_RIGHT })
-        }).catch(() => toast.error("Failed to Fetch Conditions", { position: toast.POSITION.BOTTOM_RIGHT }))
     }
 
-    handleClickOpenEdit = () => {
-        this.setState({ openEdit: true });
-    };
+        handleClickOpenEdit = () => {
+            this.setState({ openEdit: true });
+        };
 
-    handleCloseEdit = () => {
-        this.setState({ openEdit: false });
-    };
+        handleCloseEdit = () => {
+            this.setState({ openEdit: false });
+        };
 
-    handleClickOpenAdd = () => {
-        this.setState({ openAdd: true });
-    };
+        handleClickOpenAdd = () => {
+            this.setState({ openAdd: true });
+        };
 
-    handleCloseAdd = () => {
-        this.setState({ openAdd: false });
-    };
-
-    // handleEntering = () => {
-    //     this.radioGroup.focus();
-    // };
-
-    handleCancel = () => {
-        this.props.onClose(this.props.value);
-    };
-
-    handleOk = () => {
-        this.props.onClose(this.state.value);
-    };
-
-    handleChange = (event, value) => {
-        this.setState({ value });
-    };
-    handleClickListItem = () => {
-        this.setState({ open: true });
-    };
-
-    handleClose = value => {
-        this.setState({ value, open: false });
-    };
+        handleCloseAdd = () => {
+            this.setState({ openAdd: false });
+        };
 
 
-    render() {
-        const { value, ...other } = this.props;
+        render() {
+            const { value, ...other } = this.props;
 
 
 
-        let conditionList = this.state.patientConditions.map((el, i) => {
+            let conditionList = this.state.patientConditions.map((el, i) => {
+                return (
+                    <div key={el + i}>
+                        <ul>
+                            <li>{el.condition_name}</li><br />
+                            <p>-{el.condition_date_diagnosed}</p>
+                        </ul>
+                    </div>
+
+                )
+            })
             return (
-                <div key={el + i}>
-                    <ul>
-                        <li>{el.condition_name}</li><br />
-                        <p>-{el.condition_date_diagnosed}</p>
-                    </ul>
-                </div>
-
-            )
-        })
-        let conditions = this.state.conditions.map((option) => {
-            return (
-                <div key={option}>
-                    <FormControlLabel value={option} key={option} control={<Radio />} label={option} />
-                </div>
-
-            )
-        })
-        return (
-            <div>
-                <ToastContainer />
-                {/* ////////////Card Header/Content///////////////// */}
-                <Card>
-                    <CardHeader style={{
-                        width: '100%',
-                        background: '#EBF7F6',
-                        borderRadius: 0,
-                        borderTop: '1px solid rgba(0,0,0,0.3)',
-                        borderRight: '1px solid rgba(0,0,0,0.3)'
-                    }}
-                        title="Conditions">
-                    </CardHeader>
-                    <CardContent>
-                        {conditionList}
-                    </CardContent>
-                    {/* ////////////////////////////////////// */}
-
-                    {/* /////////////////Add Button//////////////// */}
-                    <Button
-                        style={{
+                <div>
+                    <ToastContainer />
+                    {/* ////////////Card Header/Content///////////////// */}
+                    <Card>
+                        <CardHeader style={{
                             width: '100%',
+                            background: '#EBF7F6',
                             borderRadius: 0,
                             borderTop: '1px solid rgba(0,0,0,0.3)',
                             borderRight: '1px solid rgba(0,0,0,0.3)'
                         }}
-                        onClick={this.handleClickOpenAdd}
-                    >
-                        Add
+                            title="Conditions">
+                        </CardHeader>
+                        <CardContent>
+                            {conditionList}
+                        </CardContent>
+                        {/* ////////////////////////////////////// */}
+
+                        {/* /////////////////Add Button//////////////// */}
+                        <Button
+                            style={{
+                                width: '100%',
+                                borderRadius: 0,
+                                borderTop: '1px solid rgba(0,0,0,0.3)',
+                                borderRight: '1px solid rgba(0,0,0,0.3)'
+                            }}
+                            onClick={this.handleClickOpenAdd}
+                        >
+                            Add
                         <Add style={{
-                            marginLeft: '5px'
-                        }} />
-                    </Button>
-                
+                                marginLeft: '5px'
+                            }} />
+                        </Button>
+
                         <Dialog
                             open={this.state.openAdd}
                             onClose={this.handleCloseAdd}
-                            onEntering={this.handleEntering}
                             aria-labelledby="confirmation-dialog-title"
-                            {...other}
                         >
                             <DialogTitle id="form-dialog-title">Add Conditions</DialogTitle>
-                            <ConditionSelector />
-                            {/* <div>
-                                <List>
-                                    <ListItem button divider disabled>
-                                        <ListItemText primary="Conditions" />
-                                    </ListItem>
-                                    <ListItem
-                                        button
-                                        divider
-                                        aria-haspopup="true"
-                                        aria-controls="ringtone-menu"
-                                        aria-label="Conditions"
-                                        onClick={this.handleClickListItem}
-                                    >
-                                        <ListItemText primary="Phone ringtone" secondary={this.state.value} />
-                                    </ListItem>
-
-                                    <ConfirmationDialogRaw
-                                classes={{
-                                    paper: classes.paper,
-                                }}
-                                open={this.state.open}
-                                onClose={this.handleClose}
-                                value={this.state.value}
-                            />
-                                </List>
-                            </div>
-                            <DialogContent>
-                                <RadioGroup
-                                    ref={node => {
-                                        this.radioGroup = node;
-                                    }}
-                                    aria-label="ringtone"
-                                    name="ringtone"
-                                    value={this.state.value}
-                                    onChange={this.handleChange}
-                                >
-                                </RadioGroup>
-                                <TextField
-                                    autoFocus
-                                    margin="dense"
-                                    id="name"
-                                    label="Condition"
-                                    type="email"
-                                    fullWidth
-                                />
-                            </DialogContent>
-                            <DialogActions>
-                                <Button onClick={this.handleCloseAdd} color="primary">
-                                    Cancel
-                            </Button>
-                                <Button onClick={this.handleCloseAdd} color="primary">
-                                    Add
-                            </Button>
-                                </DialogActions>*/}
+                            <ConditionSelector patient_id={this.props.patient_id} />
                         </Dialog>
 
 
@@ -247,7 +153,7 @@ export default class Conditions extends Component {
                                 marginLeft: '5px'
                             }} />
                         </Button>
-                </Card>
+                    </Card>
                     <div>
                         <Button onClick={this.handleClickOpenEdit}>Update</Button>
                         <Dialog
@@ -273,15 +179,18 @@ export default class Conditions extends Component {
                             <DialogActions>
                                 <Button onClick={this.handleCloseEdit} color="primary">
                                     Cancel
-                            </Button>
+                                </Button>
                                 <Button onClick={this.handleCloseEdit} color="primary">
-                                    Subscribe
-                            </Button>
+                                    Update
+                                </Button>
+                                <Button onClick={this.handleCloseEdit} color="primary">
+                                    Delete
+                                </Button>
                             </DialogActions>
                         </Dialog>
                     </div>
-            </div >
+                </div >
 
-                )
-            }
-}
+            )
+        }
+    }

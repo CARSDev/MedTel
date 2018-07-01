@@ -15,25 +15,6 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import Radio from '@material-ui/core/Radio';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
-const options = [
-    'None',
-    'Atria',
-    'Callisto',
-    'Dione',
-    'Ganymede',
-    'Hangouts Call',
-    'Luna',
-    'Oberon',
-    'Phobos',
-    'Pyxis',
-    'Sedna',
-    'Titania',
-    'Triton',
-    'Umbriel',
-];
-
-
-
 class ConfirmationDialogRaw extends React.Component {
     radioGroup = null;
 
@@ -42,7 +23,10 @@ class ConfirmationDialogRaw extends React.Component {
         
         this.state = {
             value: this.props.value,
-            conditions: []
+            value2: this.props.value2,
+            conditions: [],
+            conditionId: 0,
+            time: ''
         };
     }
 
@@ -52,6 +36,9 @@ class ConfirmationDialogRaw extends React.Component {
     componentWillReceiveProps(nextProps) {
         if (nextProps.value !== this.props.value) {
             this.setState({ value: nextProps.value });
+        }
+        if (nextProps.value2 !== this.props.value2) {
+            this.setState({ value2: nextProps.value2 });
         }
     }
 
@@ -64,24 +51,47 @@ class ConfirmationDialogRaw extends React.Component {
         }).catch(() => toast.error("Failed to Fetch Conditions", { position: toast.POSITION.BOTTOM_RIGHT }))
     }
 
+    // updateConditions() {
+    //     axios.post(`/condition/${this.props.patient_id}`, { condition_id: this.state.value2, condition_date_diagnosed: this.state.time}).then(res => {
+    //         this.state({
+
+    //         })
+    //     })
+    // }
+
     handleEntering = () => {
         this.radioGroup.focus();
     };
 
     handleCancel = () => {
-        this.props.onClose(this.props.value);
+        this.props.onClose(this.props.value, this.props.value2);
     };
 
     handleOk = () => {
-        this.props.onClose(this.state.value);
+        this.props.onClose(this.state.value, this.state.value2);
+        this.setState({
+            // time: date.getTime()
+        })
+        this.updateConditions();
     };
 
-    handleChange = (event, value) => {
-        this.setState({ value });
+    handleChange = (event, value, value2) => {
+        this.setState({
+            value,
+            value2
+        });
     };
+
+    changeHandler(event, id) {
+        this.setState({
+            value2: id
+        });
+    }
 
     render() {
-        const { value, ...other } = this.props;
+        const { value, value2, ...other } = this.props;
+        console.log(this.state.value)
+        console.log(this.state.value2)
         return (
             <Dialog
                 disableBackdropClick
@@ -97,13 +107,14 @@ class ConfirmationDialogRaw extends React.Component {
                         ref={node => {
                             this.radioGroup = node;
                         }}
-                        aria-label="ringtone"
-                        name="ringtone"
+                        aria-label="condition"
+                        name="condition"
                         value={this.state.value}
+                        value2={this.state.value2}
                         onChange={this.handleChange}
                     >
                         {this.state.conditions.map(option => (
-                            <FormControlLabel value={option.condition_name} key={option} control={<Radio />} label={option.condition_name} />
+                            <FormControlLabel value={option.condition_name} onChange={(e) =>  this.changeHandler(e.target.value, option.condition_id) } key={option.condition_id} control={<Radio />} label={option.condition_name} />
                         ))}
                         {/* {conditionList} */}
                     </RadioGroup>
@@ -111,10 +122,10 @@ class ConfirmationDialogRaw extends React.Component {
                 <DialogActions>
                     <Button onClick={this.handleCancel} color="primary">
                         Cancel
-          </Button>
+                    </Button>
                     <Button onClick={this.handleOk} color="primary">
                         Ok
-          </Button>
+                    </Button>
                 </DialogActions>
             </Dialog>
         );
@@ -124,6 +135,7 @@ class ConfirmationDialogRaw extends React.Component {
 ConfirmationDialogRaw.propTypes = {
     onClose: PropTypes.func,
     value: PropTypes.string,
+    value2: PropTypes.number
 };
 
 const styles = theme => ({
@@ -144,14 +156,15 @@ class ConfirmationDialog extends React.Component {
     state = {
         open: false,
         value: 'Asthma',
+        value2: 0
     };
 
     handleClickListItem = () => {
         this.setState({ open: true });
     };
 
-    handleClose = value => {
-        this.setState({ value, open: false });
+    handleClose = (value, value2) => {
+        this.setState({ value, value2, open: false });
     };
 
     render() {
@@ -182,6 +195,7 @@ class ConfirmationDialog extends React.Component {
                         open={this.state.open}
                         onClose={this.handleClose}
                         value={this.state.value}
+                        value2={this.state.value2}
                     />
                 </List>
             </div>
