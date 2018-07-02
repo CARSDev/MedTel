@@ -24,12 +24,8 @@ export default class Schedule extends Component {
         // console.log(utc_morning, utc_night)
         axios.get(`/schedule/${utc_morning}/${utc_night}`).then(res => {
             this.setState({schedule:res.data})
-            console.log(this.state.schedule)
+            // console.log(this.state.schedule)
         })
-    }
-
-    componentDidUpdate() {
-        
     }
 
     onChange = date => {
@@ -46,7 +42,7 @@ export default class Schedule extends Component {
         // console.log(utc_morning, utc_night)
         axios.get(`/schedule/${utc_morning}/${utc_night}`).then(res => {
             this.setState({ schedule: res.data })
-            console.log(this.state.schedule)
+            // console.log(this.state.schedule)
         })
     }
 
