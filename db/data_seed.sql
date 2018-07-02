@@ -116,7 +116,9 @@ VALUES
 INSERT INTO patient_visits
 (visit_type_id, patient_id, employee_id, patient_visit_note, patient_visit_reason, patient_visit_date)
 VALUES
-(1, 1, 1, 'This was a great visit and I totally loved it!', 'Im 85 and dont have anyhting else to do.', '2018-06-27T15:00:00.000Z');
+(1, 1, 1, 'This was a great visit and I totally loved it!', 'Im 85 and dont have anyhting else to do.', '2018-06-27T15:00:00.000Z'),
+(1, 1, 1, null, 'Flu', '2018-07-15T15:00:00.000Z'),
+(1, 1, 1, null, 'Twisted Ankle', '2018-07-10T15:00:00.000Z');
 
 INSERT INTO available_tests
 (test_name)

@@ -25,7 +25,6 @@ function addUser(req, res) {
 }
 
 function login(req, res) {
-    console.log('hit login')
 
     let { username, password } = req.body;
 
@@ -33,7 +32,6 @@ function login(req, res) {
         .then(([{ employee_hashed_password, employee_id }]) => {
             bcrypt.compare(password, employee_hashed_password, (err, result) => {
                 if (err) {
-                    console.log(err);
                     res.status(500).send(err)
                 }
                 else if (result) {
@@ -42,7 +40,6 @@ function login(req, res) {
                         user[0].employee_hashed_password = ''
                         res.status(200).send(user)
                     }).catch(err => {
-                        console.log(err)
                         res.status(200).send(err)
                     })
                 }
