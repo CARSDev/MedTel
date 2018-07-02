@@ -41,16 +41,6 @@ class PatientInfo extends Component {
     };
   }
 
-  componentDidMount() {
-    this.setState({
-      id: this.props.patient_id || 1
-    }, () => {
-      this.getPatient();
-      this.getMeasurements();
-      this.getAppts();
-    })
-  }
-
   componentDidUpdate(prevProps) {
     if (prevProps !== this.props) {
       this.setState({
@@ -156,7 +146,7 @@ class PatientInfo extends Component {
   }
 
   render() {
-    console.log(this.state)
+    // console.log(this.state)
     return (
       <div className="mainPatientInfo">
         <div className="row1">
