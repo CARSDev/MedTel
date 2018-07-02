@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import Link from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './PatientList.css';
@@ -11,7 +11,8 @@ export default class PatientList extends Component {
         this.state = {
             patients: [],
             search: '',
-            criteria: 'all'
+            criteria: 'all',
+            clicked: -1
         }
         this.filterHandler = this.filterHandler.bind(this);
         this.selectHandler = this.selectHandler.bind(this);
@@ -88,7 +89,8 @@ export default class PatientList extends Component {
             }
         }).map((el, i) => {
             return (
-                <div key={el} className="patientsList">
+                <Link to={`/dashboard/${el.patient_id}`} key={el}>
+                    <div className="patientsList">
                     <ul>
                         <li><p>{el.patient_id}</p><br />
                             <p>{el.patient_full_name}</p><br />
@@ -96,7 +98,8 @@ export default class PatientList extends Component {
                             <p>{el.patient_email}</p><br />
                         </li>
                     </ul>
-                </div>
+                    </div>
+                 </Link>
 
             )
         })
