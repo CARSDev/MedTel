@@ -3,6 +3,9 @@ import axios from 'axios';
 import Link from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import AddPatient from './AddPatient';
+import Button from '@material-ui/core/Button'
+import Add from '@material-ui/icons/Add'
 import './PatientList.css';
 
 export default class PatientList extends Component {
@@ -11,7 +14,8 @@ export default class PatientList extends Component {
         this.state = {
             patients: [],
             search: '',
-            criteria: 'all'
+            criteria: 'all',
+            open: false
         }
         this.filterHandler = this.filterHandler.bind(this);
         this.selectHandler = this.selectHandler.bind(this);
@@ -39,6 +43,14 @@ export default class PatientList extends Component {
             criteria: value
         })
     }
+
+    handleClickOpen = () => {
+        this.setState({ open: true });
+    };
+
+    handleClose = () => {
+        this.setState({ open: false });
+    };
 
     render() {
         let patients = this.state.patients.filter((el, i) => {
@@ -103,6 +115,19 @@ export default class PatientList extends Component {
         return (
             <div>
                 <ToastContainer />
+                <Button
+                    variant="fab"
+                    color="secondary"
+                    style={{
+                        position: "fixed",
+                        bottom: 10,
+                        left: 10
+                    }}
+                    onClick = { this.handleClickOpen }
+                >
+                    <Add />
+                </Button>
+                <AddPatient open={this.state.open} handleClickOpen={this.handleClickOpen} handleClose={this.handleClose}/>
                 <div>
                     <select onChange={(e) => this.selectHandler(e.target.value)} name='searchCriteria'>
                         {/* <option value='all'>All</option> */}

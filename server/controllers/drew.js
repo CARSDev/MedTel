@@ -1,12 +1,12 @@
 module.exports = function addDrewEndpointsTo(app) {
-    app.get('/api/visits/:id', getPatientVisits);
+    app.get('/api/visits/:id/:date', getPatientVisits);
 
     app.put('/api/visits/:id', updateVisit);
 }
 
 function getPatientVisits(req, res) {
-    let { id } = req.params
-    req.db.get_patient_visits([id])
+    let { id, date } = req.params
+    req.db.get_patient_visits([id, date])
         .then((visits) => {
             res.status(200).send(visits)
         })
