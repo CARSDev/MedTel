@@ -44,11 +44,7 @@ export default class Conditions extends Component {
     }
     radioGroup = null;
 
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.value !== this.props.value) {
-            this.setState({ value: nextProps.value });
-        }
-    }
+
 
     componentDidMount() {
         axios.get(`/condition/1`).then(res => {
@@ -60,137 +56,185 @@ export default class Conditions extends Component {
         }).catch(() => toast.error("Failed to Fetch Patient Conditions", { position: toast.POSITION.BOTTOM_RIGHT }))
     }
 
-        handleClickOpenEdit = () => {
-            this.setState({ openEdit: true });
-        };
+    updateCondition() {
+        
+    }
+    deleteCondition() {
+        
+    }
 
-        handleCloseEdit = () => {
-            this.setState({ openEdit: false });
-        };
+    handleClickOpenEdit = () => {
+        this.setState({ openEdit: true });
+    };
+    handleClose = () => {
+        this.setState({openEdit: false});
+    };
+    handleCloseEdit = () => {
+        this.setState({
+            openEdit: false,
 
-        handleClickOpenAdd = () => {
-            this.setState({ openAdd: true });
-        };
+        });
+    };
+    handleCloseDelete = () => {
+        this.setState({
+            openEdit: false,
 
-        handleCloseAdd = () => {
-            this.setState({ openAdd: false });
-        };
+        });
+    };
+
+    handleClickOpenAdd = () => {
+        this.setState({ openAdd: true });
+    };
+
+    handleCloseAdd = () => {
+        this.setState({ openAdd: false });
+    };
 
 
-        render() {
-            const { value, ...other } = this.props;
+    render() {
+        const { value, ...other } = this.props;
 
 
 
-            let conditionList = this.state.patientConditions.map((el, i) => {
-                return (
-                    <div key={el + i}>
-                        <ul>
+        let conditionListEdit = this.state.patientConditions.map((el, i) => {
+            return (
+
+                <div key={el + i}>
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        id="name"
+                        label={el.condition_name}
+                        type="email"
+                        fullWidth
+                    />
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        id="name"
+                        label={el.condition_date_diagnosed}
+                        type="email"
+                        fullWidth
+                    />
+                    {/* <ul>
                             <li>{el.condition_name}</li><br />
                             <p>-{el.condition_date_diagnosed}</p>
-                        </ul>
-                    </div>
+                        </ul> */}
+                </div>
 
-                )
-            })
+            )
+        })
+        let conditionList = this.state.patientConditions.map((el, i) => {
             return (
-                <div>
-                    <ToastContainer />
-                    {/* ////////////Card Header/Content///////////////// */}
-                    <Card>
-                        <CardHeader style={{
+
+                <div key={el + i}>
+                    <ul>
+                        <li>{el.condition_name}</li><br />
+                        <p>-{el.condition_date_diagnosed}</p>
+                    </ul>
+                </div>
+
+            )
+        })
+
+        return (
+            <div>
+                <ToastContainer />
+                {/* ////////////Card Header/Content///////////////// */}
+                <Card>
+                    <CardHeader style={{
+                        width: '100%',
+                        background: '#EBF7F6',
+                        borderRadius: 0,
+                        borderTop: '1px solid rgba(0,0,0,0.3)',
+                        borderRight: '1px solid rgba(0,0,0,0.3)'
+                    }}
+                        title="Conditions">
+                    </CardHeader>
+                    <CardContent>
+                        {conditionList}
+                    </CardContent>
+                    {/* ////////////////////////////////////// */}
+
+                    {/* /////////////////Add Button//////////////// */}
+                    <Button
+                        style={{
                             width: '100%',
-                            background: '#EBF7F6',
                             borderRadius: 0,
                             borderTop: '1px solid rgba(0,0,0,0.3)',
                             borderRight: '1px solid rgba(0,0,0,0.3)'
                         }}
-                            title="Conditions">
-                        </CardHeader>
-                        <CardContent>
-                            {conditionList}
-                        </CardContent>
-                        {/* ////////////////////////////////////// */}
-
-                        {/* /////////////////Add Button//////////////// */}
-                        <Button
-                            style={{
-                                width: '100%',
-                                borderRadius: 0,
-                                borderTop: '1px solid rgba(0,0,0,0.3)',
-                                borderRight: '1px solid rgba(0,0,0,0.3)'
-                            }}
-                            onClick={this.handleClickOpenAdd}
-                        >
-                            Add
+                        onClick={this.handleClickOpenAdd}
+                    >
+                        Add
                         <Add style={{
-                                marginLeft: '5px'
-                            }} />
-                        </Button>
+                            marginLeft: '5px'
+                        }} />
+                    </Button>
 
-                        <Dialog
-                            open={this.state.openAdd}
-                            onClose={this.handleCloseAdd}
-                            aria-labelledby="confirmation-dialog-title"
-                        >
-                            <DialogTitle id="form-dialog-title">Add Conditions</DialogTitle>
-                            <ConditionSelector patient_id={this.props.patient_id} />
-                        </Dialog>
+                    <Dialog
+                        open={this.state.openAdd}
+                        onClose={this.handleCloseAdd}
+                        aria-labelledby="confirmation-dialog-title"
+                    >
+                        <DialogTitle id="form-dialog-title">Add Conditions</DialogTitle>
+                        <ConditionSelector patient_id={this.props.patient_id} />
+                    </Dialog>
 
 
-                        {/* ///////////////////Edit Button///////////////////// */}
-                        <Button
-                            style={{
-                                width: '100%',
-                                borderRadius: 0,
-                                borderTop: '1px solid rgba(0,0,0,0.3)',
-                                borderRight: '1px solid rgba(0,0,0,0.3)'
-                            }}
-                            onClick={this.handleClickOpenEdit}
-                        >
-                            Edit
+                    {/* ///////////////////Edit Button///////////////////// */}
+                    <Button
+                        style={{
+                            width: '100%',
+                            borderRadius: 0,
+                            borderTop: '1px solid rgba(0,0,0,0.3)',
+                            borderRight: '1px solid rgba(0,0,0,0.3)'
+                        }}
+                        onClick={this.handleClickOpenEdit}
+                    >
+                        Edit
                         <Edit style={{
-                                marginLeft: '5px'
-                            }} />
-                        </Button>
-                    </Card>
-                    <div>
-                        <Button onClick={this.handleClickOpenEdit}>Update</Button>
-                        <Dialog
-                            open={this.state.openEdit}
-                            onClose={this.handleCloseEdit}
-                            aria-labelledby="form-dialog-title"
-                        >
-                            <DialogTitle id="form-dialog-title">Update Conditions</DialogTitle>
-                            <DialogContent>
-                                {/* <DialogContentText>
+                            marginLeft: '5px'
+                        }} />
+                    </Button>
+                </Card>
+                <div>
+                    <Dialog
+                        open={this.state.openEdit}
+                        onClose={this.handleCloseEdit}
+                        aria-labelledby="form-dialog-title"
+                    >
+                        <DialogTitle id="form-dialog-title">Edit Conditions</DialogTitle>
+                        <DialogContent>
+                            {/* <DialogContentText>
                                 To subscribe to this website, please enter your email address here. We will send
                                 updates occasionally.
                             </DialogContentText> */}
-                                <TextField
+                            {/* <TextField
                                     autoFocus
                                     margin="dense"
                                     id="name"
                                     label={conditionList}
                                     type="email"
                                     fullWidth
-                                />
-                            </DialogContent>
-                            <DialogActions>
-                                <Button onClick={this.handleCloseEdit} color="primary">
-                                    Cancel
+                                /> */}
+                            {conditionListEdit}
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={this.handleClose} color="primary">
+                                Cancel
                                 </Button>
-                                <Button onClick={this.handleCloseEdit} color="primary">
-                                    Update
+                            <Button onClick={this.handleCloseEdit} color="primary">
+                                Edit
                                 </Button>
-                                <Button onClick={this.handleCloseEdit} color="primary">
-                                    Delete
+                            <Button onClick={this.handleCloseDelete} color="primary">
+                                Delete
                                 </Button>
-                            </DialogActions>
-                        </Dialog>
-                    </div>
-                </div >
+                        </DialogActions>
+                    </Dialog>
+                </div>
+            </div >
 
-            )
-        }
+        )
     }
+}
