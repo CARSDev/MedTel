@@ -155,7 +155,7 @@ class Day extends Component {
                         </div>
                         <div className='rightTwo'>
                             {patients.map((val, i) => {
-                                console.log(val)
+                                // console.log(val)
                                 return (
                                     <div key={i} className='ptAndReason'>
                                         { val.name?

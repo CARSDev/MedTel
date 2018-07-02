@@ -7,6 +7,7 @@ class PatientInfo extends Component {
   constructor() {
     super();
     this.state = {
+      id: 1,
       patient_full_name: "",
       patient_picture: "",
       patient_age: null,
@@ -40,15 +41,21 @@ class PatientInfo extends Component {
     };
   }
 
-  componentDidMount() {
-    this.getPatient();
-    this.getMeasurements();
-    this.getAppts();
+  componentDidUpdate(prevProps) {
+    if (prevProps !== this.props) {
+      this.setState({
+        id: this.props.patient_id
+      }, () => {
+        this.getPatient();
+        this.getMeasurements();
+        this.getAppts();
+      })
+    }
   }
 
   getPatient() {
-    // let { id } = this.props.patient_id
-    let id = 1;
+    let { id } = this.state
+    // let id = 1;
     axios.get(`/patient/${id}`).then(res => {
       let {
         patient_full_name,
@@ -80,13 +87,12 @@ class PatientInfo extends Component {
         patient_emergency_contact_relationship2,
         patient_emergency_contact_number2
       });
-      // console.log(res.data, 'patient')
     });
   }
 
   getMeasurements() {
-    // let { id } = this.props.patient_id
-    let id = 1;
+    let { id } = this.state
+    // let id = 1;
     axios.get(`/patient/measurements/${id}`).then(res => {
       // console.log(res.data, "measurements");
       let heightTest =
@@ -107,8 +113,8 @@ class PatientInfo extends Component {
   }
 
   getAppts() {
-    // let { id } = this.props.patient_id
-    let id = 1;
+    let { id } = this.state
+    // let id = 1;
     let today = moment.utc(new Date()).format();
     axios.get(`/visit/${id}/${today}`).then(res => {
       // console.log(res.data, 'visits')
@@ -140,6 +146,7 @@ class PatientInfo extends Component {
   }
 
   render() {
+    // console.log(this.state)
     return (
       <div className="mainPatientInfo">
         <div className="row1">
