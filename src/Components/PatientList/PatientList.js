@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import Link from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AddPatient from './AddPatient';
@@ -15,7 +15,7 @@ export default class PatientList extends Component {
             patients: [],
             search: '',
             criteria: 'all',
-            open: false
+            clicked: -1
         }
         this.filterHandler = this.filterHandler.bind(this);
         this.selectHandler = this.selectHandler.bind(this);
@@ -27,9 +27,9 @@ export default class PatientList extends Component {
             this.setState({
                 patients: res.data
             })
-            toast.success("Successfully got Instruments", { position: toast.POSITION.TOP_CENTER })
+            toast.success("Successfully got Instruments", { position: toast.POSITION.BOTTOM_RIGHT })
         })
-        .catch(() => toast.error("Failed to Fetch Patient List"))
+            .catch(() => toast.error("Failed to Fetch Patient List", { position: toast.POSITION.BOTTOM_RIGHT }))
     }
 
     filterHandler(filter) {
@@ -100,7 +100,8 @@ export default class PatientList extends Component {
             }
         }).map((el, i) => {
             return (
-                <div key={el.patient_id} className="patientsList">
+                <Link to={`/dashboard/${el.patient_id}`} key={el}>
+                    <div className="patientsList">
                     <ul>
                         <li><p>{el.patient_id}</p><br />
                             <p>{el.patient_full_name}</p><br />
@@ -108,7 +109,8 @@ export default class PatientList extends Component {
                             <p>{el.patient_email}</p><br />
                         </li>
                     </ul>
-                </div>
+                    </div>
+                 </Link>
 
             )
         })
@@ -140,7 +142,7 @@ export default class PatientList extends Component {
                         type='search'
                         placeholder='Search...' />
                 </div>
-                <div>
+                <div className="list">
                     {this.state.search}
                     <div className="listHeaders">
                         <p>Patient Id</p>
@@ -148,7 +150,9 @@ export default class PatientList extends Component {
                         <p>Phone</p>
                         <p>Email</p>
                     </div>
-                    {patients}
+                    <div>
+                        {patients}
+                    </div>    
                 </div>
             </div>
         )
