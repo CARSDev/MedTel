@@ -41,13 +41,24 @@ export default class Conditions extends Component {
         this.handleCloseEdit = this.handleCloseEdit.bind(this);
         this.handleClickOpenAdd = this.handleClickOpenAdd.bind(this);
         this.handleCloseAdd = this.handleCloseAdd.bind(this);
+        this.getConditions = this.getConditions.bind(this);
     }
     radioGroup = null;
 
 
 
     componentDidMount() {
-        axios.get(`/condition/1`).then(res => {
+        this.getConditions()
+    }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps !== this.props) {
+            this.getConditions()
+        }
+    }
+
+    getConditions() {
+        axios.get(`/condition/${this.props.patient_id}`).then(res => {
             // console.log("performing get conditions")
             this.setState({
                 patientConditions: res.data
@@ -93,7 +104,6 @@ export default class Conditions extends Component {
 
     render() {
         const { value, ...other } = this.props;
-
 
 
         let conditionListEdit = this.state.patientConditions.map((el, i) => {
@@ -178,7 +188,7 @@ export default class Conditions extends Component {
                         aria-labelledby="confirmation-dialog-title"
                     >
                         <DialogTitle id="form-dialog-title">Add Conditions</DialogTitle>
-                        <ConditionSelector patient_id={this.props.patient_id} />
+                        <ConditionSelector patient_id={this.props.patient_id} getConditions={this.getConditions} />
                     </Dialog>
 
 

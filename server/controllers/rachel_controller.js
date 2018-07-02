@@ -45,6 +45,7 @@ function getConditions(req, res) {
 function addCondition(req, res) {
     console.log('hit add condition')
     const { params } = req;
+    const { condition_id, condition_date_diagnosed } = req.body
 
     req.db.add_condition([params.id, condition_id, condition_date_diagnosed])
         .then((conditions) => {

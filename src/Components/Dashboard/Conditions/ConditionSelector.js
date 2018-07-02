@@ -47,24 +47,20 @@ class ConfirmationDialogRaw extends React.Component {
         }).catch(() => toast.error("Failed to Fetch Conditions", { position: toast.POSITION.BOTTOM_RIGHT }))
     }
 
-    // updateConditions() {
-    //     axios.post(`/condition/${this.props.patient_id}`, { condition_id: this.state.value2, condition_date_diagnosed: this.state.time}).then(res => {
-    //         this.state({
+    updateConditions() {
 
-    //         })
-    //     })
-    // }
+    }
 
     handleEntering = () => {
         this.radioGroup.focus();
     };
 
     handleCancel = () => {
-        this.props.onClose(this.props.value, this.props.value2);
+        this.props.onClose(this.props.value);
     };
 
     handleOk = () => {
-        this.props.onClose(this.state.value);
+        this.props.onClose(this.state.value, this.state.conditionId);
         this.setState({
             // time: date.getTime()
         })
@@ -72,8 +68,14 @@ class ConfirmationDialogRaw extends React.Component {
     };
 
     handleChange = (event, value) => {
+        let conditionElement = this.state.conditions.find((el) => {
+            if (value === el.condition_name) {
+                return true;
+            }
+        })
         this.setState({
-            value
+            value,
+            conditionId: conditionElement.condition_id
         });
     };
 
@@ -160,8 +162,11 @@ class ConfirmationDialog extends React.Component {
         this.setState({ open: true });
     };
 
-    handleClose = (value, value2) => {
+    handleClose = (value, conditionId) => {
         this.setState({ value, open: false });
+        axios.post(`/condition/${this.props.patient_id}`, { condition_id: conditionId, condition_date_diagnosed: new Date() }).then(res => {
+            this.props.getConditions()
+        })
     };
 
     render() {
