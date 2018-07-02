@@ -39,25 +39,13 @@ class Nav extends Component {
   }
 
   render() {
-    console.log()
+    // console.log(this.props)
     return <div className="mainNav">
         <div className="leftNav">
           <img className="logo" src="https://static1.squarespace.com/static/59ca534059cc68a3cdb78cbb/t/59ccbd7837c58187d283b471/1518603415416/" alt="" />
           <button onClick={() => this.toggleAdmin()}>toggle</button>
         </div>
         <div className="centerNav">
-          <Link to="/dashboard">
-            <p
-              className={
-                this.props.location.pathname === "/dashboard"
-                  ? "centerBactive"
-                  : "centerB"
-              }
-            >
-              Dashboard
-            </p>
-          </Link>
-          <div className="vr" />
           <Link to="/schedule">
             <p
               className={
@@ -96,9 +84,9 @@ class Nav extends Component {
         </div>
         <div className="rightNav">
           <img className="profImg" src={this.state.employee_picture} alt="" />
-          <p className="name">{this.state.employee_first_name}</p>
+          <p className="navname">{this.state.employee_first_name}</p>
           <div className="vr" />
-          <p className='centerB'>Logout</p>
+          <Link to='/'><p className='centerB'>Logout</p></Link>
         </div>
       </div>;
   }

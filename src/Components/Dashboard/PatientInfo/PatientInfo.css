@@ -1,31 +1,43 @@
 
 .mainPatientInfo {
   background: linear-gradient(#F7FCFD ,#E9F7FA);
-  height: 40vh;
+  height: 35vh;
   width: 100%; 
   border: 1px solid #BFCBCD;
   border-radius: 3px;
   box-shadow: 2px 2px 5px -2px #404445;
   box-sizing: border-box;
+  font-size: 18px;
 }
 
 .row1 {
   display: flex;
-  height: 45%;
+  height: 160px;
   background-color: rgb(127, 140, 255);
   margin: 5px;
 }
 
-.ptpic {
-  height: 100%;
-  width: 23%;
-  background-color: rgb(92, 247, 151);
-}
-
 .identifiers {
+  box-sizing: border-box;
   height: 100%;
   width: 38.5%;
   background-color: rgb(252, 95, 147);
+  padding: 10px
+}
+
+.name {
+  font-size: 24px;
+  color: black;
+}
+
+.identifiers div {
+  margin: 10px;
+}
+
+.ptpic img {
+  height: 160px;
+  width: 160px;
+  background-color: rgb(92, 247, 151);
 }
 
 .measurements {

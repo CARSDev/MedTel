@@ -58,6 +58,8 @@
   width: 100px;
   text-align: center;
   cursor: pointer;
+  text-decoration: none;
+  color: #F6F6F6;
 }
 
 .centerBactive {
@@ -90,6 +92,11 @@
   width: 45px;
 }
 
-.name {
+.navname {
   margin-right: 30px;
+}
+
+.rightNav > a {
+  height: 100%;
+  text-decoration: none;
 }

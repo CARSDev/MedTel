@@ -3,7 +3,7 @@ module.exports = function addCamEndpointsTo(app) {
   app.get("/employee", getEmployee),
   app.get('/patient/:id', getPatient),
   app.get('/patient/measurements/:id', getPatientMeasurements) 
-    
+  app.get('/visit/:id/:date', getAppts)
 }
 
 function getEmployee(req, res) {
@@ -37,4 +37,16 @@ function getPatientMeasurements(req, res) {
     .catch((err) => {
       res.status(500).send(err)
   })
+}
+
+function getAppts(req, res) {
+  let { id, date } = req.params
+  req.db.get_appts([id, date])
+    .then((appts) => {
+      // console.log(appts)
+      res.status(200).send(appts)
+    })
+    .catch((err) => {
+      res.status(500).send(err)
+    })
 }
