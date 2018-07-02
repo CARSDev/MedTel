@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Button from '@material-ui/core/Button'
 import Add from '@material-ui/icons/Add'
-import Edit from '@material-ui/icons/Edit'
+import moment from 'moment'
 import axios from 'axios'
 import VisitDetails from './VisitDetails'
 import { Link } from 'react-router-dom'
@@ -13,7 +13,7 @@ export default class Visits extends Component {
 
         this.state = {
             patient_id: null,
-            visits: []
+            visits: [],
         }
     }
 
@@ -36,7 +36,8 @@ export default class Visits extends Component {
     }
 
     getPatientInfo = () => {
-        axios.get(`/api/visits/${this.state.patient_id}`)
+        let today = moment.utc(new Date()).format();
+        axios.get(`/api/visits/${this.state.patient_id}/${today}`)
             .then((res) => {
                 this.setState({
                     visits: res.data
