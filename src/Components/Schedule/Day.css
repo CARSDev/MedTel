@@ -12,6 +12,7 @@
 .dayList h3{
     padding: 15px;
     width: 200px;
+    height: 32px;
 }
 
 .dayList h1{
@@ -22,10 +23,33 @@
         font-size: 1.25em;
 }
 
-.dayList h3:nth-child(odd){
+.schedTimes h3:nth-child(odd){
     background: #E9F7FA;
 }
 
-.reasonsColumn h3{
+.rightTwo .ptAndReason:nth-of-type(odd){
+    background: #E9F7FA;
+}
+.rightTwo .ptAndReason:nth-of-type(even){
+    background: white;
+}
+.ptAndReason{
+    width: 560px;
+    display: flex;
+}
+
+.schedHeader{
+    display: flex;
+    flex-direction: row;
+}
+.schedHeader h1{
+    width: 200px;
+}
+#schedReason{
     width: 300px;
+}
+
+.schedContent{
+    display: flex;
+    flex-direction: row;
 }
