@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import {withRouter} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import './Day.css'
 import axios from 'axios'
 import moment from 'moment'
@@ -10,18 +12,23 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import Autocomplete from './Autocomplete'
+import Edit from '@material-ui/icons/Edit'
+import Add from '@material-ui/icons/Add'
+
 
 function Transition(props) {
     return <Slide direction="up" {...props} />;
 }
 
-export default class Day extends Component {
+class Day extends Component {
     constructor() {
         super()
         this.state = {
             times: [],
-            patients: [{ message: 'Add Appointment' }, { message: 'Add Appointment' }, { message: 'Add Appointment' }, { message: 'Add Appointment' }, { message: 'Add Appointment' }, { message: 'Add Appointment' }, { message: 'Add Appointment' }, { message: 'Add Appointment' }, { message: 'Add Appointment' }, { message: 'Add Appointment' }, { message: 'Add Appointment' }, { message: 'Add Appointment' }, { message: 'Add Appointment' }, { message: 'Add Appointment' }, { message: 'Add Appointment' }, { message: 'Add Appointment' }, { message: 'Add Appointment' }, { message: 'Add Appointment' },],
+            patients: [{ message: '+' }, { message: '+' }, { message: '+' }, { message: '+' }, { message: '+' }, { message: '+' }, { message: '+' }, { message: '+' }, { message: '+' }, { message: '+' }, { message: '+' }, { message: '+' }, { message: '+' }, { message: '+' }, { message: '+' }, { message: '+' }, { message: '+' }, { message: 'Add Appointment' },],
             open: false, 
+            openEdit: false, 
+            openReason: false,
             selectedTime: '', 
             reason: '',
             selectedID:''
@@ -52,6 +59,9 @@ export default class Day extends Component {
     componentDidUpdate(prevProps) {
         if (prevProps !== this.props) {
             this.createTimes()
+            this.setState({
+                patients: [{ message: '+' }, { message: '+' }, { message: '+' }, { message: '+' }, { message: '+' }, { message: '+' }, { message: '+' }, { message: '+' }, { message: '+' }, { message: '+' }, { message: '+' }, { message: '+' }, { message: '+' }, { message: '+' }, { message: '+' }, { message: '+' }, { message: '+' }, { message: 'Add Appointment' },],
+})
         }
     }
 
@@ -60,10 +70,26 @@ export default class Day extends Component {
         console.log(time)
     };
 
+    handleClickOpenEdit = (val) => {
+        console.log(val.visitId)
+        this.setState({openEdit:true, selectedID: val.visitId})
+    }
+
+    handleClickOpenReason = () => {
+        this.setState({openReason: true})
+    }
+
     handleClose = () => {
-        console.log('hi')
         this.setState({ open: false });
     };
+
+    handleCloseEdit = () => {
+        this.setState({openEdit:false})
+    }
+
+    handleCloseReason = () => {
+        this.setState({openReason: false})
+    }
     
     getName = (name) => {
         this.setState({selectedID:name})
@@ -72,30 +98,43 @@ export default class Day extends Component {
     submit = (time, id, reason) => {
         let utc_time = moment.utc(time).format()
         axios.post('/appointment', { utc_time, id, reason }).then(res => {
-            console.log('submitted & recorded')
-        })
-        this.handleClose()
+            this.handleClose()
+        }).then(this.props.history.go(0))
+    }
+
+    submitChange = (id, reason) => {
+        console.log(this.state.selectedID)
+        axios.put('/appointment', { id, reason }).then(res => {
+            this.setState({ openEdit: false, openReason: false })
+        }).then(this.props.history.go(0))
+    }
+
+    submitDelete = (id) => {
+        console.log(id)
+        axios.delete(`/appointment/${id}`).then(res => {
+            this.setState({ openEdit: false })
+        }).then(this.props.history.go(0))
     }
 
     setReason = (reason) => {
         this.setState({reason})
     }
 
+    // toDashboard = (id) => {
+    //     this.props.history.push(`/dashboard/${id}`)
+    // }
+
     render() {
         const { date, morning, schedule } = this.props
         const { times, patients, reasons, selectedTime, selectedID, reason } = this.state
 
-        console.log(schedule)
-
         times.map((time, ti) => {
             schedule.map(visit => {
                 if (moment(visit.patient_visit_date)._d.toString() === time.toString()) {
-                    patients.splice(ti, 1, { name: visit.patient_full_name, reason: visit.patient_visit_reason })
+                    patients.splice(ti, 1, { name: visit.patient_full_name, reason: visit.patient_visit_reason, visitId: visit.patient_visit_id })
                 }
             })
         })
-
-        console.log(patients)
 
         return (
             <div className='dayList'>
@@ -117,15 +156,29 @@ export default class Day extends Component {
                             {patients.map((val, i) => {
                                 return (
                                     <div key={i} className='ptAndReason'>
-                                        <h3 className='schedName' onClick={!val.name ?
-                                            ()=>this.handleClickOpen(times[i]) : null} >{val.name ? val.name : val.message}</h3>
-                                        <h3 id='schedReason'>{val.reason ? val.reason : '-'}</h3>
+                                        { val.name?
+                                            <Edit onClick={
+                                                () => this.handleClickOpenEdit(val)}
+                                               />
+                                            : <Add onClick={()=>this.handleClickOpen(times[i])} />}
+                                        {val.name ? 
+                                            <Link to={`/dashboard/${val.visitId}`} >
+                                                <h3 className='schedName'>{val.name}</h3>    
+                                            </Link>
+                                            :
+                                            <h3 className='schedName' onClick={this.handleClickOpen} ></h3>
+                                            // <Add onClick={this.handleClickOpen}/>
+                                    }
+                                        {/* <h3 className='schedName'
+                                            onClick={()=>this.toDashboard(val.visitId)}>{val.name ? val.name : val.message}</h3> */}
+                                        <h3 id='schedReason'>{val.reason ? val.reason : null}</h3>
                                     </div>
                                 )
                             })}
                         </div>
                     </div>
                 </div>
+                {/* //schedule */}
                 <Dialog
                     open={this.state.open}
                     TransitionComponent={Transition}
@@ -138,9 +191,6 @@ export default class Day extends Component {
                         Please select the patient you wish to schedule: 
                     </DialogTitle>
                     <DialogContent>
-                        {/* <input onChange={(e) => this.filterHandler(e.target.value)}
-                            type='search'
-                            placeholder='Search...' /> */}
                         <Autocomplete getName={this.getName} />
                         <TextField
                             autoFocus
@@ -161,7 +211,64 @@ export default class Day extends Component {
                         </Button>
                     </DialogActions>
                 </Dialog>
+
+                {/* edit appointment */}
+                <Dialog
+                    open={this.state.openEdit}
+                    TransitionComponent={Transition}
+                    keepMounted
+                    onClose={this.handleCloseEdit}
+                    aria-labelledby="alert-dialog-slide-title"
+                    aria-describedby="alert-dialog-slide-description"
+                >
+                    <DialogActions>
+                        <Button onClick={this.handleClickOpenReason} color="primary">
+                            Edit Appointment
+                        </Button>
+                        <Button onClick={() => this.submitDelete(selectedID)} color="primary">
+                            Delete Appointment
+                        </Button>
+                        <Button onClick={this.handleCloseEdit} color="primary">
+                            Cancel
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+
+                {/* update reason */}
+                <Dialog
+                    open={this.state.openReason}
+                    TransitionComponent={Transition}
+                    keepMounted
+                    onClose={this.handleClose}
+                    aria-labelledby="alert-dialog-slide-title"
+                    aria-describedby="alert-dialog-slide-description"
+                >
+                    <DialogTitle id="alert-dialog-slide-title">
+                        Please enter the reason for the appointment:
+                    </DialogTitle>
+                    <DialogContent>
+                        <TextField
+                            autoFocus
+                            margin="dense"
+                            id="name"
+                            label="Reason for visit"
+                            type="email"
+                            fullWidth
+                            onChange={e => this.setReason(e.target.value)}
+                        />
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={this.handleCloseReason} color="primary">
+                            Cancel
+                        </Button>
+                        <Button onClick={() => this.submitChange( selectedID, reason)} color="primary">
+                            Schedule
+                        </Button>
+                    </DialogActions>
+                </Dialog>
             </div>
         )
     }
 }
+
+export default withRouter(Day)

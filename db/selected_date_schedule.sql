@@ -1,4 +1,4 @@
-SELECT pv.patient_visit_date, p.patient_full_name, pv.patient_id, pv.patient_visit_reason 
+SELECT pv.patient_visit_date, p.patient_full_name, pv.patient_id, pv.patient_visit_id, pv.patient_visit_reason 
 FROM patient_visits pv
 JOIN patients p
 ON pv.patient_id = p.patient_id
