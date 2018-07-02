@@ -22,26 +22,26 @@
   align-items: center;
 }
 
-a {
+.centerNav a {
   display: flex;
   height: 99%;
   text-decoration: none;
-  align-items: center
-
+  /* align-items: center */
 }
 
-a:visited {
+.centerNav a:visited {
   color: inherit;
 }
 
-a:hover {
+.centerNav a:hover {
   background: linear-gradient(#95c1e0,#4f98cc) 
 }
 
-a:focus {
+/* a:focus {
   box-shadow: inset 0px 0px 7px 2px #3e8ec7;
   
-}
+} */
+
 
 .vr {
   height:100%;
@@ -50,47 +50,53 @@ a:focus {
   background: linear-gradient(#a7cbe5,#3e8ec7)
 }
 
-.centerBs {
+.centerB {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 100%;
   width: 100px;
-
-}
-
-.nameDropdown {
+  text-align: center;
   cursor: pointer;
+  text-decoration: none;
+  color: #F6F6F6;
 }
 
-.menu {
-  
-  
+.centerBactive {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 100%;
+  width: 100px;
+  text-align: center;
+  box-shadow: inset 0px 0px 7px 2px #3e8ec7;
+  cursor: pointer;
 }
 
 .rightNav {
   height: 100%;
   display: flex;
   align-items: center;
-  margin: 10px;
 }
 
 .profImg {
   height: 35px;
   width: 35px;
-  border-radius: 50px;
+  border-radius: 500px;
   margin-right: 10px;
   border: 1px solid #E9F7FA;
-}
-
-.arrowDown {
-  width: 0; 
-  height: 0; 
-  border-radius: 2px;
-  border-left: 7px solid transparent;
-  border-right: 7px solid transparent;
-  border-top: 7px solid #E9F7FA;
-  margin-left: 5px;
-  cursor: pointer
 }
 
 .logo {
   height: 45px;
   width: 45px;
+}
+
+.navname {
+  margin-right: 30px;
+}
+
+.rightNav > a {
+  height: 100%;
+  text-decoration: none;
 }
