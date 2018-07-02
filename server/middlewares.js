@@ -26,7 +26,6 @@ exports.default = function addMiddlewaresTo(app) {
         // console.log('hit deserialize');
         let user_id = req.session.user;
         if (user_id) {
-            console.log('Getting user' + user_id);
             req.db.read_user([user_id])
             .then(user => {
                 console.log(user.employee_id, user.company_id, user.role_id);

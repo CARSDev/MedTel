@@ -1,6 +1,7 @@
-
 import React, { Component } from 'react'
 import PatientInfo from './PatientInfo/PatientInfo'
+import Results from './Results/Results';
+import Conditions from './Conditions/Conditions';
 import Visits from './Visits/Visits'
 import './Dashboard.css';
 
@@ -28,13 +29,17 @@ export default class Dashboard extends Component {
       <div className = "dashboard">
         
         <div className="dashboardLeftColumn">
-          <PatientInfo patient_id={this.state.patient_id}/>
+          <PatientInfo patient_id={this.state.patient_id} />
+          <Results />
         </div>
         
         <div className="dashboardRightColumn">
           <Visits patient_id={this.state.patient_id}/>
+          <Conditions patient_id={this.state.patient_id}/>
         </div>
+     
         
+
       </div>
     )
   }

@@ -4,7 +4,7 @@ import Lock from '@material-ui/icons/Lock'
 import Person from '@material-ui/icons/Person'
 import Grade from '@material-ui/icons/Grade'
 import ShowChart from '@material-ui/icons/ShowChart'
-import CountUp, {startAnimation} from 'react-countup'
+// import CountUp, {startAnimation} from 'react-countup'
 import './Login.css'
 
 export default class Login extends Component {

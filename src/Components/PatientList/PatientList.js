@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import Link from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import AddPatient from './AddPatient';
+import Button from '@material-ui/core/Button'
+import Add from '@material-ui/icons/Add'
 import './PatientList.css';
 
 export default class PatientList extends Component {
@@ -11,7 +14,8 @@ export default class PatientList extends Component {
         this.state = {
             patients: [],
             search: '',
-            criteria: 'all'
+            criteria: 'all',
+            clicked: -1
         }
         this.filterHandler = this.filterHandler.bind(this);
         this.selectHandler = this.selectHandler.bind(this);
@@ -23,9 +27,9 @@ export default class PatientList extends Component {
             this.setState({
                 patients: res.data
             })
-            toast.success("Successfully got Instruments", { position: toast.POSITION.TOP_CENTER })
+            toast.success("Successfully got Instruments", { position: toast.POSITION.BOTTOM_RIGHT })
         })
-        .catch(() => toast.error("Failed to Fetch Patient List"))
+            .catch(() => toast.error("Failed to Fetch Patient List", { position: toast.POSITION.BOTTOM_RIGHT }))
     }
 
     filterHandler(filter) {
@@ -39,6 +43,14 @@ export default class PatientList extends Component {
             criteria: value
         })
     }
+
+    handleClickOpen = () => {
+        this.setState({ open: true });
+    };
+
+    handleClose = () => {
+        this.setState({ open: false });
+    };
 
     render() {
         let patients = this.state.patients.filter((el, i) => {
@@ -88,7 +100,8 @@ export default class PatientList extends Component {
             }
         }).map((el, i) => {
             return (
-                <div key={el.patient_id} className="patientsList">
+                <Link to={`/dashboard/${el.patient_id}`} key={el}>
+                    <div className="patientsList">
                     <ul>
                         <li><p>{el.patient_id}</p><br />
                             <p>{el.patient_full_name}</p><br />
@@ -96,13 +109,27 @@ export default class PatientList extends Component {
                             <p>{el.patient_email}</p><br />
                         </li>
                     </ul>
-                </div>
+                    </div>
+                 </Link>
 
             )
         })
         return (
             <div>
                 <ToastContainer />
+                <Button
+                    variant="fab"
+                    color="secondary"
+                    style={{
+                        position: "fixed",
+                        bottom: 10,
+                        left: 10
+                    }}
+                    onClick = { this.handleClickOpen }
+                >
+                    <Add />
+                </Button>
+                <AddPatient open={this.state.open} handleClickOpen={this.handleClickOpen} handleClose={this.handleClose}/>
                 <div>
                     <select onChange={(e) => this.selectHandler(e.target.value)} name='searchCriteria'>
                         {/* <option value='all'>All</option> */}
@@ -115,7 +142,7 @@ export default class PatientList extends Component {
                         type='search'
                         placeholder='Search...' />
                 </div>
-                <div>
+                <div className="list">
                     {this.state.search}
                     <div className="listHeaders">
                         <p>Patient Id</p>
@@ -123,7 +150,9 @@ export default class PatientList extends Component {
                         <p>Phone</p>
                         <p>Email</p>
                     </div>
-                    {patients}
+                    <div>
+                        {patients}
+                    </div>    
                 </div>
             </div>
         )
