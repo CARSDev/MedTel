@@ -30,8 +30,6 @@ export default class Day extends Component{
     }
 
     render() {
-        console.log(this.props.date)
-        console.log(this.props.morning)
         const {times} = this.state
 
         return(

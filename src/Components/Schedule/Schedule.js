@@ -18,12 +18,9 @@ export default class Schedule extends Component {
 
     componentDidMount() {
         const { morning, night} = this.state
-        console.log(morning, night)
         let utc_morning = moment.utc(morning).format();
         let utc_night = moment.utc(night).format();
-        console.log(utc_morning, utc_night)
         axios.get(`/schedule/${utc_morning}/${utc_night}`).then(res => {
-            console.log(res.data)
             // this.setState({schedule:res.data})
         }
             

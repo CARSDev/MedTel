@@ -43,7 +43,6 @@ toggleDropdown() {
 }  
 
   render() {
-    console.log(this.state)
     return <div className="mainNav">
         <div className="leftNav">
           <img className="logo" src="https://static1.squarespace.com/static/59ca534059cc68a3cdb78cbb/t/59ccbd7837c58187d283b471/1518603415416/" alt="" />
