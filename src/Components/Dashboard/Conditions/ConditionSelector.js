@@ -47,10 +47,6 @@ class ConfirmationDialogRaw extends React.Component {
         }).catch(() => toast.error("Failed to Fetch Conditions", { position: toast.POSITION.BOTTOM_RIGHT }))
     }
 
-    updateConditions() {
-
-    }
-
     handleEntering = () => {
         this.radioGroup.focus();
     };
@@ -87,8 +83,8 @@ class ConfirmationDialogRaw extends React.Component {
 
     render() {
         const { value, ...other } = this.props;
-        console.log(this.state.value)
-        console.log(this.state.condition_id)
+        // console.log(this.state.value)
+        // console.log(this.state.condition_id)
         return (
             <Dialog
                 disableBackdropClick
@@ -114,10 +110,9 @@ class ConfirmationDialogRaw extends React.Component {
                             <FormControlLabel
                                 value={option.condition_name}
                                 key={option.condition_id}
-                                control={<Radio  />}
+                                control={<Radio/>}
                                 label={option.condition_name} />
                         ))}
-                        {/* {conditionList} */}
                     </RadioGroup>
                 </DialogContent>
                 <DialogActions>
@@ -174,9 +169,6 @@ class ConfirmationDialog extends React.Component {
         return (
             <div className={classes.root}>
                 <List>
-                    {/* <ListItem button divider disabled>
-                        <ListItemText primary="Interruptions" />
-                    </ListItem> */}
                     <ListItem
                         button
                         divider
@@ -187,9 +179,6 @@ class ConfirmationDialog extends React.Component {
                     >
                         <ListItemText primary="Condition" secondary={this.state.value} />
                     </ListItem>
-                    {/* <ListItem button divider disabled>
-                        <ListItemText primary="Default notification ringtone" secondary="Tethys" />
-                    </ListItem> */}
                     <ConfirmationDialogRaw
                         classes={{
                             paper: classes.paper,

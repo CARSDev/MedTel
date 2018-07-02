@@ -35,13 +35,16 @@ export default class Conditions extends Component {
             conditions: [],
             openEdit: false,
             openAdd: false,
-            value: ''
+            value: '',
+            patientConditionId: 0
         }
         this.handleClickOpenEdit = this.handleClickOpenEdit.bind(this);
         this.handleCloseEdit = this.handleCloseEdit.bind(this);
         this.handleClickOpenAdd = this.handleClickOpenAdd.bind(this);
         this.handleCloseAdd = this.handleCloseAdd.bind(this);
         this.getConditions = this.getConditions.bind(this);
+        // this.deleteCondition = this.deleteCondition.bind(this);
+        // this.selectCondition = this.selectCondition.bind(this);
     }
     radioGroup = null;
 
@@ -70,9 +73,16 @@ export default class Conditions extends Component {
     updateCondition() {
         
     }
-    deleteCondition() {
-        
-    }
+    // deleteCondition() {
+    //     if (window.confirm('Are you sure you want to delete this condition?')) {
+    //         axios.delete(`/condition/${this.state.patientConditionId}`).then(res => {
+    //             this.setState({
+    //                 all_instruments: res.data
+    //             })
+    //             toast.success("Successfully deleted patient condition")
+    //         }).catch(() => toast.error(alert("Condition has a dependent records. Cannot be deleted")));
+    //     }
+    // }
 
     handleClickOpenEdit = () => {
         this.setState({ openEdit: true });
@@ -91,6 +101,7 @@ export default class Conditions extends Component {
             openEdit: false,
 
         });
+        // this.deleteCondition();
     };
 
     handleClickOpenAdd = () => {
@@ -100,6 +111,11 @@ export default class Conditions extends Component {
     handleCloseAdd = () => {
         this.setState({ openAdd: false });
     };
+    selectCondition(id) {
+        this.setState({
+            patientConditionId: id
+        })
+    }
 
 
     render() {
@@ -108,13 +124,13 @@ export default class Conditions extends Component {
 
         let conditionListEdit = this.state.patientConditions.map((el, i) => {
             return (
-
                 <div key={el + i}>
                     <TextField
                         autoFocus
                         margin="dense"
-                        id="name"
-                        label={el.condition_name}
+                        id={`${el.pateint_condition_id}`}
+                        label="Condition Type"
+                        value={`${el.condition_name}`}
                         type="email"
                         fullWidth
                     />
@@ -122,16 +138,12 @@ export default class Conditions extends Component {
                         autoFocus
                         margin="dense"
                         id="name"
-                        label={el.condition_date_diagnosed}
+                        label= "Date Diagnosed"
+                        value={`${moment(el.condition_date_diagnosed).format('MMM DD, YYYY')}`}
                         type="email"
                         fullWidth
                     />
-                    {/* <ul>
-                            <li>{el.condition_name}</li><br />
-                            <p>-{el.condition_date_diagnosed}</p>
-                        </ul> */}
                 </div>
-
             )
         })
         let conditionList = this.state.patientConditions.map((el, i) => {
@@ -140,7 +152,7 @@ export default class Conditions extends Component {
                 <div key={el + i}>
                     <ul>
                         <li>{el.condition_name}</li><br />
-                        <p>-{el.condition_date_diagnosed}</p>
+                        <p>-{moment(el.condition_date_diagnosed).format('MMM DD, YYYY')}</p>
                     </ul>
                 </div>
 
@@ -216,18 +228,6 @@ export default class Conditions extends Component {
                     >
                         <DialogTitle id="form-dialog-title">Edit Conditions</DialogTitle>
                         <DialogContent>
-                            {/* <DialogContentText>
-                                To subscribe to this website, please enter your email address here. We will send
-                                updates occasionally.
-                            </DialogContentText> */}
-                            {/* <TextField
-                                    autoFocus
-                                    margin="dense"
-                                    id="name"
-                                    label={conditionList}
-                                    type="email"
-                                    fullWidth
-                                /> */}
                             {conditionListEdit}
                         </DialogContent>
                         <DialogActions>
