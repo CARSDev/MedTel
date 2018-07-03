@@ -126,7 +126,7 @@ class Day extends Component {
 
     render() {
         const { date, morning, schedule } = this.props
-        const { times, patients, reasons, selectedTime, selectedID, reason } = this.state
+        const { times, patients, selectedTime, selectedID, reason } = this.state
 
         times.map((time, ti) => {
             schedule.map(visit => {
