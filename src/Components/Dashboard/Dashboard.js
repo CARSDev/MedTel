@@ -3,6 +3,7 @@ import PatientInfo from './PatientInfo/PatientInfo'
 import Results from './Results/Results';
 import Allergies from './Allergies/Allergies';
 import Conditions from './Conditions/Conditions';
+import Devices from './Devices/Devices';
 import Visits from './Visits/Visits'
 import './Dashboard.css';
 
@@ -37,7 +38,8 @@ export default class Dashboard extends Component {
         <div className="dashboardRightColumn">
           <Visits patient_id={this.state.patient_id}/>
           <Conditions patient_id={this.state.patient_id} />
-          <Allergies patient_id={this.state.patient_id}/>
+          <Allergies patient_id={this.state.patient_id} />
+          <Devices patient_id={this.state.patient_id} />
         </div>
      
         

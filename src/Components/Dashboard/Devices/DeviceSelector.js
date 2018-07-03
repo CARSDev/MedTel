@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -15,7 +15,7 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import Radio from '@material-ui/core/Radio';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
-class AllergiesDialogRaw extends React.Component {
+class DeviceDialogRaw extends React.Component {
     radioGroup = null;
 
     constructor(props) {
@@ -23,12 +23,10 @@ class AllergiesDialogRaw extends React.Component {
 
         this.state = {
             value: this.props.value,
-            allergies: [],
-            allergyId:11,
-            time: ''
+            devices: [],
+            deviceId: 4,
         };
     }
-
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.value !== this.props.value) {
@@ -37,12 +35,12 @@ class AllergiesDialogRaw extends React.Component {
     }
 
     componentDidMount() {
-        axios.get(`/allergies`).then(res => {
+        axios.get(`/devices`).then(res => {
             this.setState({
-                allergies: res.data
+                devices: res.data
             })
-            toast.success("Successfully got Allergies", { position: toast.POSITION.BOTTOM_RIGHT })
-        }).catch(() => toast.error("Failed to Fetch Allergies", { position: toast.POSITION.BOTTOM_RIGHT }))
+            toast.success("Successfully got Devices", { position: toast.POSITION.BOTTOM_RIGHT })
+        }).catch(() => toast.error("Failed to Fetch Devices", { position: toast.POSITION.BOTTOM_RIGHT }))
     }
 
     handleEntering = () => {
@@ -54,25 +52,25 @@ class AllergiesDialogRaw extends React.Component {
     };
 
     handleOk = () => {
-        this.props.onClose(this.state.value, this.state.allergyId);
+        this.props.onClose(this.state.value, this.state.deviceId);
     };
 
     handleChange = (event, value) => {
-        let allergyElement = this.state.allergies.find((el) => {
-            if (value === el.allergy_name) {
+        let deviceElement = this.state.devices.find((el) => {
+            if (value === el.medical_device_name) {
                 return true;
             }
         })
         this.setState({
             value,
-            allergyId: allergyElement.allergy_id
+            deviceId: deviceElement.medical_device_id
         });
     };
 
     render() {
         const { value, ...other } = this.props;
         // console.log(this.state.value)
-        // console.log(this.state.allergy_id)
+        // console.log(this.state.deviceId)
         return (
             <Dialog
                 disableBackdropClick
@@ -82,23 +80,23 @@ class AllergiesDialogRaw extends React.Component {
                 aria-labelledby="confirmation-dialog-title"
                 {...other}
             >
-                <DialogTitle id="confirmation-dialog-title">Allergies</DialogTitle>
+                <DialogTitle id="confirmation-dialog-title">Medical Devices</DialogTitle>
                 <DialogContent>
                     <RadioGroup
                         ref={node => {
                             this.radioGroup = node;
                         }}
-                        aria-label="allergy"
-                        name="allergy"
+                        aria-label="medical device"
+                        name="medical device"
                         value={this.state.value}
                         onChange={this.handleChange}
                     >
-                        {this.state.allergies.map(option => (
+                        {this.state.devices.map(option => (
                             <FormControlLabel
-                                value={option.allergy_name}
-                                key={option.allergy_id + 'select'}
+                                value={option.medical_device_name}
+                                key={option.medical_device_id}
                                 control={<Radio />}
-                                label={option.allergy_name} />
+                                label={option.medical_device_name} />
                         ))}
                     </RadioGroup>
                 </DialogContent>
@@ -115,7 +113,7 @@ class AllergiesDialogRaw extends React.Component {
     }
 }
 
-AllergiesDialogRaw.propTypes = {
+DeviceDialogRaw.propTypes = {
     onClose: PropTypes.func,
     value: PropTypes.string,
 };
@@ -132,22 +130,22 @@ const styles = theme => ({
     },
 });
 
-class AllergiesDialog extends React.Component {
+class DeviceDialog extends React.Component {
     button = null;
 
     state = {
         open: false,
-        value: 'Anticonvulsants'
+        value: 'Adjustable Gastric Band'
     };
 
     handleClickListItem = () => {
         this.setState({ open: true });
     };
 
-    handleClose = (value, allergyId) => {
+    handleClose = (value, deviceId) => {
         this.setState({ value, open: false });
-        axios.post(`/allergy/${this.props.patient_id}`, { allergy_id: allergyId, allergy_date_diagnosed: new Date() }).then(res => {
-            this.props.getAllergies()
+        axios.post(`/device/${this.props.patient_id}`, { medical_device_id: deviceId, medical_device_date_administered: new Date() }).then(() => {
+            this.props.getDevices()
         })
     };
 
@@ -160,13 +158,13 @@ class AllergiesDialog extends React.Component {
                         button
                         divider
                         aria-haspopup="true"
-                        aria-controls="allergy-menu"
-                        aria-label="Allergy"
+                        aria-controls="medical-device-menu"
+                        aria-label="Medical device"
                         onClick={this.handleClickListItem}
                     >
-                        <ListItemText primary="Allergy" secondary={this.state.value} />
+                        <ListItemText primary="Device" secondary={this.state.value} />
                     </ListItem>
-                    <AllergiesDialogRaw
+                    <DeviceDialogRaw
                         classes={{
                             paper: classes.paper,
                         }}
@@ -180,8 +178,8 @@ class AllergiesDialog extends React.Component {
     }
 }
 
-AllergiesDialog.propTypes = {
+DeviceDialog.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(AllergiesDialog);
+export default withStyles(styles)(DeviceDialog);

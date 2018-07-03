@@ -24,7 +24,7 @@ class ConfirmationDialogRaw extends React.Component {
         this.state = {
             value: this.props.value,
             conditions: [],
-            conditionId: 0,
+            conditionId: 8,
             time: ''
         };
     }
@@ -56,8 +56,6 @@ class ConfirmationDialogRaw extends React.Component {
 
     handleOk = () => {
         this.props.onClose(this.state.value, this.state.conditionId);
-        this.setState({
-        })
     };
 
     handleChange = (event, value) => {
@@ -140,7 +138,7 @@ class ConfirmationDialog extends React.Component {
 
     state = {
         open: false,
-        value: 'Asthma'
+        value: 'Allergies'
     };
 
     handleClickListItem = () => {

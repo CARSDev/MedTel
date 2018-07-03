@@ -10,6 +10,11 @@ module.exports = function addRachelEndpointsTo(app) {
     app.get('/allergies', getAllergies);
     app.post('/allergy/:id', addAllergy);
     app.put('/allergy/:id', updateAllergy);
+    ///////////Medical Devices//////////////////
+    app.get('/devices/:id', getPatientDevices);
+    app.get('/devices', getDevices);
+    app.post('/device/:id', addDevice);
+    app.put('/device/:id', updateDevice);
 }
 
 
@@ -121,4 +126,53 @@ function updateAllergy(req, res) {
 
         })
         .catch((e) => { console.log(e); res.status(500).send("Couldn't get update_patient_allergies") });
+}
+
+/////////////////Devices///////////////////
+function getPatientDevices(req, res) {
+    // console.log('hit patient conditions list')
+    const { params } = req;
+
+    req.db.get_patient_devices([params.id])
+        .then((devices) => {
+            // console.log(devices)
+            res.status(200).send(devices)
+
+        })
+        .catch((e) => { console.log(e); res.status(500).send("Couldn't get get_patient_devices") });
+}
+
+function getDevices(req, res) {
+    req.db.get_devices()
+        .then((devices) => {
+            res.status(200).send(devices)
+
+        })
+        .catch((e) => { console.log(e); res.status(500).send("Couldn't get get_devices") });
+}
+
+function addDevice(req, res) {
+    // console.log('hit add device')
+    const { params } = req;
+    const { medical_device_id, medical_device_date_administered } = req.body
+
+    req.db.add_device([params.id, medical_device_id, medical_device_date_administered])
+        .then((devices) => {
+            res.status(200).send(devices)
+
+        })
+        .catch((e) => { console.log(e); res.status(500).send("Couldn't get get_devices") });
+}
+
+function updateDevice(req, res) {
+    // console.log('hit update device')
+    const { params } = req;
+    // console.log(params.id)
+
+    req.db.update_patient_devices([params.id])
+        .then((devices) => {
+            res.status(200).send(devices)
+
+        })
+        .catch((e) => { console.log(e); res.status(500).send("Couldn't get update_patient_devices") });
 }

@@ -116,7 +116,7 @@ export default class PatientList extends Component {
         })
         return (
             <div>
-                <ToastContainer />
+                {/* <ToastContainer /> */}
                 <Button
                     variant="fab"
                     color="secondary"

@@ -1,1 +1,2 @@
-SELECT * FROM allergies;
+SELECT * FROM allergies
+ORDER BY allergy_name ASC;
