@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import moment from "moment";
 import ExpandMore from "@material-ui/icons/ExpandMore";
+import ExpandLess from "@material-ui/icons/ExpandLess";
 import "./PatientInfo.css";
 
 class PatientInfo extends Component {
@@ -38,7 +39,8 @@ class PatientInfo extends Component {
         visit_type_name: null,
         patient_visit_reason: null
       },
-      measurementResults: []
+      measurementResults: [],
+      toggle: true
     };
   }
 
@@ -149,79 +151,142 @@ class PatientInfo extends Component {
     return result;
   }
 
+  toggleFn() {
+    this.setState({
+      toggle: !this.state.toggle
+    });
+  }
+
   render() {
-    // console.log(this.state)
+    // console.log(this.state.toggle);
+    let {
+      patient_emergency_contact_name,
+      patient_emergency_contact_relationship,
+      patient_emergency_contact_number,
+      patient_emergency_contact_name2,
+      patient_emergency_contact_relationship2,
+      patient_emergency_contact_number2
+    } = this.state;
     return (
       <div className="mainPatientInfo">
-        
         <div className="row1">
-          
           <div className="ptpic">
             <img src={this.state.patient_picture} alt="" />
           </div>
-
-          <div className="identifiers">
+          <div className="row1right">
             <div className="name">
               <h3>{this.state.patient_full_name}</h3>
             </div>
-
-            <div className="birthdate">
-              Birthdate:{" "}
-              {moment(this.state.patient_birthday).format("MM/DD/YYYY")}{" "}
-              {moment().diff(
-                moment(this.state.patient_birthday, "YYYYMMDD"),
-                "years"
-              )}y
+            <div className="row1info">
+              <div className="identifiers">
+                <div className="age">
+                  Age:{" "}
+                  {moment().diff(
+                    moment(this.state.patient_birthday, "YYYYMMDD"),
+                    "years"
+                  )}y
+                </div>
+                <div className="birthdate">
+                  Birthdate:{" "}
+                  {moment(this.state.patient_birthday).format("MM/DD/YYYY")}{" "}
+                </div>
+                <div className="gender">
+                  Gender: {this.state.patient_gender}
+                </div>
+              </div>
+              <div className="measurements">
+                <div className="height">
+                  Height: {this.state.patient_height}in
+                </div>
+                <div className="weight">
+                  Weight: {this.state.patient_weight}lbs
+                </div>
+                <div className="bmi">
+                  BMI:{" "}
+                  {this.calculateBMI(
+                    this.state.patient_height,
+                    this.state.patient_weight
+                  )}
+                </div>
+              </div>
             </div>
-
-            <div className="gender">Gender:
-              {this.state.patient_gender}
+            <div className="iconContainer">
+              <div className="arrowUp">
+                <ExpandMore
+                  className="arrowUp"
+                  onClick={() => {
+                    this.toggleFn();
+                  }}
+                />
+              </div>
+              {/* {this.state.toggle ? (
+                <div className="arrowUp">
+                  <ExpandMore
+                    onClick={() => {
+                      this.toggleFn();
+                    }}
+                  />
+                </div>
+              ) : (
+                <div className="arrowUp">
+                  <ExpandLess
+                    onClick={() => {
+                      this.toggleFn();
+                    }}
+                  />
+                </div>
+              )} */}
             </div>
           </div>
-
-          <div className="measurements">
-            <div className="height">Height: {this.state.patient_height}"</div>
-
-            <div className="weight">Weight: {this.state.patient_weight}lbs</div>
-
-            <div className="bmi">
-              BMI:{" "}
-              {this.calculateBMI(
-                this.state.patient_height,
-                this.state.patient_weight
-              )}
-            </div>
-
-            <div className="expand">
-              <ExpandMore />
-            </div>
-
-          </div>
-
         </div>
 
-        <hr />
+        {!this.state.toggle ? (
+          <div>
+            <hr />
 
-        <div className="row2">
-          Contact Info
-
-          <hr />
-
-          <div className="contactInfo">
-            
-            <div className="address">
-              Address: {this.state.patient_address} <br />
-              Phone: {this.state.patient_phone_number} <br />
-              Email: {this.state.patient_email}
+            <div className="row2">
+              Contact Info
+              <hr />
+              <div className="contactInfo">
+                <div className="address">
+                  Address: <br /> {this.state.patient_address} <br />
+                </div>
+                <div className="phone">
+                  Phone: {this.state.patient_phone_number} <br />
+                  Email: {this.state.patient_email}
+                </div>
+              </div>
             </div>
-
-            <div className="contacts"></div>
-            
+            <hr />
+            <div className="emergencycontacts">
+              Emergency Contacts
+              <hr />
+              <div className="contacts">
+                <div className="contact 1">
+                  <div>
+                    {patient_emergency_contact_name} <br />
+                    {patient_emergency_contact_number} <br />
+                    {patient_emergency_contact_relationship}
+                  </div>
+                </div>
+                {this.state.patient_emergency_contact_name2 ? (
+                  <div className="contact 2">
+                    {patient_emergency_contact_name2} <br />
+                    {patient_emergency_contact_number2} <br />
+                    {patient_emergency_contact_relationship2}
+                  </div>
+                ) : (
+                  <div className="contact 2">
+                    <p>Not Listed</p>
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
-        </div>
+        ) : null}
 
         {/* <div className="row3"> */}
-          {/* <div className="appt 1">
+        {/* <div className="appt 1">
             {this.state.upcoming_appt1 ? (
               <div>
                 {this.state.upcoming_appt1.employee_full_name}
@@ -234,7 +299,7 @@ class PatientInfo extends Component {
               "None"
             )}
           </div> */}
-          {/* <div className="appt 2">
+        {/* <div className="appt 2">
             {this.state.upcoming_appt2 ? (
               <div>
                 {this.state.upcoming_appt2.employee_full_name}
@@ -248,7 +313,6 @@ class PatientInfo extends Component {
             )}
           </div> */}
         {/* </div> */}
-
       </div>
     );
   }
