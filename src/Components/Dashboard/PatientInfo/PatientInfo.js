@@ -184,7 +184,7 @@ class PatientInfo extends Component {
                   {moment().diff(
                     moment(this.state.patient_birthday, "YYYYMMDD"),
                     "years"
-                  )}y
+                  )}
                 </div>
                 <div className="birthdate">
                   Birthdate:{" "}
@@ -212,8 +212,10 @@ class PatientInfo extends Component {
             </div>
             <div className="iconContainer">
               <div className="arrowUp">
-                <ExpandMore
-                  className="arrowUp"
+                <ExpandMore style={{
+                  color: '#5A5A5A'
+                }}
+                  className={!this.state.toggle ? "arrowUp":''}
                   onClick={() => {
                     this.toggleFn();
                   }}
@@ -239,11 +241,9 @@ class PatientInfo extends Component {
             </div>
           </div>
         </div>
-
-        {!this.state.toggle ? (
-          <div>
+        <div className='hiddenTabWrapper'>
+          <div className={this.state.toggle ? "hiddenTab" : "hidden"}>
             <hr />
-
             <div className="row2">
               Contact Info
               <hr />
@@ -283,13 +283,13 @@ class PatientInfo extends Component {
               </div>
             </div>
           </div>
-        ) : null}
+        </div>
 
         {/* <div className="row3"> */}
         {/* <div className="appt 1">
             {this.state.upcoming_appt1 ? (
               <div>
-                {this.state.upcoming_appt1.employee_full_name}
+              {this.state.upcoming_appt1.employee_full_name}
                 {moment(this.state.upcoming_appt1.patient_visit_date).format(
                   "MM/DD/YYYY H:mm A"
                 )}{" "}

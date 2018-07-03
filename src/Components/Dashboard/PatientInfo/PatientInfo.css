@@ -12,6 +12,7 @@
 .row1 {
   margin: 5px;
   display: flex;
+  box-sizing: border-box;
   /* justify-content: space-evenly; */
 }
 
@@ -29,6 +30,7 @@
 
 .row1right {
   width: 90%;
+  margin-top: 5px;
 }
 
 .name {
@@ -80,7 +82,12 @@
 
 .arrowUp{
   transform: rotate(180deg);
-  transition: ease-in-out all 0.2s;
+  transition: ease-in-out all 1s;
+}
+
+.arrowDown {
+  transform: rotate(180deg);
+  transition: ease-in-out all 1s;
 }
 
 /* .iconContainer:hover{
@@ -92,13 +99,11 @@ hr {
   border: 0;
   height: 1px;
   background: #bfcbcd;
-  /* background-image: linear-gradient(to right, #ccc, #999, #ccc) */
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .row2 {
-  /* display: flex; */
-  /* height: 5000px; */
-  /* margin: 5px; */
   box-sizing: border-box;
 }
 .contactInfo {
@@ -109,15 +114,9 @@ hr {
 }
 
 .row2 div {
-  /* height: 500px; */
-  /* width: 50%; */
-  /* background-color: rgb(250, 168, 74); */
   text-align: left;
   line-height: 2;
   font-size: 16px;
-}
-
-.emergencycontacts {
 }
 
 .contacts {
@@ -125,8 +124,6 @@ hr {
   justify-content: space-between;
   align-items: center;
   font-size: 16px;
-  /* margin-left: 5%;
-  margin-right: 5%; */
 }
 
 .contact {
@@ -135,4 +132,17 @@ hr {
   width: 50%;
   display: flex;
   justify-content: space-around;
+}
+
+.hidden{
+  max-height: 0px;
+  overflow: hidden;
+  opacity: 0;
+  transition: linear all 0.2s;
+}
+
+.hiddenTab{
+  max-height: 400px;
+  opacity: 1;
+  transition: linear all 0.2s;
 }
