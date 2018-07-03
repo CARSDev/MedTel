@@ -56,7 +56,8 @@ CREATE TABLE patient_conditions(
     patient_condition_id SERIAL PRIMARY KEY,
     patient_id INTEGER REFERENCES patients(patient_id),
     condition_id INTEGER REFERENCES conditions(condition_id),
-    condition_date_diagnosed TIMESTAMPTZ
+    condition_date_diagnosed TIMESTAMPTZ,
+    deleted BOOLEAN
 );
 
 CREATE TABLE allergies(
@@ -68,7 +69,8 @@ CREATE TABLE patient_allergies(
     patient_allergy_id SERIAL PRIMARY KEY,
     patient_id INTEGER REFERENCES patients(patient_id),
     allergy_id INTEGER REFERENCES allergies(allergy_id),
-    allergy_date_diagnosed TIMESTAMPTZ
+    allergy_date_diagnosed TIMESTAMPTZ,
+    deleted BOOLEAN
 );
 
 CREATE TABLE medications(
@@ -81,7 +83,8 @@ CREATE TABLE patient_medications(
     patient_id INTEGER REFERENCES patients(patient_id),
     medication_id INTEGER REFERENCES medications(medication_id),
     medication_date_prescribed TIMESTAMPTZ,
-    medication_side_effects VARCHAR(5000)
+    medication_side_effects VARCHAR(5000),
+    deleted BOOLEAN
 );
 
 CREATE TABLE medical_devices(
@@ -93,7 +96,8 @@ CREATE TABLE patient_medical_devices(
     patient_medical_device_id SERIAL PRIMARY KEY,
     patient_id INTEGER REFERENCES patients(patient_id),
     medical_device_id INTEGER REFERENCES medical_devices(medical_device_id),
-    medical_device_date_administered TIMESTAMPTZ
+    medical_device_date_administered TIMESTAMPTZ,
+    deleted BOOLEAN
 );
 
 CREATE TABLE family_history(

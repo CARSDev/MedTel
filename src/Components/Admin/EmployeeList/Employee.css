@@ -1,0 +1,25 @@
+.employee{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 3fr 3fr;
+}
+
+.employee>img{
+    max-height: 40px;
+    border-radius: 5px;
+}
+
+.employee:nth-child(odd){
+        background: #E9F7FA;
+}
+
+.icons{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tableCell{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
