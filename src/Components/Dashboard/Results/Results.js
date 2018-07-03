@@ -3,6 +3,7 @@ import Labs from './Labs'
 import Imaging from './Imaging'
 import Reported from './Reported'
 import './Results.css'
+import { worker } from 'cluster';
 
 export default class Results extends Component {
   render() {
