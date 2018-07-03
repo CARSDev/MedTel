@@ -188,8 +188,8 @@ class PatientInfo extends Component {
         </div>
         <hr />
         <div className="row2">
-          {/* Emergency Contacts
-          <hr /> */}
+          Contact Info
+          <hr />
           <div className="contactInfo">
             <div className="address">
               Address: {this.state.patient_address} <br />
@@ -199,8 +199,8 @@ class PatientInfo extends Component {
             <div className="contacts"></div>
           </div>
         </div>
-        <div className="row3">
-          <div className="appt 1">
+        {/* <div className="row3"> */}
+          {/* <div className="appt 1">
             {this.state.upcoming_appt1 ? (
               <div>
                 {this.state.upcoming_appt1.employee_full_name}
@@ -212,8 +212,8 @@ class PatientInfo extends Component {
             ) : (
               "None"
             )}
-          </div>
-          <div className="appt 2">
+          </div> */}
+          {/* <div className="appt 2">
             {this.state.upcoming_appt2 ? (
               <div>
                 {this.state.upcoming_appt2.employee_full_name}
@@ -225,8 +225,8 @@ class PatientInfo extends Component {
             ) : (
               "None"
             )}
-          </div>
-        </div>
+          </div> */}
+        {/* </div> */}
       </div>
     );
   }
