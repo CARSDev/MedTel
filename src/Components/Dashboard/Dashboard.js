@@ -30,7 +30,7 @@ export default class Dashboard extends Component {
         
         <div className="dashboardLeftColumn">
           <PatientInfo patient_id={this.state.patient_id} />
-          <Results />
+          <Results patient_id={this.state.patient_id}/>
         </div>
         
         <div className="dashboardRightColumn">
