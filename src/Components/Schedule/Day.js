@@ -130,8 +130,9 @@ class Day extends Component {
 
         times.map((time, ti) => {
             schedule.map(visit => {
+                // console.log(visit)
                 if (moment(visit.patient_visit_date)._d.toString() === time.toString()) {
-                    patients.splice(ti, 1, { name: visit.patient_full_name, reason: visit.patient_visit_reason, visitId: visit.patient_visit_id })
+                    patients.splice(ti, 1, { name: visit.patient_full_name, ptID:visit.patient_id ,reason: visit.patient_visit_reason, visitId: visit.patient_visit_id })
                 }
             })
         })
@@ -154,6 +155,7 @@ class Day extends Component {
                         </div>
                         <div className='rightTwo'>
                             {patients.map((val, i) => {
+                                // console.log(val)
                                 return (
                                     <div key={i} className='ptAndReason'>
                                         { val.name?
@@ -162,7 +164,7 @@ class Day extends Component {
                                                />
                                             : <Add onClick={()=>this.handleClickOpen(times[i])} />}
                                         {val.name ? 
-                                            <Link to={`/dashboard/${val.visitId}`} >
+                                            <Link to={`/dashboard/${val.ptID}`} >
                                                 <h3 className='schedName'>{val.name}</h3>    
                                             </Link>
                                             :

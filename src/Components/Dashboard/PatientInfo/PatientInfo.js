@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import axios from "axios";
 import moment from "moment";
+import ExpandMore from "@material-ui/icons/ExpandMore";
 import "./PatientInfo.css";
 
 class PatientInfo extends Component {
   constructor() {
     super();
     this.state = {
+      id: 1,
       patient_full_name: "",
       patient_picture: "",
       patient_age: null,
@@ -40,15 +42,24 @@ class PatientInfo extends Component {
     };
   }
 
-  componentDidMount() {
-    this.getPatient();
-    this.getMeasurements();
-    this.getAppts();
+  componentDidUpdate(prevProps) {
+    if (prevProps !== this.props) {
+      this.setState(
+        {
+          id: this.props.patient_id
+        },
+        () => {
+          this.getPatient();
+          this.getMeasurements();
+          this.getAppts();
+        }
+      );
+    }
   }
 
   getPatient() {
-    // let { id } = this.props.patient_id
-    let id = 1;
+    let { id } = this.state;
+    // let id = 1;
     axios.get(`/patient/${id}`).then(res => {
       let {
         patient_full_name,
@@ -80,13 +91,12 @@ class PatientInfo extends Component {
         patient_emergency_contact_relationship2,
         patient_emergency_contact_number2
       });
-      // console.log(res.data, 'patient')
     });
   }
 
   getMeasurements() {
-    // let { id } = this.props.patient_id
-    let id = 1;
+    let { id } = this.state;
+    // let id = 1;
     axios.get(`/patient/measurements/${id}`).then(res => {
       // console.log(res.data, "measurements");
       let heightTest =
@@ -107,8 +117,8 @@ class PatientInfo extends Component {
   }
 
   getAppts() {
-    // let { id } = this.props.patient_id
-    let id = 1;
+    let { id } = this.state;
+    // let id = 1;
     let today = moment.utc(new Date()).format();
     axios.get(`/visit/${id}/${today}`).then(res => {
       // console.log(res.data, 'visits')
@@ -135,70 +145,110 @@ class PatientInfo extends Component {
 
   calculateBMI(height, weight) {
     let bmi = (weight / (height * height)) * 703;
-    let result = Math.round(bmi * 10) / 10
-    return result
+    let result = Math.round(bmi * 10) / 10;
+    return result;
   }
 
   render() {
+    // console.log(this.state)
     return (
       <div className="mainPatientInfo">
+        
         <div className="row1">
+          
           <div className="ptpic">
             <img src={this.state.patient_picture} alt="" />
           </div>
+
           <div className="identifiers">
             <div className="name">
               <h3>{this.state.patient_full_name}</h3>
             </div>
+
             <div className="birthdate">
-              Birthdate: {this.state.patient_birthday}
+              Birthdate:{" "}
+              {moment(this.state.patient_birthday).format("MM/DD/YYYY")}{" "}
+              {moment().diff(
+                moment(this.state.patient_birthday, "YYYYMMDD"),
+                "years"
+              )}y
             </div>
-            <div className="gender">Gender: {this.state.patient_gender}</div>
+
+            <div className="gender">Gender:
+              {this.state.patient_gender}
+            </div>
           </div>
+
           <div className="measurements">
-            <div className="height">Height: {this.state.patient_height}</div>
-            <div className="weight">Weight: {this.state.patient_weight}</div>
-            <div className="bmi">BMI: {this.calculateBMI(this.state.patient_height, this.state.patient_weight)}</div>
+            <div className="height">Height: {this.state.patient_height}"</div>
+
+            <div className="weight">Weight: {this.state.patient_weight}lbs</div>
+
+            <div className="bmi">
+              BMI:{" "}
+              {this.calculateBMI(
+                this.state.patient_height,
+                this.state.patient_weight
+              )}
+            </div>
+
+            <div className="expand">
+              <ExpandMore />
+            </div>
+
+          </div>
+
+        </div>
+
+        <hr />
+
+        <div className="row2">
+          Contact Info
+
+          <hr />
+
+          <div className="contactInfo">
+            
+            <div className="address">
+              Address: {this.state.patient_address} <br />
+              Phone: {this.state.patient_phone_number} <br />
+              Email: {this.state.patient_email}
+            </div>
+
+            <div className="contacts"></div>
+            
           </div>
         </div>
-        <hr />
-        <div className="row2">
-          <div className="address">
-            Address: {this.state.patient_address} <br />
-            Phone: {this.state.patient_phone_number} <br />
-            Email: {this.state.patient_email}
-          </div>
-          <div className="appts">
-            Upcoming Appointments: <br />
+
+        {/* <div className="row3"> */}
+          {/* <div className="appt 1">
             {this.state.upcoming_appt1 ? (
               <div>
                 {this.state.upcoming_appt1.employee_full_name}
                 {moment(this.state.upcoming_appt1.patient_visit_date).format(
-                  "YYYY-MM-DD H:mm A"
+                  "MM/DD/YYYY H:mm A"
                 )}{" "}
                 <br /> {this.state.upcoming_appt1.patient_visit_reason}{" "}
               </div>
             ) : (
               "None"
             )}
-            <hr />
+          </div> */}
+          {/* <div className="appt 2">
             {this.state.upcoming_appt2 ? (
               <div>
                 {this.state.upcoming_appt2.employee_full_name}
                 {moment(this.state.upcoming_appt2.patient_visit_date).format(
-                  "YYYY-MM-DD H:mm A"
+                  "MM/DD/YYYY H:mm A"
                 )}{" "}
                 <br /> {this.state.upcoming_appt2.patient_visit_reason}{" "}
               </div>
             ) : (
               "None"
             )}
-          </div>
-        </div>
-        <div className="row3">
-          <div className="contact1" />
-          <div className="contact2" />
-        </div>
+          </div> */}
+        {/* </div> */}
+
       </div>
     );
   }

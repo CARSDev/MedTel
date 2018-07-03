@@ -22,6 +22,10 @@ export default class PatientList extends Component {
     }
 
     componentDidMount() {
+        this.getPatients()
+    }
+
+    getPatients = () => {
         axios.get('/patients').then(res => {
             // console.log(res.data)
             this.setState({
@@ -129,7 +133,7 @@ export default class PatientList extends Component {
                 >
                     <Add />
                 </Button>
-                <AddPatient open={this.state.open} handleClickOpen={this.handleClickOpen} handleClose={this.handleClose}/>
+                <AddPatient open={this.state.open} handleClickOpen={this.handleClickOpen} handleClose={this.handleClose} outsideCallback={this.getPatients} />
                 <div>
                     <select onChange={(e) => this.selectHandler(e.target.value)} name='searchCriteria'>
                         {/* <option value='all'>All</option> */}
