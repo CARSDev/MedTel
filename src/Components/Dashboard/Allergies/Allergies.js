@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import moment from 'moment';
 import { ToastContainer, toast } from 'react-toastify';
-import './Conditions.css';
+import AllergySelector from './AllergySelector';
+import '../Conditions/Conditions.css';
 
 
 import Button from '@material-ui/core/Button';
@@ -11,7 +12,6 @@ import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
 import Add from '@material-ui/icons/Add';
 import Delete from '@material-ui/icons/Delete';
-import ConditionSelector from './ConditionSelector';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogTitle from '@material-ui/core/DialogTitle';
@@ -31,12 +31,12 @@ export default class Allergies extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            patientConditions: [],
-            conditions: [],
+            patientAllergies: [],
+            allergies: [],
             openDelete: false,
             openAdd: false,
             value: '',
-            patientConditionId: 0,
+            patientAllergyId: 0,
         }
         this.handleClickOpenDelete = this.handleClickOpenDelete.bind(this);
         this.handleCloseDelete = this.handleCloseDelete.bind(this);
@@ -44,48 +44,48 @@ export default class Allergies extends Component {
         this.handleCloseAdd = this.handleCloseAdd.bind(this);
         this.getPatientAllergies = this.getPatientAllergies.bind(this);
         this.getAllergiesList = this.getAllergiesList.bind(this);
-        this.updateAllergies = this.updateAllergies.bind(this);
+        this.updateAllergy = this.updateAllergy.bind(this);
     }
     radioGroup = null;
 
     componentDidMount() {
-        this.getPatientConditions()
-        this.getConditionsList()
+        this.getPatientAllergies()
+        this.getAllergiesList()
     }
 
     componentDidUpdate(prevProps) {
         if (prevProps !== this.props) {
-            this.getPatientConditions()
-            this.getConditionsList()
+            this.getPatientAllergies()
+            this.getAllergiesList()
         }
     }
 
     getPatientAllergies() {
         axios.get(`/allergies/${this.props.patient_id}`).then(res => {
-            // console.log("performing get conditions")
-            console.log(res.data)
+            // console.log("performing get allergies")
+            // console.log(res.data)
             this.setState({
-                patientConditions: res.data
+                patientAllergies: res.data
             })
-            toast.success("Successfully got Patient Conditions", { position: toast.POSITION.BOTTOM_RIGHT })
-        }).catch(() => toast.error("Failed to Fetch Patient Conditions", { position: toast.POSITION.BOTTOM_RIGHT }))
+            toast.success("Successfully got Patient Allergies", { position: toast.POSITION.BOTTOM_RIGHT })
+        }).catch(() => toast.error("Failed to Fetch Patient Allergies", { position: toast.POSITION.BOTTOM_RIGHT }))
     }
 
-    getConditionsList() {
-        axios.get(`/conditions`).then(res => {
+    getAllergiesList() {
+        axios.get(`/allergies`).then(res => {
             this.setState({
-                conditions: res.data
+                allergies: res.data
             })
-            toast.success("Successfully got Conditions", { position: toast.POSITION.BOTTOM_RIGHT })
-        }).catch(() => toast.error("Failed to Fetch Conditions", { position: toast.POSITION.BOTTOM_RIGHT }))
+            toast.success("Successfully got Allergies", { position: toast.POSITION.BOTTOM_RIGHT })
+        }).catch(() => toast.error("Failed to Fetch Allergies", { position: toast.POSITION.BOTTOM_RIGHT }))
     }
-    updateCondition(id) {
-        if (window.confirm('Are you sure you want to delete this condition?')) {
-            axios.put(`/condition/${id}`).then(res => {
-                toast.success("Successfully deleted patient condition")
+    updateAllergy(id) {
+        if (window.confirm('Are you sure you want to delete this allergy?')) {
+            axios.put(`/allergy/${id}`).then(()=> {
+                toast.success("Successfully deleted patient allergy")
             }).catch((e) => console.log(e));
         }
-        this.getPatientConditions();
+        this.getPatientAllergies();
     }
 
     handleClickOpenDelete = () => {
@@ -110,14 +110,14 @@ export default class Allergies extends Component {
     render() {
         const { value, ...other } = this.props;
 
-        let conditionList = this.state.patientConditions.map((el, i) => {
+        let allergyList = this.state.patientAllergies.map((el, i) => {
             if (!el.deleted) {
-                console.log(el)
+                // console.log(el)
                 return (
-                    <div key={el.patient_condition_id}>
+                    <div key={el.patient_allergy_id}>
                         <ul>
-                            <li id='conditionText'>{el.condition_name}</li>
-                            <li id='conditionText'>{moment(el.condition_date_diagnosed).format('MMM DD, YYYY')}</li>
+                            <li id='conditionText'>{el.allergy_name}</li>
+                            <li id='conditionText'>{moment(el.allergy_date_diagnosed).format('MMM DD, YYYY')}</li>
                             <br />
                         </ul>
                     </div>
@@ -125,13 +125,13 @@ export default class Allergies extends Component {
             }
 
         })
-        let pastConditionList = this.state.patientConditions.map((el, i) => {
+        let pastAllergyList = this.state.patientAllergies.map((el, i) => {
             if (el.deleted) {
                 return (
-                    <div key={el.patient_condition_id}>
+                    <div key={el.patient_allergy_id}>
                         <ul>
-                            <li id='conditionText'>{el.condition_name}</li>
-                            <li id='conditionText'>{moment(el.condition_date_diagnosed).format('MMM DD, YYYY')}</li>
+                            <li id='conditionText'>{el.allergy_name}</li>
+                            <li id='conditionText'>{moment(el.allergy_date_diagnosed).format('MMM DD, YYYY')}</li>
                             <br />
                         </ul>
                     </div>
@@ -152,22 +152,22 @@ export default class Allergies extends Component {
                         borderTop: '1px solid rgba(0,0,0,0.3)',
                         borderRight: '1px solid rgba(0,0,0,0.3)'
                     }}
-                        title="Conditions">
+                        title="Allergies">
                     </CardHeader>
                     <CardContent>
-                        {conditionList}
+                        {allergyList}
                     </CardContent>
                     {/* ////////////////////////////////////// */}
 
-                    {/* ///////////////////PastConditions///////////////// */}
+                    {/* ///////////////////PastAllergies///////////////// */}
                     <div >
                         <ExpansionPanel>
                             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                                <Typography >Past Conditions</Typography>
+                                <Typography >Past Allergies</Typography>
                             </ExpansionPanelSummary>
                             <ExpansionPanelDetails>
                                 <Typography>
-                                    {pastConditionList}
+                                    {pastAllergyList}
                                 </Typography>
                             </ExpansionPanelDetails>
                         </ExpansionPanel>
@@ -196,8 +196,8 @@ export default class Allergies extends Component {
                         onClose={this.handleCloseAdd}
                         aria-labelledby="confirmation-dialog-title"
                     >
-                        <DialogTitle id="form-dialog-title">Add Conditions</DialogTitle>
-                        <ConditionSelector patient_id={this.props.patient_id} getConditions={this.getPatientConditions} />
+                        <DialogTitle id="form-dialog-title">Add Allergies</DialogTitle>
+                        <AllergySelector patient_id={this.props.patient_id} getAllergies={this.getPatientAllergies} />
                     </Dialog>
 
                     {/* ///////////////////Delete Button///////////////////// */}
@@ -221,22 +221,22 @@ export default class Allergies extends Component {
                         onClose={this.handleCloseDelete}
                         aria-labelledby="form-dialog-title"
                     >
-                        <DialogTitle id="form-dialog-title">Delete Conditions</DialogTitle>
+                        <DialogTitle id="form-dialog-title">Delete Allergies</DialogTitle>
                         <div>
                             <List>
-                                {this.state.patientConditions.map((el, i) => {
+                                {this.state.patientAllergies.map((el, i) => {
                                     if (!el.deleted)
                                         return (
-                                            <ListItem>
+                                                <ListItem key={el.patient_allergy_id + 'list'}>
                                                 <ListItemText
-                                                    primary={el.condition_name}
+                                                    primary={el.allergy_name}
                                                 />
                                                 <ListItemSecondaryAction>
                                                     <IconButton
                                                         aria-label="Delete"
                                                         onClick={() => {
-                                                            console.log(el)
-                                                            this.updateCondition(el.patient_condition_id)
+                                                            // console.log(el)
+                                                            this.updateAllergy(el.patient_allergy_id)
                                                         }
                                                         }
                                                     >

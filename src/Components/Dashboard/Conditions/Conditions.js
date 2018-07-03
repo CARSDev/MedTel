@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import moment from 'moment';
 import { ToastContainer, toast } from 'react-toastify';
+import ConditionSelector from './ConditionSelector';
 import './Conditions.css';
 
 
@@ -11,7 +12,6 @@ import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
 import Add from '@material-ui/icons/Add';
 import Delete from '@material-ui/icons/Delete';
-import ConditionSelector from './ConditionSelector';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogTitle from '@material-ui/core/DialogTitle';
@@ -63,7 +63,7 @@ export default class Conditions extends Component {
     getPatientConditions() {
         axios.get(`/conditions/${this.props.patient_id}`).then(res => {
             // console.log("performing get conditions")
-            console.log(res.data)
+            // console.log(res.data)
             this.setState({
                 patientConditions: res.data
             })
@@ -81,7 +81,7 @@ export default class Conditions extends Component {
     }
     updateCondition(id) {
         if (window.confirm('Are you sure you want to delete this condition?')) {
-            axios.put(`/condition/${id}`).then(res => {
+            axios.put(`/condition/${id}`).then(() => {
                 toast.success("Successfully deleted patient condition")
             }).catch((e) => console.log(e));
         }
@@ -112,7 +112,7 @@ export default class Conditions extends Component {
 
         let conditionList = this.state.patientConditions.map((el, i) => {
             if (!el.deleted) {
-                console.log(el)
+                // console.log(el)
                 return (
                     <div key={el.patient_condition_id}>
                         <ul>
@@ -235,7 +235,7 @@ export default class Conditions extends Component {
                                                     <IconButton
                                                         aria-label="Delete"
                                                         onClick={() => {
-                                                            console.log(el)
+                                                            // console.log(el)
                                                             this.updateCondition(el.patient_condition_id)
                                                         }
                                                         }

@@ -79,9 +79,9 @@ function getPatientAllergies(req, res) {
     // console.log('hit patient conditions list')
     const { params } = req;
 
-    req.db.get_patient_conditions([params.id])
+    req.db.get_patient_allergies([params.id])
         .then((allergies) => {
-            console.log(allergies)
+            // console.log(allergies)
             res.status(200).send(allergies)
 
         })
@@ -113,9 +113,9 @@ function addAllergy(req, res) {
 function updateAllergy(req, res) {
     // console.log('hit update allergy')
     const { params } = req;
-    console.log(params.id)
+    // console.log(params.id)
 
-    req.db.update_patient_allergy([params.id])
+    req.db.update_patient_allergies([params.id])
         .then((allergies) => {
             res.status(200).send(allergies)
 

@@ -23,8 +23,8 @@ class AllergiesDialogRaw extends React.Component {
 
         this.state = {
             value: this.props.value,
-            conditions: [],
-            conditionId: 0,
+            allergies: [],
+            allergyId: 0,
             time: ''
         };
     }
@@ -40,10 +40,10 @@ class AllergiesDialogRaw extends React.Component {
     componentDidMount() {
         axios.get(`/allergies`).then(res => {
             this.setState({
-                conditions: res.data
+                allergies: res.data
             })
-            toast.success("Successfully got Conditions", { position: toast.POSITION.BOTTOM_RIGHT })
-        }).catch(() => toast.error("Failed to Fetch Conditions", { position: toast.POSITION.BOTTOM_RIGHT }))
+            toast.success("Successfully got Allergies", { position: toast.POSITION.BOTTOM_RIGHT })
+        }).catch(() => toast.error("Failed to Fetch Allergies", { position: toast.POSITION.BOTTOM_RIGHT }))
     }
 
     handleEntering = () => {
@@ -55,27 +55,27 @@ class AllergiesDialogRaw extends React.Component {
     };
 
     handleOk = () => {
-        this.props.onClose(this.state.value, this.state.conditionId);
+        this.props.onClose(this.state.value, this.state.allergyId);
         this.setState({
         })
     };
 
     handleChange = (event, value) => {
-        let conditionElement = this.state.conditions.find((el) => {
-            if (value === el.condition_name) {
+        let allergyElement = this.state.allergies.find((el) => {
+            if (value === el.allergy_name) {
                 return true;
             }
         })
         this.setState({
             value,
-            conditionId: conditionElement.condition_id
+            allergyId: allergyElement.allergy_id
         });
     };
 
     render() {
         const { value, ...other } = this.props;
         // console.log(this.state.value)
-        // console.log(this.state.condition_id)
+        // console.log(this.state.allergy_id)
         return (
             <Dialog
                 disableBackdropClick
@@ -85,23 +85,23 @@ class AllergiesDialogRaw extends React.Component {
                 aria-labelledby="confirmation-dialog-title"
                 {...other}
             >
-                <DialogTitle id="confirmation-dialog-title">Conditions</DialogTitle>
+                <DialogTitle id="confirmation-dialog-title">Allergies</DialogTitle>
                 <DialogContent>
                     <RadioGroup
                         ref={node => {
                             this.radioGroup = node;
                         }}
-                        aria-label="condition"
-                        name="condition"
+                        aria-label="allergy"
+                        name="allergy"
                         value={this.state.value}
                         onChange={this.handleChange}
                     >
-                        {this.state.conditions.map(option => (
+                        {this.state.allergies.map(option => (
                             <FormControlLabel
-                                value={option.condition_name}
-                                key={option.condition_id}
+                                value={option.allergy_name}
+                                key={option.allergy_id + 'select'}
                                 control={<Radio />}
-                                label={option.condition_name} />
+                                label={option.allergy_name} />
                         ))}
                     </RadioGroup>
                 </DialogContent>
@@ -140,17 +140,17 @@ class AllergiesDialog extends React.Component {
 
     state = {
         open: false,
-        value: 'Asthma'
+        value: 'Peanuts'
     };
 
     handleClickListItem = () => {
         this.setState({ open: true });
     };
 
-    handleClose = (value, conditionId) => {
+    handleClose = (value, allergyId) => {
         this.setState({ value, open: false });
-        axios.post(`/condition/${this.props.patient_id}`, { condition_id: conditionId, condition_date_diagnosed: new Date() }).then(res => {
-            this.props.getConditions()
+        axios.post(`/allergy/${this.props.patient_id}`, { allergy_id: allergyId, allergy_date_diagnosed: new Date() }).then(res => {
+            this.props.getAllergies()
         })
     };
 
@@ -163,11 +163,11 @@ class AllergiesDialog extends React.Component {
                         button
                         divider
                         aria-haspopup="true"
-                        aria-controls="condition-menu"
-                        aria-label="Condition"
+                        aria-controls="allergy-menu"
+                        aria-label="Allergy"
                         onClick={this.handleClickListItem}
                     >
-                        <ListItemText primary="Condition" secondary={this.state.value} />
+                        <ListItemText primary="Allergy" secondary={this.state.value} />
                     </ListItem>
                     <AllergiesDialogRaw
                         classes={{
