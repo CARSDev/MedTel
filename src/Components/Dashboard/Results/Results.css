@@ -1,3 +1,121 @@
 .results{
     margin-top: 20px;
 }
+
+.resultsAccordian{
+    width: 100%;
+    box-sizing: border-box;
+    background: #fff;
+    /* border-top-left-radius: 5px; */
+    /* border-top-right-radius: 5px; */
+    border: 1px solid rgba(0,0,0,0.3);
+    -webkit-box-shadow: 0px 3px 3px 0px rgba(0,0,0,0.3);
+    -moz-box-shadow: 0px 3px 3px 0px rgba(0,0,0,0.3);
+    box-shadow: 0px 3px 3px 0px rgba(0,0,0,0.3);
+    transition: ease-in-out all 0.1s;
+    margin-bottom: -3px; 
+}
+
+.addMargin{
+    margin: 20px 0px;
+    transition: ease-in-out all 0.1s;
+    background: #E9F7FA;
+}
+
+.visibleTab{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 7px 10px;
+    box-sizing: border-box;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom: 1px solid rgba(0,0,0,0.3);
+}
+
+.visibleTab > h3 {
+    font-family: 'Roboto';
+    text-transform: uppercase;
+}
+
+.iconContainer{
+    border-radius: 50%;
+    height: 36px;
+    width: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    margin: -5px;
+    background: rgba(0,0,0,0);
+    transition: ease-in-out all 0.1s, ease-in-out background 0.2s;
+}
+
+.arrowUp{
+    transform: rotate(540deg);
+    transition: ease-in-out all 0.1s;
+}
+
+
+
+.iconContainer:hover{
+    background: rgba(0,0,0,0.08);
+    transition: ease-in-out all 0.2s;
+}
+
+.hidden{
+    max-height: 0px;
+    overflow: hidden;
+    opacity: 0;
+    transition: ease-in-out all 0.1s;
+}
+
+.hiddenTab{
+    max-height: 300px;
+    opacity: 1;
+    transition: ease-in-out all 0.1s;
+}
+
+.individualVisibleTab{
+    padding: 10px 17px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    border-bottom: 1px solid rgba(0,0,0,0.3);
+    background: #fff;
+}
+
+.individualVisibleTab h3{
+    text-transform: capitalize;
+}
+
+.individualHiddenTab{
+    background: #fff;
+    padding: 10px;
+    border-bottom: 1px solid rgba(0,0,0,0.3);
+    max-height: 50px;
+}
+
+.hiddenIndividual{
+    max-height: 0;
+    overflow: hidden;
+    padding: 0px;
+    border: 0;
+}
+
+.individualTabCellL, .individualTabCellM, .individualTabCellR{
+    display: flex;
+    align-items: center;
+}
+
+.individualTabCellL{
+    justify-content: flex-start;
+}
+
+.individualTabCellM{
+    justify-content: center;
+}
+
+.individualTabCellR{
+    justify-content: flex-end;
+}

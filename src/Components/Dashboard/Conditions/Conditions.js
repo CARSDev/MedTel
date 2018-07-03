@@ -48,12 +48,6 @@ export default class Conditions extends Component {
     }
     radioGroup = null;
 
-
-
-    componentDidMount() {
-        this.getConditions()
-    }
-
     componentDidUpdate(prevProps) {
         if (prevProps !== this.props) {
             this.getConditions()

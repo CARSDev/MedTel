@@ -26,7 +26,7 @@ function getPatientConditions(req, res) {
 
     req.db.get_patient_conditions([params.id])
         .then((conditions) => {
-            console.log(conditions)
+            // console.log(conditions)
             res.status(200).send(conditions)
 
         })

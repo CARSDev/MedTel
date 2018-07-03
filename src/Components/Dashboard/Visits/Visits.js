@@ -17,14 +17,6 @@ export default class Visits extends Component {
         }
     }
 
-    componentDidMount() {
-        this.setState({
-            patient_id: this.props.patient_id
-        }, () => {
-            this.getPatientInfo()
-        })
-    }
-
     componentDidUpdate(prevProps) {
         if (prevProps !== this.props) {
             this.setState({

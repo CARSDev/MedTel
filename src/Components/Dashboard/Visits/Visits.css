@@ -52,7 +52,8 @@
     font-size: 12px;
     padding-left: 10px;
     padding-top: 5px;
-    color: rgba(0,0,0,0.7)
+    color: rgba(0,0,0,0.7);
+    text-align: left;
 }
 
 .dialogTitle{
