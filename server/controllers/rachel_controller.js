@@ -43,7 +43,7 @@ function getConditions(req, res) {
 }
 
 function addCondition(req, res) {
-    console.log('hit add condition')
+    // console.log('hit add condition')
     const { params } = req;
     const { condition_id, condition_date_diagnosed } = req.body
 
@@ -56,7 +56,7 @@ function addCondition(req, res) {
 }
 
 function updateCondition(req, res) {
-    console.log('hit update condition')
+    // console.log('hit update condition')
     const { params } = req;
     
     req.db.update_patient_condition([params.id])

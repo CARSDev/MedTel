@@ -29,6 +29,11 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import Typography from '@material-ui/core/Typography';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 
 export default class Conditions extends Component {
@@ -72,6 +77,7 @@ export default class Conditions extends Component {
     getPatientConditions() {
         axios.get(`/condition/${this.props.patient_id}`).then(res => {
             // console.log("performing get conditions")
+            console.log(res.data)
             this.setState({
                 patientConditions: res.data
             })
@@ -110,7 +116,7 @@ export default class Conditions extends Component {
         this.setState({ openEdit: true });
     };
     handleClose = () => {
-        this.setState({openEdit: false});
+        this.setState({ openEdit: false });
     };
     handleCloseEdit = () => {
         this.setState({
@@ -141,43 +147,58 @@ export default class Conditions extends Component {
 
     render() {
         const { value, ...other } = this.props;
-        let testConditions = ['asthma', 'krohns', 'allergies']
+        // let testConditions = ['asthma', 'krohns', 'allergies']
 
-        let conditionListEdit = this.state.patientConditions.map((el, i) => {
-            return (
-                <div key={el + i}>
-                    <TextField
-                        select
-                        margin="dense"
-                        id={`${el.pateint_condition_id}`}
-                        label="Condition Type"
-                        value={`${el.condition_name}`}
-                        type="email"
-                        fullWidth
-                    />
-                    <TextField
-                        autoFocus
-                        margin="dense"
-                        id="name"
-                        label= "Date Diagnosed"
-                        value={`${moment(el.condition_date_diagnosed).format('MMM DD, YYYY')}`}
-                        type="email"
-                        fullWidth
-                    />
-                </div>
-            )
-        })
+        // let conditionListEdit = this.state.patientConditions.map((el, i) => {
+        //     return (
+        //         <div key={el + i}>
+        //             <TextField
+        //                 select
+        //                 margin="dense"
+        //                 id={`${el.pateint_condition_id}`}
+        //                 label="Condition Type"
+        //                 value={`${el.condition_name}`}
+        //                 type="email"
+        //                 fullWidth
+        //             />
+        //             <TextField
+        //                 autoFocus
+        //                 margin="dense"
+        //                 id="name"
+        //                 label="Date Diagnosed"
+        //                 value={`${moment(el.condition_date_diagnosed).format('MMM DD, YYYY')}`}
+        //                 type="email"
+        //                 fullWidth
+        //             />
+        //         </div>
+        //     )
+        // })
         let conditionList = this.state.patientConditions.map((el, i) => {
-            return (
+            if (el.deleted === false) {
+            console.log(el)
+                return (
+                    <div key={i + 1}>
+                        <ul>
+                            <li>{el.condition_name}</li><br />
+                            <li>{moment(el.condition_date_diagnosed).format('MMM DD, YYYY')}</li>
+                        </ul>
+                    </div>
+                )
+            }
 
-                <div key={el + i}>
-                    <ul>
-                        <li>{el.condition_name}</li><br />
-                        <p>-{moment(el.condition_date_diagnosed).format('MMM DD, YYYY')}</p>
-                    </ul>
-                </div>
+        })
+        let pastConditionList = this.state.patientConditions.map((el, i) => {
+            if (el.deleted) {
+                return (
+                    <div key={el + 2}>
+                        <ul>
+                            <li>{el.condition_name}</li><br />
+                            <li>{moment(el.condition_date_diagnosed).format('MMM DD, YYYY')}</li>
+                        </ul>
+                    </div>
+                )
+            }
 
-            )
         })
 
         return (
@@ -198,6 +219,22 @@ export default class Conditions extends Component {
                         {conditionList}
                     </CardContent>
                     {/* ////////////////////////////////////// */}
+
+                    {/* ///////////////////PastConditions///////////////// */}
+                    <div >
+                        <ExpansionPanel>
+                            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                                <Typography >Past Conditions</Typography>
+                            </ExpansionPanelSummary>
+                            <ExpansionPanelDetails>
+                                <Typography>
+                                    {pastConditionList}
+                                 </Typography>
+                            </ExpansionPanelDetails>
+                        </ExpansionPanel>
+                    </div>
+
+                    {/* ///////////////////////////////////////////////////// */}
 
                     {/* /////////////////Add Button//////////////// */}
                     <Button
@@ -251,29 +288,29 @@ export default class Conditions extends Component {
                         <div>
                             <List>
                                 {this.state.patientConditions.map((el, i) => {
-                                 
+
                                     return (
-                                            
+
                                         <ListItem>
                                             <ListItemText
                                                 primary={el.condition_name}
-                                                // secondary={secondary ? 'Secondary text' : null}
+                                            // secondary={secondary ? 'Secondary text' : null}
                                             />
                                             <ListItemSecondaryAction>
                                                 <IconButton
                                                     aria-label="Delete"
                                                     onClick={this.updateCondition}
                                                 >
-                                                    <Delete  />
+                                                    <Delete />
                                                 </IconButton>
                                             </ListItemSecondaryAction>
                                         </ListItem>
-                                        )
-                                    
+                                    )
+
                                 }
                                 )}
-                                    
-                                    
+
+
                             </List>
                         </div>
                         <DialogActions>
