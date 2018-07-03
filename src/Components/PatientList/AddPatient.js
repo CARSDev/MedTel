@@ -13,6 +13,8 @@ import FormControl from '@material-ui/core/FormControl';
 import { DatePicker } from 'material-ui-pickers';
 import ChevronLeft from '@material-ui/icons/ChevronLeft';
 import ChevronRight from '@material-ui/icons/ChevronRight';
+import axios from 'axios';
+import moment from 'moment';
 import './PatientList.css';
 
 export default class AddPatient extends Component {
@@ -31,6 +33,44 @@ export default class AddPatient extends Component {
             emergencyNumber: '',
             emergencyRelationship: ''
         }
+    }
+
+    addPatient = () => {
+        let birthday = moment.utc(this.state.birthday).format()
+        const { firstName, lastName, gender, address, phone, email, emergencyName, emergencyNumber, emergencyRelationship } = this.state
+        let info = {
+            firstName,
+            lastName,
+            birthday,
+            gender,
+            address,
+            phone,
+            email,
+            emergencyName,
+            emergencyNumber,
+            emergencyRelationship
+        }
+        axios.post('/api/patients', info)
+            .then(() => {
+                this.props.outsideCallback()
+                this.resetState()
+                this.props.handleClose()
+            })
+    }
+
+    resetState = () => {
+        this.setState({
+            firstName: '',
+            lastName: '',
+            birthday: new Date(),
+            gender: '',
+            address: '',
+            phone: '',
+            email: '',
+            emergencyName: '',
+            emergencyNumber: '',
+            emergencyRelationship: ''
+        })
     }
 
     inputHandler = (e, property) => {
@@ -64,6 +104,7 @@ export default class AddPatient extends Component {
                         type="name"
                         fullWidth
                         onChange={(e) => this.inputHandler(e, "firstName")}
+                        value = {this.state.firstName}
                     />
 
                     <TextField
@@ -72,27 +113,19 @@ export default class AddPatient extends Component {
                         label="Last Name"
                         type="name"
                         fullWidth
-                        onChange={(e) => this.inputHandler(e, "birthday")}
+                        onChange={(e) => this.inputHandler(e, "lastName")}
+                        value={this.state.lastName}
                     />
 
 
                         <div className="picker">
                             <DatePicker
-                                // value={birthday}
-                                // fullWidth
-                                // label="Birthday"
-                                // onChange={this.handleDateChange}
-                                keyboard
                                 label="Birthday"
-                                format="DD/MM/YYYY"
-                                placeholder="DD/MM/YYYY"
+                                format="MM/DD/YYYY"
+                                placeholder="MM/DD/YYYY"
                                 fullWidth
-                                // handle clearing outside => pass plain array if you are not controlling value outside
-                                mask={value => (value ? [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/] : [])}
                                 value={birthday}
                                 onChange={this.handleDateChange}
-                                disableOpenOnEnter
-                                animateYearScrolling={false}
                                 leftArrowIcon={<ChevronLeft />}
                                 rightArrowIcon={<ChevronRight />}
                             />
@@ -104,7 +137,7 @@ export default class AddPatient extends Component {
                             fullWidth
                             value={this.state.gender}
                             input={<Input id="gender" />}
-                            onChange={(e) => this.inputHandler(e, "address")}
+                            onChange={(e) => this.inputHandler(e, "gender")}
                         >
                             <MenuItem value=""></MenuItem>
                             <MenuItem value={1}>Male</MenuItem>
@@ -119,6 +152,7 @@ export default class AddPatient extends Component {
                         type="address"
                         fullWidth
                         onChange={(e) => this.inputHandler(e, "address")}
+                        value={this.state.address}
                     />
 
                     <TextField
@@ -128,6 +162,7 @@ export default class AddPatient extends Component {
                         type="phone number"
                         fullWidth
                         onChange={(e) => this.inputHandler(e, "phone")}
+                        value={this.state.phone}
                     />
 
                     <TextField
@@ -137,6 +172,7 @@ export default class AddPatient extends Component {
                         type="email"
                         fullWidth
                         onChange={(e) => this.inputHandler(e, "email")}
+                        value={this.state.email}
                     />
 
                     <TextField
@@ -146,6 +182,7 @@ export default class AddPatient extends Component {
                         type="name"
                         fullWidth
                         onChange={(e) => this.inputHandler(e, "emergencyName")}
+                        value={this.state.emergencyName}
                     />
 
                     <TextField
@@ -155,6 +192,7 @@ export default class AddPatient extends Component {
                         type="phone number"
                         fullWidth
                         onChange={(e) => this.inputHandler(e, "emergencyNumber")}
+                        value={this.state.emergencyNumber}
                     />
 
                     <TextField
@@ -164,6 +202,7 @@ export default class AddPatient extends Component {
                         type="relationship"
                         fullWidth
                         onChange={(e) => this.inputHandler(e, "emergencyRelationship")}
+                        value={this.state.emergencyRelationship}
                     />
 
                 </DialogContent>
@@ -172,7 +211,7 @@ export default class AddPatient extends Component {
                     <Button onClick={this.props.handleClose} color="primary">
                         Cancel
                     </Button>
-                    <Button onClick={this.props.handleClose} color="primary">
+                    <Button onClick={this.addPatient} color="primary">
                         Add
                     </Button>
                 </DialogActions>
