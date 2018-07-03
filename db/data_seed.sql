@@ -1,12 +1,13 @@
 INSERT INTO companies
-(company_name)
+(company_name, company_logo)
 VALUES
-('Test Company');
+('Test Company', 'https://image.freepik.com/free-vector/health-company-logo-template_1071-28.jpg');
 
 INSERT INTO roles
 (role_name)
 VALUES
-('Admin');
+('Admin'),
+('Non-Admin');
 
 insert into genders
 (gender_name)
