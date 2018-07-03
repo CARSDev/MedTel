@@ -1,0 +1,67 @@
+.employeeList{
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    margin: auto;
+    margin-top: 20px;
+    border: #F6F6F6 2px solid;
+    box-shadow: 3px 3px 19px -4px rgba(0,0,0,0.75);
+}
+
+.header{
+    display: grid;
+    grid-template-columns: 2fr 1fr 3fr 3fr;
+    padding-right: 10px;
+    padding-left: 10px;
+    font-weight: bold;
+    color: whitesmoke;
+    background: #25A9A0;
+    height: 50px;
+}
+
+.empPic{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    padding-right: 17%;
+    box-sizing: border-box;
+}
+
+.empPic2{
+    width: 40px;
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.empid{
+    width: 40px;
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.empid2, .empName2, .empEmail2{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.empName{
+    width: 200px;
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.empEmail{
+    width: 200px;
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}

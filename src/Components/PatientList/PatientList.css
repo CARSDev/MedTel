@@ -13,6 +13,12 @@
     border: #F6F6F6 2px solid;
     box-shadow: 3px 3px 19px -4px rgba(0,0,0,0.75);
     width: 60vw;
+    text-decoration: none;
+    
+}
+.test{
+    text-decoration: none;
+    
 }
 .listHeaders{
     display: flex;
@@ -33,6 +39,10 @@
     padding: 0.5vw;
     width: 20vw;
 }
+.patientsList{
+    text-decoration: none;
+    
+}
 .patientsList li{
   display: flex;
 	flex-direction: row;
@@ -43,6 +53,8 @@
     height: 50px;
     width: 60vw;
     font-family: roboto;
+    text-decoration: none;
+    
     color: black;
 }
 .patientsList p {
@@ -50,9 +62,11 @@
     /* padding-left: 2vw;
     padding-right: 8vw; */
     width: 20vw;
+    text-decoration: none;
+    
     
 }
 
-.patientsList li:nth-child(odd){
+.patientsList>ul li:nth-child(odd){
     background: #E9F7FA;
 }
