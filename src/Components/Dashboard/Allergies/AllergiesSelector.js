@@ -15,12 +15,12 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import Radio from '@material-ui/core/Radio';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
-class ConfirmationDialogRaw extends React.Component {
+class AllergiesDialogRaw extends React.Component {
     radioGroup = null;
 
     constructor(props) {
         super(props);
-        
+
         this.state = {
             value: this.props.value,
             conditions: [],
@@ -35,10 +35,10 @@ class ConfirmationDialogRaw extends React.Component {
         if (nextProps.value !== this.props.value) {
             this.setState({ value: nextProps.value });
         }
-      }
+    }
 
     componentDidMount() {
-        axios.get(`/conditions`).then(res => {
+        axios.get(`/allergies`).then(res => {
             this.setState({
                 conditions: res.data
             })
@@ -100,7 +100,7 @@ class ConfirmationDialogRaw extends React.Component {
                             <FormControlLabel
                                 value={option.condition_name}
                                 key={option.condition_id}
-                                control={<Radio/>}
+                                control={<Radio />}
                                 label={option.condition_name} />
                         ))}
                     </RadioGroup>
@@ -118,7 +118,7 @@ class ConfirmationDialogRaw extends React.Component {
     }
 }
 
-ConfirmationDialogRaw.propTypes = {
+AllergiesDialogRaw.propTypes = {
     onClose: PropTypes.func,
     value: PropTypes.string,
 };
@@ -135,7 +135,7 @@ const styles = theme => ({
     },
 });
 
-class ConfirmationDialog extends React.Component {
+class AllergiesDialog extends React.Component {
     button = null;
 
     state = {
@@ -169,7 +169,7 @@ class ConfirmationDialog extends React.Component {
                     >
                         <ListItemText primary="Condition" secondary={this.state.value} />
                     </ListItem>
-                    <ConfirmationDialogRaw
+                    <AllergiesDialogRaw
                         classes={{
                             paper: classes.paper,
                         }}
@@ -183,8 +183,8 @@ class ConfirmationDialog extends React.Component {
     }
 }
 
-ConfirmationDialog.propTypes = {
+AllergiesDialog.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(ConfirmationDialog);
+export default withStyles(styles)(AllergiesDialog);

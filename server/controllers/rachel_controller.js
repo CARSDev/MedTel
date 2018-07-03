@@ -1,9 +1,15 @@
 module.exports = function addRachelEndpointsTo(app) {
     app.get('/patients', getPatients);
-    app.get('/condition/:id', getPatientConditions);
+    //////////Conditions////////////////
+    app.get('/conditions/:id', getPatientConditions);
     app.get('/conditions', getConditions);
     app.post('/condition/:id', addCondition);
     app.put('/condition/:id', updateCondition);
+    ///////////Allergies//////////////////
+    app.get('/allergies/:id', getPatientAllergies);
+    app.get('/allergies', getAllergies);
+    app.post('/allergy/:id', addAllergy);
+    app.put('/allergy/:id', updateAllergy);
 }
 
 
@@ -20,6 +26,7 @@ function getPatients(req, res) {
         .catch((e) => { console.log(e); res.status(500).send("Couldn't get all_patients") });
 }
 
+/////////////Conditions//////////////////////
 function getPatientConditions(req, res) {
     // console.log('hit patient conditions list')
     const { params } = req;
@@ -58,6 +65,7 @@ function addCondition(req, res) {
 function updateCondition(req, res) {
     // console.log('hit update condition')
     const { params } = req;
+    console.log(params.id)
     
     req.db.update_patient_condition([params.id])
         .then((conditions) => {
@@ -66,13 +74,51 @@ function updateCondition(req, res) {
         })
         .catch((e) => { console.log(e); res.status(500).send("Couldn't get update_patient_conditions") });
 }
+/////////////////Allergies///////////////////
+function getPatientAllergies(req, res) {
+    // console.log('hit patient conditions list')
+    const { params } = req;
 
-function deleteCondition(req, res) {
-    const { patient_condition_id } = req.body;
-    req.db.delete_patient_condition([patient_condition_id])
-        .then((conditions) => {
-            res.status(200).send(conditions)
+    req.db.get_patient_conditions([params.id])
+        .then((allergies) => {
+            console.log(allergies)
+            res.status(200).send(allergies)
 
         })
-        .catch((e) => { console.log(e); res.status(500).send("Couldn't get delete_patient_conditions") });
+        .catch((e) => { console.log(e); res.status(500).send("Couldn't get get_patient_allergies") });
+}
+
+function getAllergies(req, res) {
+    req.db.get_allergies()
+        .then((allergies) => {
+            res.status(200).send(allergies)
+
+        })
+        .catch((e) => { console.log(e); res.status(500).send("Couldn't get get_allergies") });
+}
+
+function addAllergy(req, res) {
+    // console.log('hit add allergy')
+    const { params } = req;
+    const { allergy_id, allergy_date_diagnosed } = req.body
+
+    req.db.add_allergy([params.id, allergy_id, allergy_date_diagnosed])
+        .then((allergies) => {
+            res.status(200).send(allergies)
+
+        })
+        .catch((e) => { console.log(e); res.status(500).send("Couldn't get get_allergies") });
+}
+
+function updateAllergy(req, res) {
+    // console.log('hit update allergy')
+    const { params } = req;
+    console.log(params.id)
+
+    req.db.update_patient_allergy([params.id])
+        .then((allergies) => {
+            res.status(200).send(allergies)
+
+        })
+        .catch((e) => { console.log(e); res.status(500).send("Couldn't get update_patient_allergies") });
 }

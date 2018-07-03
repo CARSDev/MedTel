@@ -1,33 +1,24 @@
 import React, { Component } from 'react';
-import Button from '@material-ui/core/Button';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import CardHeader from '@material-ui/core/CardHeader';
-// import FlatButton from 'material-ui/FlatButton';
-import { withStyles } from '@material-ui/core/styles';
-import Add from '@material-ui/icons/Add';
-import Edit from '@material-ui/icons/Edit';
-import Delete from '@material-ui/icons/Delete';
 import axios from 'axios';
 import moment from 'moment';
 import { ToastContainer, toast } from 'react-toastify';
-import ConditionSelector from './ConditionSelector';
+import './Conditions.css';
 
-import TextField from '@material-ui/core/TextField';
+
+import Button from '@material-ui/core/Button';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CardHeader from '@material-ui/core/CardHeader';
+import Add from '@material-ui/icons/Add';
+import Delete from '@material-ui/icons/Delete';
+import ConditionSelector from './ConditionSelector';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import Radio from '@material-ui/core/Radio';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
@@ -42,25 +33,20 @@ export default class Conditions extends Component {
         this.state = {
             patientConditions: [],
             conditions: [],
-            openEdit: false,
+            openDelete: false,
             openAdd: false,
             value: '',
             patientConditionId: 0,
         }
-        this.handleClickOpenEdit = this.handleClickOpenEdit.bind(this);
-        this.handleCloseEdit = this.handleCloseEdit.bind(this);
+        this.handleClickOpenDelete = this.handleClickOpenDelete.bind(this);
+        this.handleCloseDelete = this.handleCloseDelete.bind(this);
         this.handleClickOpenAdd = this.handleClickOpenAdd.bind(this);
         this.handleCloseAdd = this.handleCloseAdd.bind(this);
-        this.handleClose = this.handleClose.bind(this);
         this.getPatientConditions = this.getPatientConditions.bind(this);
         this.getConditionsList = this.getConditionsList.bind(this);
         this.updateCondition = this.updateCondition.bind(this);
-        // this.deleteCondition = this.deleteCondition.bind(this);
-        // this.selectCondition = this.selectCondition.bind(this);
     }
     radioGroup = null;
-
-
 
     componentDidMount() {
         this.getPatientConditions()
@@ -75,7 +61,7 @@ export default class Conditions extends Component {
     }
 
     getPatientConditions() {
-        axios.get(`/condition/${this.props.patient_id}`).then(res => {
+        axios.get(`/conditions/${this.props.patient_id}`).then(res => {
             // console.log("performing get conditions")
             console.log(res.data)
             this.setState({
@@ -97,39 +83,20 @@ export default class Conditions extends Component {
         if (window.confirm('Are you sure you want to delete this condition?')) {
             axios.put(`/condition/${id}`).then(res => {
                 toast.success("Successfully deleted patient condition")
-            }).catch(() => toast.error(alert("Condition has a dependent records. Cannot be deleted")));
+            }).catch((e) => console.log(e));
         }
         this.getPatientConditions();
     }
-    // deleteCondition() {
-    //     if (window.confirm('Are you sure you want to delete this condition?')) {
-    //         axios.delete(`/condition/${this.state.patientConditionId}`).then(res => {
-    //             this.setState({
-    //                 all_instruments: res.data
-    //             })
-    //             toast.success("Successfully deleted patient condition")
-    //         }).catch(() => toast.error(alert("Condition has a dependent records. Cannot be deleted")));
-    //     }
-    // }
 
-    handleClickOpenEdit = () => {
-        this.setState({ openEdit: true });
+    handleClickOpenDelete = () => {
+        this.setState({ openDelete: true });
     };
-    handleClose = () => {
-        this.setState({ openEdit: false });
-    };
-    handleCloseEdit = () => {
-        this.setState({
-            openEdit: false,
 
-        });
-    };
     handleCloseDelete = () => {
         this.setState({
-            openEdit: false,
+            openDelete: false,
 
         });
-        // this.deleteCondition();
     };
 
     handleClickOpenAdd = () => {
@@ -139,48 +106,19 @@ export default class Conditions extends Component {
     handleCloseAdd = () => {
         this.setState({ openAdd: false });
     };
-    selectCondition(id) {
-        this.setState({
-            patientConditionId: id
-        })
-    }
 
     render() {
         const { value, ...other } = this.props;
-        // let testConditions = ['asthma', 'krohns', 'allergies']
 
-        // let conditionListEdit = this.state.patientConditions.map((el, i) => {
-        //     return (
-        //         <div key={el + i}>
-        //             <TextField
-        //                 select
-        //                 margin="dense"
-        //                 id={`${el.pateint_condition_id}`}
-        //                 label="Condition Type"
-        //                 value={`${el.condition_name}`}
-        //                 type="email"
-        //                 fullWidth
-        //             />
-        //             <TextField
-        //                 autoFocus
-        //                 margin="dense"
-        //                 id="name"
-        //                 label="Date Diagnosed"
-        //                 value={`${moment(el.condition_date_diagnosed).format('MMM DD, YYYY')}`}
-        //                 type="email"
-        //                 fullWidth
-        //             />
-        //         </div>
-        //     )
-        // })
         let conditionList = this.state.patientConditions.map((el, i) => {
-            if (el.deleted === false) {
-            console.log(el)
+            if (!el.deleted) {
+                console.log(el)
                 return (
-                    <div key={i + 1}>
+                    <div key={el.patient_condition_id}>
                         <ul>
-                            <li>{el.condition_name}</li><br />
-                            <li>{moment(el.condition_date_diagnosed).format('MMM DD, YYYY')}</li>
+                            <li id='conditionText'>{el.condition_name}</li>
+                            <li id='conditionText'>{moment(el.condition_date_diagnosed).format('MMM DD, YYYY')}</li>
+                            <br />
                         </ul>
                     </div>
                 )
@@ -190,10 +128,11 @@ export default class Conditions extends Component {
         let pastConditionList = this.state.patientConditions.map((el, i) => {
             if (el.deleted) {
                 return (
-                    <div key={el + 2}>
+                    <div key={el.patient_condition_id}>
                         <ul>
-                            <li>{el.condition_name}</li><br />
-                            <li>{moment(el.condition_date_diagnosed).format('MMM DD, YYYY')}</li>
+                            <li id='conditionText'>{el.condition_name}</li>
+                            <li id='conditionText'>{moment(el.condition_date_diagnosed).format('MMM DD, YYYY')}</li>
+                            <br />
                         </ul>
                     </div>
                 )
@@ -203,7 +142,7 @@ export default class Conditions extends Component {
 
         return (
             <div>
-                <ToastContainer />
+                {/* <ToastContainer /> */}
                 {/* ////////////Card Header/Content///////////////// */}
                 <Card>
                     <CardHeader style={{
@@ -229,7 +168,7 @@ export default class Conditions extends Component {
                             <ExpansionPanelDetails>
                                 <Typography>
                                     {pastConditionList}
-                                 </Typography>
+                                </Typography>
                             </ExpansionPanelDetails>
                         </ExpansionPanel>
                     </div>
@@ -261,8 +200,7 @@ export default class Conditions extends Component {
                         <ConditionSelector patient_id={this.props.patient_id} getConditions={this.getPatientConditions} />
                     </Dialog>
 
-
-                    {/* ///////////////////Edit Button///////////////////// */}
+                    {/* ///////////////////Delete Button///////////////////// */}
                     <Button
                         style={{
                             width: '100%',
@@ -270,8 +208,7 @@ export default class Conditions extends Component {
                             borderTop: '1px solid rgba(0,0,0,0.3)',
                             borderRight: '1px solid rgba(0,0,0,0.3)'
                         }}
-                        onClick={this.handleClickOpenEdit}
-                    >
+                        onClick={this.handleClickOpenDelete}>
                         Delete
                         <Delete style={{
                             marginLeft: '5px'
@@ -280,49 +217,42 @@ export default class Conditions extends Component {
                 </Card>
                 <div>
                     <Dialog
-                        open={this.state.openEdit}
-                        onClose={this.handleCloseEdit}
+                        open={this.state.openDelete}
+                        onClose={this.handleCloseDelete}
                         aria-labelledby="form-dialog-title"
                     >
                         <DialogTitle id="form-dialog-title">Delete Conditions</DialogTitle>
                         <div>
                             <List>
                                 {this.state.patientConditions.map((el, i) => {
-
-                                    return (
-
-                                        <ListItem>
-                                            <ListItemText
-                                                primary={el.condition_name}
-                                            // secondary={secondary ? 'Secondary text' : null}
-                                            />
-                                            <ListItemSecondaryAction>
-                                                <IconButton
-                                                    aria-label="Delete"
-                                                    onClick={this.updateCondition}
-                                                >
-                                                    <Delete />
-                                                </IconButton>
-                                            </ListItemSecondaryAction>
-                                        </ListItem>
-                                    )
-
+                                    if (!el.deleted)
+                                        return (
+                                            <ListItem>
+                                                <ListItemText
+                                                    primary={el.condition_name}
+                                                />
+                                                <ListItemSecondaryAction>
+                                                    <IconButton
+                                                        aria-label="Delete"
+                                                        onClick={() => {
+                                                            console.log(el)
+                                                            this.updateCondition(el.patient_condition_id)
+                                                        }
+                                                        }
+                                                    >
+                                                        <Delete />
+                                                    </IconButton>
+                                                </ListItemSecondaryAction>
+                                            </ListItem>
+                                        )
                                 }
                                 )}
-
-
                             </List>
                         </div>
                         <DialogActions>
-                            <Button onClick={this.handleClose} color="primary">
+                            <Button onClick={this.handleCloseDelete} color="primary">
                                 Cancel
                                 </Button>
-                            {/* <Button onClick={this.handleCloseEdit} color="primary">
-                                Update
-                                </Button>
-                            <Button onClick={this.handleCloseDelete} color="primary">
-                                Delete
-                                </Button> */}
                         </DialogActions>
                     </Dialog>
                 </div>
