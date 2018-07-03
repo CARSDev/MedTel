@@ -222,7 +222,7 @@ export default class Conditions extends Component {
                                 {this.state.patientConditions.map((el, i) => {
                                     if (!el.deleted)
                                         return (
-                                            <ListItem>
+                                            <ListItem key={i}>
                                                 <ListItemText
                                                     primary={el.condition_name}
                                                 />

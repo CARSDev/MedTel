@@ -227,7 +227,7 @@ export default class Devices extends Component {
                                 {this.state.patientDevices.map((el, i) => {
                                     if (!el.deleted)
                                         return (
-                                            <ListItem>
+                                            <ListItem key={`${i}Devices`}>
                                                 <ListItemText
                                                     primary={el.medical_device_name}
                                                 />
