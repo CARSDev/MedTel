@@ -75,11 +75,11 @@ class ConfirmationDialogRaw extends React.Component {
         });
     };
 
-    handleClick = (id)=>{
-        this.setState({
-            conditionId: id
-        })
-    }
+    // handleClick = (id)=>{
+    //     this.setState({
+    //         conditionId: id
+    //     })
+    // }
 
     render() {
         const { value, ...other } = this.props;
@@ -104,7 +104,7 @@ class ConfirmationDialogRaw extends React.Component {
                         name="condition"
                         value={this.state.value}
                         onChange={this.handleChange}
-                        onClick={this.handleClick}
+                        // onClick={this.handleClick}
                     >
                         {this.state.conditions.map(option => (
                             <FormControlLabel

@@ -8,6 +8,7 @@ import CardHeader from '@material-ui/core/CardHeader';
 import { withStyles } from '@material-ui/core/styles';
 import Add from '@material-ui/icons/Add';
 import Edit from '@material-ui/icons/Edit';
+import Delete from '@material-ui/icons/Delete';
 import axios from 'axios';
 import moment from 'moment';
 import { ToastContainer, toast } from 'react-toastify';
@@ -25,6 +26,9 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import Grid from '@material-ui/core/Grid';
+import IconButton from '@material-ui/core/IconButton';
 
 
 export default class Conditions extends Component {
@@ -36,13 +40,16 @@ export default class Conditions extends Component {
             openEdit: false,
             openAdd: false,
             value: '',
-            patientConditionId: 0
+            patientConditionId: 0,
         }
         this.handleClickOpenEdit = this.handleClickOpenEdit.bind(this);
         this.handleCloseEdit = this.handleCloseEdit.bind(this);
         this.handleClickOpenAdd = this.handleClickOpenAdd.bind(this);
         this.handleCloseAdd = this.handleCloseAdd.bind(this);
-        this.getConditions = this.getConditions.bind(this);
+        this.handleClose = this.handleClose.bind(this);
+        this.getPatientConditions = this.getPatientConditions.bind(this);
+        this.getConditionsList = this.getConditionsList.bind(this);
+        this.updateCondition = this.updateCondition.bind(this);
         // this.deleteCondition = this.deleteCondition.bind(this);
         // this.selectCondition = this.selectCondition.bind(this);
     }
@@ -51,16 +58,18 @@ export default class Conditions extends Component {
 
 
     componentDidMount() {
-        this.getConditions()
+        this.getPatientConditions()
+        this.getConditionsList()
     }
 
     componentDidUpdate(prevProps) {
         if (prevProps !== this.props) {
-            this.getConditions()
+            this.getPatientConditions()
+            this.getConditionsList()
         }
     }
 
-    getConditions() {
+    getPatientConditions() {
         axios.get(`/condition/${this.props.patient_id}`).then(res => {
             // console.log("performing get conditions")
             this.setState({
@@ -70,8 +79,21 @@ export default class Conditions extends Component {
         }).catch(() => toast.error("Failed to Fetch Patient Conditions", { position: toast.POSITION.BOTTOM_RIGHT }))
     }
 
-    updateCondition() {
-        
+    getConditionsList() {
+        axios.get(`/conditions`).then(res => {
+            this.setState({
+                conditions: res.data
+            })
+            toast.success("Successfully got Conditions", { position: toast.POSITION.BOTTOM_RIGHT })
+        }).catch(() => toast.error("Failed to Fetch Conditions", { position: toast.POSITION.BOTTOM_RIGHT }))
+    }
+    updateCondition(id) {
+        if (window.confirm('Are you sure you want to delete this condition?')) {
+            axios.put(`/condition/${id}`).then(res => {
+                toast.success("Successfully deleted patient condition")
+            }).catch(() => toast.error(alert("Condition has a dependent records. Cannot be deleted")));
+        }
+        this.getPatientConditions();
     }
     // deleteCondition() {
     //     if (window.confirm('Are you sure you want to delete this condition?')) {
@@ -117,16 +139,15 @@ export default class Conditions extends Component {
         })
     }
 
-
     render() {
         const { value, ...other } = this.props;
-
+        let testConditions = ['asthma', 'krohns', 'allergies']
 
         let conditionListEdit = this.state.patientConditions.map((el, i) => {
             return (
                 <div key={el + i}>
                     <TextField
-                        autoFocus
+                        select
                         margin="dense"
                         id={`${el.pateint_condition_id}`}
                         label="Condition Type"
@@ -200,7 +221,7 @@ export default class Conditions extends Component {
                         aria-labelledby="confirmation-dialog-title"
                     >
                         <DialogTitle id="form-dialog-title">Add Conditions</DialogTitle>
-                        <ConditionSelector patient_id={this.props.patient_id} getConditions={this.getConditions} />
+                        <ConditionSelector patient_id={this.props.patient_id} getConditions={this.getPatientConditions} />
                     </Dialog>
 
 
@@ -214,8 +235,8 @@ export default class Conditions extends Component {
                         }}
                         onClick={this.handleClickOpenEdit}
                     >
-                        Edit
-                        <Edit style={{
+                        Delete
+                        <Delete style={{
                             marginLeft: '5px'
                         }} />
                     </Button>
@@ -226,20 +247,45 @@ export default class Conditions extends Component {
                         onClose={this.handleCloseEdit}
                         aria-labelledby="form-dialog-title"
                     >
-                        <DialogTitle id="form-dialog-title">Edit Conditions</DialogTitle>
-                        <DialogContent>
-                            {conditionListEdit}
-                        </DialogContent>
+                        <DialogTitle id="form-dialog-title">Delete Conditions</DialogTitle>
+                        <div>
+                            <List>
+                                {this.state.patientConditions.map((el, i) => {
+                                 
+                                    return (
+                                            
+                                        <ListItem>
+                                            <ListItemText
+                                                primary={el.condition_name}
+                                                // secondary={secondary ? 'Secondary text' : null}
+                                            />
+                                            <ListItemSecondaryAction>
+                                                <IconButton
+                                                    aria-label="Delete"
+                                                    onClick={this.updateCondition}
+                                                >
+                                                    <Delete  />
+                                                </IconButton>
+                                            </ListItemSecondaryAction>
+                                        </ListItem>
+                                        )
+                                    
+                                }
+                                )}
+                                    
+                                    
+                            </List>
+                        </div>
                         <DialogActions>
                             <Button onClick={this.handleClose} color="primary">
                                 Cancel
                                 </Button>
-                            <Button onClick={this.handleCloseEdit} color="primary">
-                                Edit
+                            {/* <Button onClick={this.handleCloseEdit} color="primary">
+                                Update
                                 </Button>
                             <Button onClick={this.handleCloseDelete} color="primary">
                                 Delete
-                                </Button>
+                                </Button> */}
                         </DialogActions>
                     </Dialog>
                 </div>

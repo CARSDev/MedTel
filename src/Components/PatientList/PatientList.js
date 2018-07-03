@@ -27,7 +27,7 @@ export default class PatientList extends Component {
             this.setState({
                 patients: res.data
             })
-            toast.success("Successfully got Instruments", { position: toast.POSITION.BOTTOM_RIGHT })
+            toast.success("Successfully Got All Patients", { position: toast.POSITION.BOTTOM_RIGHT })
         })
             .catch(() => toast.error("Failed to Fetch Patient List", { position: toast.POSITION.BOTTOM_RIGHT }))
     }

@@ -57,9 +57,9 @@ function addCondition(req, res) {
 
 function updateCondition(req, res) {
     console.log('hit update condition')
-    const { condition_id, condition_date_diagnosed, patient_condition_id } = req.body
+    const { params } = req;
     
-    req.db.update_patient_condition([condition_id, condition_date_diagnosed, patient_condition_id])
+    req.db.update_patient_condition([params.id])
         .then((conditions) => {
             res.status(200).send(conditions)
 
