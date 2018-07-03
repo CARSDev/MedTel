@@ -15,35 +15,34 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import Radio from '@material-ui/core/Radio';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
-class ConfirmationDialogRaw extends React.Component {
+class AllergiesDialogRaw extends React.Component {
     radioGroup = null;
 
     constructor(props) {
         super(props);
-        
+
         this.state = {
             value: this.props.value,
-            conditions: [],
-            conditionId: 8,
+            allergies: [],
+            allergyId:11,
             time: ''
         };
     }
 
-    state = {};
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.value !== this.props.value) {
             this.setState({ value: nextProps.value });
         }
-      }
+    }
 
     componentDidMount() {
-        axios.get(`/conditions`).then(res => {
+        axios.get(`/allergies`).then(res => {
             this.setState({
-                conditions: res.data
+                allergies: res.data
             })
-            toast.success("Successfully got Conditions", { position: toast.POSITION.BOTTOM_RIGHT })
-        }).catch(() => toast.error("Failed to Fetch Conditions", { position: toast.POSITION.BOTTOM_RIGHT }))
+            toast.success("Successfully got Allergies", { position: toast.POSITION.BOTTOM_RIGHT })
+        }).catch(() => toast.error("Failed to Fetch Allergies", { position: toast.POSITION.BOTTOM_RIGHT }))
     }
 
     handleEntering = () => {
@@ -55,25 +54,25 @@ class ConfirmationDialogRaw extends React.Component {
     };
 
     handleOk = () => {
-        this.props.onClose(this.state.value, this.state.conditionId);
+        this.props.onClose(this.state.value, this.state.allergyId);
     };
 
     handleChange = (event, value) => {
-        let conditionElement = this.state.conditions.find((el) => {
-            if (value === el.condition_name) {
+        let allergyElement = this.state.allergies.find((el) => {
+            if (value === el.allergy_name) {
                 return true;
             }
         })
         this.setState({
             value,
-            conditionId: conditionElement.condition_id
+            allergyId: allergyElement.allergy_id
         });
     };
 
     render() {
         const { value, ...other } = this.props;
         // console.log(this.state.value)
-        // console.log(this.state.condition_id)
+        // console.log(this.state.allergy_id)
         return (
             <Dialog
                 disableBackdropClick
@@ -83,23 +82,23 @@ class ConfirmationDialogRaw extends React.Component {
                 aria-labelledby="confirmation-dialog-title"
                 {...other}
             >
-                <DialogTitle id="confirmation-dialog-title">Conditions</DialogTitle>
+                <DialogTitle id="confirmation-dialog-title">Allergies</DialogTitle>
                 <DialogContent>
                     <RadioGroup
                         ref={node => {
                             this.radioGroup = node;
                         }}
-                        aria-label="condition"
-                        name="condition"
+                        aria-label="allergy"
+                        name="allergy"
                         value={this.state.value}
                         onChange={this.handleChange}
                     >
-                        {this.state.conditions.map(option => (
+                        {this.state.allergies.map(option => (
                             <FormControlLabel
-                                value={option.condition_name}
-                                key={option.condition_id}
-                                control={<Radio/>}
-                                label={option.condition_name} />
+                                value={option.allergy_name}
+                                key={option.allergy_id + 'select'}
+                                control={<Radio />}
+                                label={option.allergy_name} />
                         ))}
                     </RadioGroup>
                 </DialogContent>
@@ -116,7 +115,7 @@ class ConfirmationDialogRaw extends React.Component {
     }
 }
 
-ConfirmationDialogRaw.propTypes = {
+AllergiesDialogRaw.propTypes = {
     onClose: PropTypes.func,
     value: PropTypes.string,
 };
@@ -133,22 +132,22 @@ const styles = theme => ({
     },
 });
 
-class ConfirmationDialog extends React.Component {
+class AllergiesDialog extends React.Component {
     button = null;
 
     state = {
         open: false,
-        value: 'Allergies'
+        value: 'Anticonvulsants'
     };
 
     handleClickListItem = () => {
         this.setState({ open: true });
     };
 
-    handleClose = (value, conditionId) => {
+    handleClose = (value, allergyId) => {
         this.setState({ value, open: false });
-        axios.post(`/condition/${this.props.patient_id}`, { condition_id: conditionId, condition_date_diagnosed: new Date() }).then(res => {
-            this.props.getConditions()
+        axios.post(`/allergy/${this.props.patient_id}`, { allergy_id: allergyId, allergy_date_diagnosed: new Date() }).then(res => {
+            this.props.getAllergies()
         })
     };
 
@@ -161,13 +160,13 @@ class ConfirmationDialog extends React.Component {
                         button
                         divider
                         aria-haspopup="true"
-                        aria-controls="condition-menu"
-                        aria-label="Condition"
+                        aria-controls="allergy-menu"
+                        aria-label="Allergy"
                         onClick={this.handleClickListItem}
                     >
-                        <ListItemText primary="Condition" secondary={this.state.value} />
+                        <ListItemText primary="Allergy" secondary={this.state.value} />
                     </ListItem>
-                    <ConfirmationDialogRaw
+                    <AllergiesDialogRaw
                         classes={{
                             paper: classes.paper,
                         }}
@@ -181,8 +180,8 @@ class ConfirmationDialog extends React.Component {
     }
 }
 
-ConfirmationDialog.propTypes = {
+AllergiesDialog.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(ConfirmationDialog);
+export default withStyles(styles)(AllergiesDialog);
