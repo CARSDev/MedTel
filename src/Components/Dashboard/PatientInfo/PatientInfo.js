@@ -153,14 +153,18 @@ class PatientInfo extends Component {
     // console.log(this.state)
     return (
       <div className="mainPatientInfo">
+        
         <div className="row1">
+          
           <div className="ptpic">
             <img src={this.state.patient_picture} alt="" />
           </div>
+
           <div className="identifiers">
             <div className="name">
               <h3>{this.state.patient_full_name}</h3>
             </div>
+
             <div className="birthdate">
               Birthdate:{" "}
               {moment(this.state.patient_birthday).format("MM/DD/YYYY")}{" "}
@@ -169,11 +173,17 @@ class PatientInfo extends Component {
                 "years"
               )}y
             </div>
-            <div className="gender">Gender: {this.state.patient_gender}</div>
+
+            <div className="gender">Gender:
+              {this.state.patient_gender}
+            </div>
           </div>
+
           <div className="measurements">
             <div className="height">Height: {this.state.patient_height}"</div>
+
             <div className="weight">Weight: {this.state.patient_weight}lbs</div>
+
             <div className="bmi">
               BMI:{" "}
               {this.calculateBMI(
@@ -181,24 +191,35 @@ class PatientInfo extends Component {
                 this.state.patient_weight
               )}
             </div>
+
             <div className="expand">
               <ExpandMore />
             </div>
+
           </div>
+
         </div>
+
         <hr />
+
         <div className="row2">
           Contact Info
+
           <hr />
+
           <div className="contactInfo">
+            
             <div className="address">
               Address: {this.state.patient_address} <br />
               Phone: {this.state.patient_phone_number} <br />
               Email: {this.state.patient_email}
             </div>
+
             <div className="contacts"></div>
+            
           </div>
         </div>
+
         {/* <div className="row3"> */}
           {/* <div className="appt 1">
             {this.state.upcoming_appt1 ? (
@@ -227,6 +248,7 @@ class PatientInfo extends Component {
             )}
           </div> */}
         {/* </div> */}
+
       </div>
     );
   }
