@@ -20,6 +20,10 @@ module.exports = function addRachelEndpointsTo(app) {
     app.get('/med', getMedications);
     app.post('/med/:id', addMedication);
     app.put('/med/:id', updateMedication);
+    ///////////Family History//////////////////
+    app.get('/hx/:id', getPatientHx);
+    app.post('/hx/:id', addHx);
+    app.put('/hx/:id', updateHx);
 }
 
 
@@ -228,4 +232,39 @@ function updateMedication(req, res) {
 
         })
         .catch((e) => { console.log(e); res.status(500).send("Couldn't get update_patient_medications") });
+}
+/////////////////Family History///////////////////
+function getPatientHx(req, res) {
+    // console.log('hit patient family history')
+    const { id } = req.params;
+
+    req.db.get_patient_hx([id])
+        .then((history) => {
+            res.status(200).send(history)
+        })
+        .catch((e) => { console.log(e); res.status(500).send("Couldn't get get_patient_hx") });
+}
+
+function addHx(req, res) {
+    // console.log('hit add family history')
+    const { id } = req.params;
+    const { condition_id, family_history_relationship } = req.body
+
+    req.db.add_hx([id, condition_id, family_history_relationship])
+        .then(() => {
+            res.status(200).send()
+        })
+        .catch((e) => { console.log(e); res.status(500).send("Couldn't get get_hx") });
+}
+
+function updateHx(req, res) {
+    // console.log('hit update medication')
+    const { id } = req.params;
+    const { condition_id, family_history_relationship } = req.body
+
+    req.db.update_patient_hx([condition_id, family_history_relationship, id])
+        .then(() => {
+            res.status(200).send()
+        })
+        .catch((e) => { console.log(e); res.status(500).send("Couldn't get update_patient_hx") });
 }
