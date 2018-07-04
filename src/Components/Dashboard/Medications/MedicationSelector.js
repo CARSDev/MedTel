@@ -15,6 +15,7 @@ import Dialog from '@material-ui/core/Dialog';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import Radio from '@material-ui/core/Radio';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import TextField from '@material-ui/core/TextField';
 
 class MedicationDialogRaw extends React.Component {
     radioGroup = null;
@@ -26,6 +27,7 @@ class MedicationDialogRaw extends React.Component {
             value: this.props.value,
             medications: [],
             medicationId: 1,
+            sideEffect: ''
         };
     }
 
@@ -54,7 +56,11 @@ class MedicationDialogRaw extends React.Component {
     };
 
     handleOk = () => {
-        this.props.onClose(this.state.value, this.state.medicationId);
+        this.props.onClose(
+            this.state.value,
+            this.state.medicationId,
+            this.state.sideEffect
+        );
     };
 
     handleChange = (event, value) => {
@@ -68,6 +74,11 @@ class MedicationDialogRaw extends React.Component {
             medicationId: medicationElement.medication_id
         });
     };
+    handleText(input) {
+        this.setState({
+            sideEffect: input
+        })
+    }
 
     render() {
         const { value, ...other } = this.props;
@@ -101,6 +112,15 @@ class MedicationDialogRaw extends React.Component {
                                 label={option.medication_name} />
                         ))}
                     </RadioGroup>
+                    <TextField
+                        required
+                        id="required"
+                        label="Required"
+                        defaultValue="Side Effect"
+                        onChange={(e)=>this.handleText(e.target.value)}
+                        // className={classes.textField}
+                        margin="normal"
+                    />
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={this.handleCancel} color="primary">
@@ -144,11 +164,11 @@ class MedicationDialog extends React.Component {
         this.setState({ open: true });
     };
 
-    handleClose = (value, medicationId) => {
+    handleClose = (value, medicationId, sideEffect) => {
         this.setState({ value, open: false });
         let rxdate = moment.utc(new Date()).format()
         // console.log(rxdate)
-        axios.post(`/med/${this.props.patient_id}`, { medication_id: medicationId, medication_date_prescribed: rxdate, medication_side_effect: 'This side effect' }).then(() => {
+        axios.post(`/med/${this.props.patient_id}`, { medication_id: medicationId, medication_date_prescribed: rxdate, medication_side_effect: sideEffect }).then(() => {
             this.props.getMedications()
         })
     };

@@ -218,7 +218,7 @@ function addMedication(req, res) {
 }
 
 function updateMedication(req, res) {
-    console.log('hit update medication')
+    // console.log('hit update medication')
     const { params } = req;
     // console.log(params.id)
 

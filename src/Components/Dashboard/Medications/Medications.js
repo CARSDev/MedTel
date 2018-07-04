@@ -145,7 +145,7 @@ export default class Medications extends Component {
 
         return (
             <div>
-                <ToastContainer />
+                {/* <ToastContainer /> */}
                 {/* ////////////Card Header/Content///////////////// */}
                 <Card style={{
                     marginTop: '20px'
