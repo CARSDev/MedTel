@@ -7,6 +7,9 @@ module.exports = function addShanEndpointsTo(app) {
     app.delete('/appointment/:id', deleteAppointment)
     app.get('/employees', getEmployees)
     app.post('/employee', addEmployee)
+    app.put('/employee/:id', updateEmployee)
+    app.delete('/employee/:id', deleteEmployee)
+
 }
 
 function getSchedule(req, res) {
@@ -53,4 +56,16 @@ function addEmployee(req, res) {
             req.db.add_employee([full, first, last, picture, role, username, hash, email]).then(()=>res.status(200).send())
         })
     })
+}
+
+function updateEmployee(req, res) {
+    let { id } = req.params
+    let { first, last, picture, role, username, email } = req.body
+    let full = `${first} ${last}`
+    req.db.edit_employee([id, full, first, last, picture, role, username, email]).then(()=>res.status(200).send())
+}
+
+function deleteEmployee(req, res) {
+    let { id } = req.params
+    req.db.delete_employee([id]).then(()=>res.status(200).send())
 }
