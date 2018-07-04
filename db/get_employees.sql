@@ -1,2 +1,3 @@
-select  employee_picture, employee_full_name, employee_email, employee_id
+select  *
 from employees
+order by employee_id asc;

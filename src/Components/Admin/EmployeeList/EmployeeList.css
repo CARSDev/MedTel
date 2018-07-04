@@ -19,6 +19,39 @@
     height: 50px;
 }
 
+.empSearch{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #25A9A0;
+    text-align: center;
+    max-height: 80px;
+    opacity: 1;
+    transition: linear all 0.2s;
+
+}
+
+.empSearch input{
+    margin-top: 10px;
+    outline: none;
+    border: none;
+    padding: 10px;
+    width: 90%
+}
+
+.hidden{
+ max-height: 0px;
+ overflow: hidden;
+ opacity: 0;
+ transition: linear all 0.2s;
+}
+
+/* .hiddenTab{
+ max-height: 400px;
+ opacity: 1;
+ transition: linear all 0.2s;
+} */
+
 .empPic{
     display: flex;
     justify-content: flex-end;

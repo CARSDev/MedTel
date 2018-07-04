@@ -84,7 +84,7 @@ export default class Schedule extends Component {
                     onChange={this.onChange}
                     value={date}
                 />
-                <Day date={date} morning={morning} schedule={schedule}/>
+                <Day date={date} morning={morning} schedule={schedule} getSchedule={this.getSchedule}/>
             </div>
         )
     }
