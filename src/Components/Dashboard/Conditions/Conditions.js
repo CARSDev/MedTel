@@ -126,7 +126,7 @@ export default class Conditions extends Component {
                     <div key={el.patient_condition_id}>
                         <ul>
                             <li id='conditionText'>{el.condition_name}</li>
-                            <li id='conditionText'>{moment(el.condition_date_diagnosed).format('MMM DD, YYYY')}</li>
+                            <li id='conditionText'>{moment(el.condition_date_diagnosed).format('MM-DD-YYYY')}</li>
                             <br />
                         </ul>
                     </div>

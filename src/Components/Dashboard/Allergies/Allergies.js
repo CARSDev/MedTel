@@ -117,7 +117,7 @@ export default class Allergies extends Component {
                     <div key={el.patient_allergy_id}>
                         <ul>
                             <li id='conditionText'>{el.allergy_name}</li>
-                            <li id='conditionText'>{moment(el.allergy_date_diagnosed).format('MMM DD, YYYY')}</li>
+                            <li id='conditionText'>{moment(el.allergy_date_diagnosed).format('MM-DD-YYYY')}</li>
                             <br />
                         </ul>
                     </div>
@@ -131,7 +131,7 @@ export default class Allergies extends Component {
                     <div key={el.patient_allergy_id}>
                         <ul>
                             <li id='conditionText'>{el.allergy_name}</li>
-                            <li id='conditionText'>{moment(el.allergy_date_diagnosed).format('MMM DD, YYYY')}</li>
+                            <li id='conditionText'>{moment(el.allergy_date_diagnosed).format('MM-DD-YYYY')}</li>
                             <br />
                         </ul>
                     </div>

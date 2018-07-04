@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import moment from 'moment';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -144,7 +145,7 @@ class DeviceDialog extends React.Component {
 
     handleClose = (value, deviceId) => {
         this.setState({ value, open: false });
-        axios.post(`/device/${this.props.patient_id}`, { medical_device_id: deviceId, medical_device_date_administered: new Date() }).then(() => {
+        axios.post(`/device/${this.props.patient_id}`, { medical_device_id: deviceId, medical_device_date_administered: moment.utc(new Date()).format() }).then(() => {
             this.props.getDevices()
         })
     };

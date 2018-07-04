@@ -117,7 +117,7 @@ export default class Devices extends Component {
                     <div key={el.patient_medical_device_id}>
                         <ul>
                             <li id='conditionText'>{el.medical_device_name}</li>
-                            <li id='conditionText'>{moment(el.medical_device_date_administered).format('MMM DD, YYYY')}</li>
+                            <li id='conditionText'>{moment(el.medical_device_date_administered).format('MM-DD-YYYY')}</li>
                             <br />
                         </ul>
                     </div>
@@ -131,7 +131,7 @@ export default class Devices extends Component {
                     <div key={el.patient_medical_device_id}>
                         <ul>
                             <li id='conditionText'>{el.medical_device_name}</li>
-                            <li id='conditionText'>{moment(el.medical_device_date_diagnosed).format('MMM DD, YYYY')}</li>
+                            <li id='conditionText'>{moment(el.medical_device_date_diagnosed).format('MM-DD-YYYY')}</li>
                             <br />
                         </ul>
                     </div>
