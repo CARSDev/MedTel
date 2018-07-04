@@ -28,7 +28,7 @@ exports.default = function addMiddlewaresTo(app) {
         if (user_id) {
             req.db.read_user([user_id])
             .then(user => {
-                console.log(user.employee_id, user.company_id, user.role_id);
+                // console.log(user.employee_id, user.company_id, user.role_id);
             })
             
         } else {

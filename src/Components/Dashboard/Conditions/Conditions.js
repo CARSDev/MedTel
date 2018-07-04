@@ -48,11 +48,6 @@ export default class Conditions extends Component {
     }
     radioGroup = null;
 
-    componentDidMount() {
-        this.getPatientConditions()
-        this.getConditionsList()
-    }
-
     componentDidUpdate(prevProps) {
         if (prevProps !== this.props) {
             this.getPatientConditions()
@@ -144,13 +139,15 @@ export default class Conditions extends Component {
             <div>
                 {/* <ToastContainer /> */}
                 {/* ////////////Card Header/Content///////////////// */}
-                <Card>
+                <Card style={{
+                    marginTop: '20px'
+                }}>
                     <CardHeader style={{
                         width: '100%',
                         background: '#EBF7F6',
                         borderRadius: 0,
                         borderTop: '1px solid rgba(0,0,0,0.3)',
-                        borderRight: '1px solid rgba(0,0,0,0.3)'
+                        borderRight: '1px solid rgba(0,0,0,0.3)',
                     }}
                         title="Conditions">
                     </CardHeader>
@@ -227,7 +224,7 @@ export default class Conditions extends Component {
                                 {this.state.patientConditions.map((el, i) => {
                                     if (!el.deleted)
                                         return (
-                                            <ListItem>
+                                            <ListItem key={i}>
                                                 <ListItemText
                                                     primary={el.condition_name}
                                                 />
