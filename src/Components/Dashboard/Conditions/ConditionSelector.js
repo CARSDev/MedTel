@@ -147,7 +147,7 @@ class ConfirmationDialog extends React.Component {
 
     handleClose = (value, conditionId) => {
         this.setState({ value, open: false });
-        axios.post(`/condition/${this.props.patient_id}`, { condition_id: conditionId, condition_date_diagnosed: new Date() }).then(res => {
+        axios.post(`/condition/${this.props.patient_id}`, { condition_id: conditionId, condition_date_diagnosed: moment.utc(new Date()).format() }).then(res => {
             this.props.getConditions()
         })
     };
