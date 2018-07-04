@@ -55,9 +55,9 @@ export default class Labs extends Component {
     return (
       <div className="resultsAccordian" id="labsAccordian" >
         
-        <div className="visibleTab">
+        <div className="visibleTab" onClick={this.changeHidden}>
           <h3>Labs & Vitals</h3>
-          <div className="iconContainer" id="labsArrow"><ExpandMore onClick={this.changeHidden}/></div>
+          <div className="iconContainer" id="labsArrow"><ExpandMore /></div>
         </div>
 
         <div className="hidden" id="labsHidden">

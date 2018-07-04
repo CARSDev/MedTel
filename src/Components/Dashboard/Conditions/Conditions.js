@@ -139,13 +139,15 @@ export default class Conditions extends Component {
             <div>
                 {/* <ToastContainer /> */}
                 {/* ////////////Card Header/Content///////////////// */}
-                <Card>
+                <Card style={{
+                    marginTop: '20px'
+                }}>
                     <CardHeader style={{
                         width: '100%',
                         background: '#EBF7F6',
                         borderRadius: 0,
                         borderTop: '1px solid rgba(0,0,0,0.3)',
-                        borderRight: '1px solid rgba(0,0,0,0.3)'
+                        borderRight: '1px solid rgba(0,0,0,0.3)',
                     }}
                         title="Conditions">
                     </CardHeader>

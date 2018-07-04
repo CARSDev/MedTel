@@ -52,7 +52,6 @@ export default class Visits extends Component {
                 <Button style={{
                     width: '100%',
                     borderRadius: 0,
-                    borderTop: '1px solid rgba(0,0,0,0.3)',
                 }} >
                     Add
                     <Add style={{

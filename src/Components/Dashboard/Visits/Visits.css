@@ -76,3 +76,8 @@
     font-family: 'Roboto';
     font-size: 22px;
 }
+
+.visitsButtons > a{
+    width: 100%;
+    text-decoration: none;
+}
