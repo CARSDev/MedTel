@@ -144,7 +144,9 @@ export default class Devices extends Component {
             <div>
                 {/* <ToastContainer /> */}
                 {/* ////////////Card Header/Content///////////////// */}
-                <Card>
+                <Card style={{
+                    marginTop: '20px'
+                }}>
                     <CardHeader style={{
                         width: '100%',
                         background: '#EBF7F6',
@@ -227,7 +229,7 @@ export default class Devices extends Component {
                                 {this.state.patientDevices.map((el, i) => {
                                     if (!el.deleted)
                                         return (
-                                            <ListItem>
+                                            <ListItem key={`${i}Devices`}>
                                                 <ListItemText
                                                     primary={el.medical_device_name}
                                                 />

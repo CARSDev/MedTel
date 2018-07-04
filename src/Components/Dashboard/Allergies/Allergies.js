@@ -144,7 +144,9 @@ export default class Allergies extends Component {
             <div>
                 {/* <ToastContainer /> */}
                 {/* ////////////Card Header/Content///////////////// */}
-                <Card>
+                <Card style={{
+                    marginTop: '20px'
+                }}>
                     <CardHeader style={{
                         width: '100%',
                         background: '#EBF7F6',
