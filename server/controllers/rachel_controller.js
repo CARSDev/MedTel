@@ -15,6 +15,11 @@ module.exports = function addRachelEndpointsTo(app) {
     app.get('/devices', getDevices);
     app.post('/device/:id', addDevice);
     app.put('/device/:id', updateDevice);
+    ///////////Medications//////////////////
+    app.get('/med/:id', getPatientMedications);
+    app.get('/med', getMedications);
+    app.post('/med/:id', addMedication);
+    app.put('/med/:id', updateMedication);
 }
 
 
@@ -175,4 +180,52 @@ function updateDevice(req, res) {
 
         })
         .catch((e) => { console.log(e); res.status(500).send("Couldn't get update_patient_devices") });
+}
+/////////////////Medications///////////////////
+function getPatientMedications(req, res) {
+    // console.log('hit patient medications list')
+    const { params } = req;
+
+    req.db.get_patient_medications([params.id])
+        .then((medications) => {
+            // console.log(medications)
+            res.status(200).send(medications)
+
+        })
+        .catch((e) => { console.log(e); res.status(500).send("Couldn't get get_patient_medications") });
+}
+
+function getMedications(req, res) {
+    req.db.get_medications()
+        .then((medications) => {
+            res.status(200).send(medications)
+
+        })
+        .catch((e) => { console.log(e); res.status(500).send("Couldn't get get_medications") });
+}
+
+function addMedication(req, res) {
+    // console.log('hit add medication')
+    const { id } = req.params;
+    const { medication_id, medication_date_prescribed, medication_side_effect } = req.body
+
+    req.db.add_medication([id, medication_id, medication_date_prescribed, medication_side_effect])
+        .then(() => {
+            res.status(200).send()
+
+        })
+        .catch((e) => { console.log(e); res.status(500).send("Couldn't get get_medications") });
+}
+
+function updateMedication(req, res) {
+    console.log('hit update medication')
+    const { params } = req;
+    // console.log(params.id)
+
+    req.db.update_patient_medications([params.id])
+        .then(() => {
+            res.status(200).send()
+
+        })
+        .catch((e) => { console.log(e); res.status(500).send("Couldn't get update_patient_medications") });
 }
