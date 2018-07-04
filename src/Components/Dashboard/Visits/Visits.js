@@ -17,14 +17,6 @@ export default class Visits extends Component {
         }
     }
 
-    componentDidMount() {
-        this.setState({
-            patient_id: this.props.patient_id
-        }, () => {
-            this.getPatientInfo()
-        })
-    }
-
     componentDidUpdate(prevProps) {
         if (prevProps !== this.props) {
             this.setState({
@@ -60,7 +52,6 @@ export default class Visits extends Component {
                 <Button style={{
                     width: '100%',
                     borderRadius: 0,
-                    borderTop: '1px solid rgba(0,0,0,0.3)',
                 }} >
                     Add
                     <Add style={{
