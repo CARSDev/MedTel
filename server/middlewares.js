@@ -46,7 +46,7 @@ exports.default = function addMiddlewaresTo(app) {
             employee_first_name: "Donna",
             employee_last_name: "Schmiphflingherr",
             employee_picture: 'https://img.etsystatic.com/il/8f3c6d/818346854/il_570xN.818346854_r3b9.jpg?version=0',
-            role_id: 2,
+            role_id: 1,
             employee_hashed_password: "",
             employee_email: "degs@gmail.com",
             employee_username: "Degs"
