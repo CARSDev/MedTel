@@ -1,12 +1,24 @@
-#conditionText{
-    padding: 0px;
-    margin: 0px;
+ #conditionTextHead{
+    padding-bottom: 5px;
+    margin-right: auto;
     display: flex;
-	flex-direction: column;
-	flex-wrap: nowrap;
-	justify-content: flex-start;
-	align-items: flex-start;
-    align-content: stretch;
+    font-weight: bold;
     /* display: list-item;
     list-style-type: disc; */
 }
+#conditionText{
+	display: flex;
+    align-items: center;
+    font-size: 12px;
+}
+
+#listContainer{
+    display: flex;   
+    justify-content: space-between;
+	align-items: center;
+}
+
+ExpansionPanelDetails>div{
+    flex: 0 50%;
+}
+

@@ -108,16 +108,15 @@ export default class Allergies extends Component {
     };
 
     render() {
-        const { value, ...other } = this.props;
 
         let allergyList = this.state.patientAllergies.map((el, i) => {
             if (!el.deleted) {
                 // console.log(el)
                 return (
                     <div key={el.patient_allergy_id}>
-                        <ul>
-                            <li id='conditionText'>{el.allergy_name}</li>
-                            <li id='conditionText'>{moment(el.allergy_date_diagnosed).format('MMM DD, YYYY')}</li>
+                        <ul id='listContainer'>
+                            <li id='conditionTextHead'>{el.allergy_name}</li>
+                            <li id='conditionText'>{moment(el.allergy_date_diagnosed).format('MM-DD-YYYY')}</li>
                             <br />
                         </ul>
                     </div>
@@ -129,9 +128,9 @@ export default class Allergies extends Component {
             if (el.deleted) {
                 return (
                     <div key={el.patient_allergy_id}>
-                        <ul>
-                            <li id='conditionText'>{el.allergy_name}</li>
-                            <li id='conditionText'>{moment(el.allergy_date_diagnosed).format('MMM DD, YYYY')}</li>
+                        <ul id='listContainer'>
+                            <li id='conditionTextHead'>{el.allergy_name}</li>
+                            <li id='conditionText'>{moment(el.allergy_date_diagnosed).format('MM-DD-YYYY')}</li>
                             <br />
                         </ul>
                     </div>
@@ -167,10 +166,13 @@ export default class Allergies extends Component {
                             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                                 <Typography >Past Allergies</Typography>
                             </ExpansionPanelSummary>
-                            <ExpansionPanelDetails>
-                                <Typography>
+                            <ExpansionPanelDetails
+                                style={{
+                                    display: 'flex',
+                                    flexDirection: 'column'
+                                }}
+                            >
                                     {pastAllergyList}
-                                </Typography>
                             </ExpansionPanelDetails>
                         </ExpansionPanel>
                     </div>
@@ -253,7 +255,7 @@ export default class Allergies extends Component {
                         </div>
                         <DialogActions>
                             <Button onClick={this.handleCloseDelete} color="primary">
-                                Cancel
+                                Close
                                 </Button>
                         </DialogActions>
                     </Dialog>
