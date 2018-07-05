@@ -99,21 +99,21 @@ class Day extends Component {
         let utc_time = moment.utc(time).format()
         axios.post('/appointment', { utc_time, id, reason }).then(res => {
             this.handleClose()
-        }).then(this.props.history.go(0))
+        }).then(this.props.getSchedule())
     }
 
     submitChange = (id, reason) => {
         console.log(this.state.selectedID)
         axios.put('/appointment', { id, reason }).then(res => {
             this.setState({ openEdit: false, openReason: false })
-        }).then(this.props.history.go(0))
+        }).then(this.props.getSchedule())
     }
 
     submitDelete = (id) => {
         console.log(id)
         axios.delete(`/appointment/${id}`).then(res => {
             this.setState({ openEdit: false })
-        }).then(this.props.history.go(0))
+        }).then(this.props.getSchedule())
     }
 
     setReason = (reason) => {
