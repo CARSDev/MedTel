@@ -146,16 +146,25 @@ export default class Allergies extends Component {
                     <CardHeader style={{
                         width: '100%',
                         background: '#E9F7FA',
-                        padding: '10px',
+                        padding: 1,
+                        margin: 0,
                         borderBottom: '1px solid rgba(0,0,0,0.3)',
                         borderTopLeftRadius: '5px',
                         borderTopRightRadius: '5px',
                         fontFamily: 'Roboto',
                         textTransform: 'uppercase',
                     }}
-                        title="Allergies">
+                        title={<span
+                            style={{
+                                fontSize: '0.7em',
+                                padding: '0px',
+                            }}>Allergies</span>}>
                     </CardHeader>
-                    <CardContent>
+                    <CardContent
+                        style={{
+                            padding: 10
+                        }}
+                    >
                         {allergyList}
                     </CardContent>
                     {/* ////////////////////////////////////// */}

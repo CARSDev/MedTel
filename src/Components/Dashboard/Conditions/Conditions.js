@@ -26,6 +26,11 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
+const styles = {
+    button: {
+        background: props => props.color,
+    },
+};
 
 export default class Conditions extends Component {
     constructor(props) {
@@ -105,7 +110,7 @@ export default class Conditions extends Component {
     render() {
 
         let conditionList = this.state.patientConditions
-            .filter(el => !el.deleted)            
+            .filter(el => !el.deleted)
             .map((el, i) => {
                 // console.log(el)
                 return (
@@ -117,9 +122,9 @@ export default class Conditions extends Component {
                         </ul>
                     </div>
                 )
-        })
+            })
         let pastConditionList = this.state.patientConditions
-            .filter(el => !el.deleted)            
+            .filter(el => !el.deleted)
             .map((el, i) => {
                 return (
                     <div key={el.patient_condition_id + 'conPastList'}>
@@ -131,7 +136,7 @@ export default class Conditions extends Component {
                         </ul>
                     </div>
                 )
-        })
+            })
 
         return (
             <div>
@@ -141,21 +146,26 @@ export default class Conditions extends Component {
                     marginTop: '20px',
                     borderRadius: '5px',
                     border: '1px solid rgba(0,0,0,0.3)',
-                    boxShadow: '0px 3px 3px 0px rgba(0,0,0,0.3)'
+                    boxShadow: '0px 3px 3px 0px rgba(0,0,0,0.3)',
                 }}>
                     <CardHeader
                         style={{
                             width: '100%',
                             background: '#E9F7FA',
-                            padding: '10px',
+                            padding: 1,
+                            margin: 0,
                             borderBottom: '1px solid rgba(0,0,0,0.3)',
                             borderTopLeftRadius: '5px',
                             borderTopRightRadius: '5px',
                             fontFamily: 'Roboto',
-                            textTransform: 'uppercase',
-                            fontSize: '1em'
+                            textTransform: 'uppercase'
                         }}
-                        title="Conditions">
+                        title={<span
+                            style={{
+                                fontSize: '0.7em',
+                                padding: '0px',
+                        }}
+                        >Conditions</span>}>
                     </CardHeader>
                     <CardContent
                         style={{
@@ -169,7 +179,9 @@ export default class Conditions extends Component {
                     {/* ///////////////////PastConditions///////////////// */}
                     <div >
                         <ExpansionPanel>
-                            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                            <ExpansionPanelSummary
+                                expandIcon={<ExpandMoreIcon />}
+                            >
                                 <Typography
                                     style={{
                                         fontSize: '0.9em',
@@ -277,5 +289,3 @@ export default class Conditions extends Component {
         )
     }
 }
-
-

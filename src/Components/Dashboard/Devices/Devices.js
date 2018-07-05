@@ -147,14 +147,20 @@ export default class Devices extends Component {
                     <CardHeader style={{
                         width: '100%',
                         background: '#E9F7FA',
-                        padding: '10px',
+                        padding: 1,
+                        margin: 0,
                         borderBottom: '1px solid rgba(0,0,0,0.3)',
                         borderTopLeftRadius: '5px',
                         borderTopRightRadius: '5px',
                         fontFamily: 'Roboto',
-                        textTransform: 'uppercase',
+                        textTransform: 'uppercase'
                     }}
-                        title="Medical Devices">
+                        title={<span
+                            style={{
+                                fontSize: '0.7em',
+                                padding: '0px',
+                            }}
+                        >Medical Devices</span>}>
                     </CardHeader>
                     <CardContent
                         style={{
