@@ -15,6 +15,15 @@ module.exports = function addRachelEndpointsTo(app) {
     app.get('/devices', getDevices);
     app.post('/device/:id', addDevice);
     app.put('/device/:id', updateDevice);
+    ///////////Medications//////////////////
+    app.get('/med/:id', getPatientMedications);
+    app.get('/med', getMedications);
+    app.post('/med/:id', addMedication);
+    app.put('/med/:id', updateMedication);
+    ///////////Family History//////////////////
+    app.get('/hx/:id', getPatientHx);
+    app.post('/hx/:id', addHx);
+    app.put('/hx/:id', updateHx);
 }
 
 
@@ -175,4 +184,87 @@ function updateDevice(req, res) {
 
         })
         .catch((e) => { console.log(e); res.status(500).send("Couldn't get update_patient_devices") });
+}
+/////////////////Medications///////////////////
+function getPatientMedications(req, res) {
+    // console.log('hit patient medications list')
+    const { params } = req;
+
+    req.db.get_patient_medications([params.id])
+        .then((medications) => {
+            // console.log(medications)
+            res.status(200).send(medications)
+
+        })
+        .catch((e) => { console.log(e); res.status(500).send("Couldn't get get_patient_medications") });
+}
+
+function getMedications(req, res) {
+    req.db.get_medications()
+        .then((medications) => {
+            res.status(200).send(medications)
+
+        })
+        .catch((e) => { console.log(e); res.status(500).send("Couldn't get get_medications") });
+}
+
+function addMedication(req, res) {
+    // console.log('hit add medication')
+    const { id } = req.params;
+    const { medication_id, medication_date_prescribed, medication_side_effect } = req.body
+
+    req.db.add_medication([id, medication_id, medication_date_prescribed, medication_side_effect])
+        .then(() => {
+            res.status(200).send()
+
+        })
+        .catch((e) => { console.log(e); res.status(500).send("Couldn't get get_medications") });
+}
+
+function updateMedication(req, res) {
+    // console.log('hit update medication')
+    const { params } = req;
+    // console.log(params.id)
+
+    req.db.update_patient_medications([params.id])
+        .then(() => {
+            res.status(200).send()
+
+        })
+        .catch((e) => { console.log(e); res.status(500).send("Couldn't get update_patient_medications") });
+}
+/////////////////Family History///////////////////
+function getPatientHx(req, res) {
+    // console.log('hit patient family history')
+    const { id } = req.params;
+
+    req.db.get_patient_hx([id])
+        .then((history) => {
+            res.status(200).send(history)
+        })
+        .catch((e) => { console.log(e); res.status(500).send("Couldn't get get_patient_hx") });
+}
+
+function addHx(req, res) {
+    // console.log('hit add family history')
+    const { id } = req.params;
+    const { condition_id, family_history_relationship } = req.body
+
+    req.db.add_hx([id, condition_id, family_history_relationship])
+        .then(() => {
+            res.status(200).send()
+        })
+        .catch((e) => { console.log(e); res.status(500).send("Couldn't get get_hx") });
+}
+
+function updateHx(req, res) {
+    // console.log('hit update medication')
+    const { id } = req.params;
+    const { condition_id, family_history_relationship } = req.body
+
+    req.db.update_patient_hx([condition_id, family_history_relationship, id])
+        .then(() => {
+            res.status(200).send()
+        })
+        .catch((e) => { console.log(e); res.status(500).send("Couldn't get update_patient_hx") });
 }
