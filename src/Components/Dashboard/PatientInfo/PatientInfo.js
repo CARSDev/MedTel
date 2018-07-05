@@ -3,7 +3,7 @@ import axios from "axios";
 import moment from "moment";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import Edit from "@material-ui/icons/Edit";
-import EditInfo from './EditInfo'
+import EditInfo from "./EditInfo";
 import "./PatientInfo.css";
 
 class PatientInfo extends Component {
@@ -11,8 +11,8 @@ class PatientInfo extends Component {
     super();
     this.state = {
       id: null,
-      patient_first_name: '',
-      patient_last_name: '',
+      patient_first_name: "",
+      patient_last_name: "",
       patient_full_name: "",
       patient_picture: "",
       patient_age: null,
@@ -49,7 +49,7 @@ class PatientInfo extends Component {
   }
 
   componentDidMount() {
-    this.getPatient()
+    this.getPatient();
   }
 
   componentDidUpdate(prevProps) {
@@ -76,7 +76,7 @@ class PatientInfo extends Component {
         patient_last_name,
         patient_full_name,
         patient_picture,
-        gender_name,
+        patient_gender,
         patient_address,
         patient_birthday,
         patient_phone_number,
@@ -93,7 +93,7 @@ class PatientInfo extends Component {
         patient_last_name,
         patient_full_name,
         patient_picture,
-        patient_gender: gender_name,
+        patient_gender,
         patient_address,
         patient_phone_number,
         patient_birthday,
@@ -174,8 +174,8 @@ class PatientInfo extends Component {
   };
 
   editPatient = () => {
-    let birthday = moment.utc(this.state.birthday).format();
-    let id = this.props.patient_id
+    // let birthday = moment.utc(this.state.birthday).format();
+    let id = this.props.patient_id;
     let {
       patient_first_name,
       patient_last_name,
@@ -210,10 +210,11 @@ class PatientInfo extends Component {
       patient_emergency_contact_relationship2,
       patient_emergency_contact_number2
     };
+    // console.log('gender', patient_gender)
     axios.put(`/patient/${id}`, info).then(() => {
       this.resetState();
-      this.getPatient();
-      this.getMeasurements();
+      // this.getPatient();
+      // this.getMeasurements();
       this.handleClose();
     });
   };
@@ -251,7 +252,7 @@ class PatientInfo extends Component {
   };
 
   render() {
-    // console.log(this.state);
+    // console.log('state',this.state.patient_gender);
     let {
       patient_first_name,
       patient_last_name,
@@ -279,14 +280,37 @@ class PatientInfo extends Component {
             <div className="name">
               <h3>{`${patient_first_name} ${patient_last_name}`}</h3>
               <div className="editB">
-                <Edit onClick={() => {
-                  this.handleClickOpen()
-                }}
+                <Edit
+                  onClick={() => {
+                    this.handleClickOpen();
+                  }}
                   style={{
                     color: "#5A5A5A"
                   }}
                 />
-                <EditInfo open={this.state.open} handleClickOpen={this.handleClickOpen} handleClose={this.handleClose} firstName={patient_first_name} lastName={patient_last_name} gender={patient_gender} height={patient_height} weight={patient_weight} address={patient_address} phone={patient_phone_number} email={patient_email} contact1Name={patient_emergency_contact_name} contact1Number={patient_emergency_contact_number} contact1Relationship={patient_emergency_contact_relationship} contact2Name={patient_emergency_contact_name2} contact2Number={patient_emergency_contact_number2} contact2Relationship={patient_emergency_contact_relationship2} birthday={patient_birthday} inputHandler={this.inputHandler} editPatient={this.editPatient} handleDateChange={this.handleDateChange}/>
+                <EditInfo
+                  open={this.state.open}
+                  handleClickOpen={this.handleClickOpen}
+                  handleClose={this.handleClose}
+                  firstName={patient_first_name}
+                  lastName={patient_last_name}
+                  gender={patient_gender}
+                  height={patient_height}
+                  weight={patient_weight}
+                  address={patient_address}
+                  phone={patient_phone_number}
+                  email={patient_email}
+                  contact1Name={patient_emergency_contact_name}
+                  contact1Number={patient_emergency_contact_number}
+                  contact1Relationship={patient_emergency_contact_relationship}
+                  contact2Name={patient_emergency_contact_name2}
+                  contact2Number={patient_emergency_contact_number2}
+                  contact2Relationship={patient_emergency_contact_relationship2}
+                  birthday={patient_birthday}
+                  inputHandler={this.inputHandler}
+                  editPatient={this.editPatient}
+                  handleDateChange={this.handleDateChange}
+                />
               </div>
             </div>
             <div className="row1info">
@@ -296,14 +320,14 @@ class PatientInfo extends Component {
                   {moment().diff(
                     moment(this.state.patient_birthday, "YYYYMMDD"),
                     "years"
-                  )}
+                  )} y
                 </div>
                 <div className="birthdate">
-                  Birthdate:{" "}
+                  DOB:{" "}
                   {moment(this.state.patient_birthday).format("MM/DD/YYYY")}{" "}
                 </div>
                 <div className="gender">
-                  Gender: {patient_gender === 1 ? 'Male' : 'Female'}
+                  Gender: {patient_gender === 1 ? "Male" : "Female"}
                 </div>
               </div>
               <div className="measurements">
@@ -322,7 +346,9 @@ class PatientInfo extends Component {
                 </div>
               </div>
             </div>
-            <div className="iconContainer">
+          </div>
+        </div>
+            <div className="iconWrapper">
               <div className="arrowUp">
                 <ExpandMore
                   style={{
@@ -334,31 +360,12 @@ class PatientInfo extends Component {
                   }}
                 />
               </div>
-              {/* {this.state.toggle ? (
-                <div className="arrowUp">
-                  <ExpandMore
-                    onClick={() => {
-                      this.toggleFn();
-                    }}
-                  />
-                </div>
-              ) : (
-                <div className="arrowUp">
-                  <ExpandLess
-                    onClick={() => {
-                      this.toggleFn();
-                    }}
-                  />
-                </div>
-              )} */}
             </div>
-          </div>
-        </div>
         <div className="hiddenTabWrapper">
           <div className={this.state.toggle ? "hiddenTab" : "hidden"}>
             <hr />
             <div className="row2">
-              Contact Info
+              <div className="ptHeader">CONTACT INFO</div>
               <hr />
               <div className="contactInfo">
                 <div className="address">
@@ -372,21 +379,21 @@ class PatientInfo extends Component {
             </div>
             <hr />
             <div className="emergencycontacts">
-              Emergency Contacts
+              <div className='ptHeader'>EMERGENCY CONTACTS</div>
               <hr />
               <div className="contacts">
                 <div className="contact 1">
                   <div>
-                    {patient_emergency_contact_name} <br />
+                    {patient_emergency_contact_name} -  {patient_emergency_contact_relationship}<br />
                     {patient_emergency_contact_number} <br />
-                    {patient_emergency_contact_relationship}
+                    
                   </div>
                 </div>
                 {this.state.patient_emergency_contact_name2 ? (
                   <div className="contact 2">
-                    {patient_emergency_contact_name2} <br />
+                    {patient_emergency_contact_name2} - {patient_emergency_contact_relationship2} <br />
                     {patient_emergency_contact_number2} <br />
-                    {patient_emergency_contact_relationship2}
+                    
                   </div>
                 ) : (
                   <div className="contact 2">

@@ -17,7 +17,7 @@ class Nav extends Component {
 
   componentDidMount() {
     axios.get("/employee").then(res => {
-      console.log(res.data[0])
+      // console.log(res.data[0])
       let { employee_picture, employee_first_name, role_id } = res.data[0];
       if (role_id === 1) {
         this.setState({
