@@ -1,8 +1,4 @@
-.searchBar{
-    margin: 3vh;
-    display: flex;
-    justify-content: center;
-}
+/* 
 .list{
     display:flex;
     flex-direction: column;
@@ -14,59 +10,63 @@
     box-shadow: 3px 3px 19px -4px rgba(0,0,0,0.75);
     width: 60vw;
     text-decoration: none;
-    
-}
-.test{
-    text-decoration: none;
-    
-}
-.listHeaders{
+     
+} */
+
+.patientList{
+    margin-top: 20px;
     display: flex;
-	flex-direction: row;
-	flex-wrap: nowrap;
-	justify-content: flex-start;
-	align-items: center;
-	align-content: stretch;
-    padding: 15px;
-    /* padding-right: 150px; */
-    background: #25A9A0;
-    color: #F6F6F6;
-    font-weight: bold;
-    font-size: 1.25em;
-    font-family: roboto;
-}
-.listHeaders>p{
-    padding: 0.5vw;
-    width: 20vw;
-}
-.patientsList{
-    text-decoration: none;
-    
-}
-.patientsList li{
-  display: flex;
-	flex-direction: row;
-	flex-wrap: nowrap;
-	justify-content: flex-start;
-	align-items: center;
-    align-content: stretch;
-    height: 50px;
-    width: 60vw;
-    font-family: roboto;
-    text-decoration: none;
-    
-    color: black;
-}
-.patientsList p {
-    /* padding: 10px; */
-    /* padding-left: 2vw;
-    padding-right: 8vw; */
-    width: 20vw;
-    text-decoration: none;
-    
-    
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
-.patientsList>ul li:nth-child(odd){
-    background: #E9F7FA;
+.ptHeader{
+    display: grid;
+    grid-template-columns: 2fr 1fr 3fr 3fr;
+    /* padding-right: 10px;
+    padding-left: 10px; */
+    font-weight: bold;
+    color: whitesmoke;
+    background: #25A9A0;
+    height: 50px;
+    width: 70%;
+}
+
+.ptHeader p{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ptSearch{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #25A9A0;
+    text-align: center;
+    max-height: 80px;
+    opacity: 1;
+    transition: linear all 0.2s;
+    width: 70%;
+}
+
+.ptSearch input{
+    margin-top: 10px;
+    outline: none;
+    border: none;
+    padding: 10px;
+    width: 90%
+}
+
+a{
+    text-decoration: none;
+    color: black;
+}
+
+.patientsList{
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;    
 }

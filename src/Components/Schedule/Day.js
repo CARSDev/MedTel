@@ -71,7 +71,6 @@ class Day extends Component {
     };
 
     handleClickOpenEdit = (val) => {
-        console.log(val.visitId)
         this.setState({openEdit:true, selectedID: val.visitId})
     }
 
@@ -99,13 +98,17 @@ class Day extends Component {
         let utc_time = moment.utc(time).format()
         axios.post('/appointment', { utc_time, id, reason }).then(res => {
             this.handleClose()
-        }).then(this.props.getSchedule())
+        }).then(() => {
+            this.setState({selectedTime:'', selectedID:'', reason:''})
+            this.props.getSchedule()
+            console.log(this.state)
+        })
     }
 
     submitChange = (id, reason) => {
-        console.log(this.state.selectedID)
+        // console.log(this.state.selectedID)
         axios.put('/appointment', { id, reason }).then(res => {
-            this.setState({ openEdit: false, openReason: false })
+            this.setState({ openEdit: false, openReason: false, selectedTime: '', selectedID: '', reason: '' })
         }).then(this.props.getSchedule())
     }
 
@@ -120,17 +123,12 @@ class Day extends Component {
         this.setState({reason})
     }
 
-    // toDashboard = (id) => {
-    //     this.props.history.push(`/dashboard/${id}`)
-    // }
-
     render() {
-        const { date, morning, schedule } = this.props
+        const { schedule } = this.props
         const { times, patients, selectedTime, selectedID, reason } = this.state
 
-        times.map((time, ti) => {
-            schedule.map(visit => {
-                // console.log(visit)
+        times.forEach((time, ti) => {
+            schedule.forEach(visit => {
                 if (moment(visit.patient_visit_date)._d.toString() === time.toString()) {
                     patients.splice(ti, 1, { name: visit.patient_full_name, ptID:visit.patient_id ,reason: visit.patient_visit_reason, visitId: visit.patient_visit_id })
                 }
@@ -168,7 +166,7 @@ class Day extends Component {
                                                 <h3 className='schedName'>{val.name}</h3>    
                                             </Link>
                                             :
-                                            <h3 className='schedName' onClick={this.handleClickOpen} ></h3>
+                                            <h3 className='schedName' onClick={this.handleClickOpen} >{null}</h3>
                                             // <Add onClick={this.handleClickOpen}/>
                                     }
                                         {/* <h3 className='schedName'
@@ -193,7 +191,7 @@ class Day extends Component {
                         Please select the patient you wish to schedule: 
                     </DialogTitle>
                     <DialogContent>
-                        <Autocomplete getName={this.getName} />
+                        <Autocomplete getName={this.getName} open={this.state.open}/>
                         <TextField
                             autoFocus
                             margin="dense"
@@ -201,6 +199,7 @@ class Day extends Component {
                             label="Reason for visit"
                             type="email"
                             fullWidth 
+                            value= {this.state.reason}
                             onChange={e=>this.setReason(e.target.value)}
                         />
                     </DialogContent>

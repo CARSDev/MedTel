@@ -15,7 +15,8 @@ export default class Schedule extends Component {
             date: new Date(),
             morning: moment(this.date).startOf('day')._d,
             night: moment(this.date).endOf('day')._d,
-            schedule: []
+            schedule: [],
+            open: false
         }
     }
 
