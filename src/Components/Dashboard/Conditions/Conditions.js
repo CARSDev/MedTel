@@ -104,8 +104,9 @@ export default class Conditions extends Component {
 
     render() {
 
-        let conditionList = this.state.patientConditions.map((el, i) => {
-            if (!el.deleted) {
+        let conditionList = this.state.patientConditions
+            .filter(el => !el.deleted)            
+            .map((el, i) => {
                 // console.log(el)
                 return (
                     <div key={el.patient_condition_id + 'conList'}>
@@ -116,11 +117,10 @@ export default class Conditions extends Component {
                         </ul>
                     </div>
                 )
-            }
-
         })
-        let pastConditionList = this.state.patientConditions.map((el, i) => {
-            if (el.deleted) {
+        let pastConditionList = this.state.patientConditions
+            .filter(el => !el.deleted)            
+            .map((el, i) => {
                 return (
                     <div key={el.patient_condition_id + 'conPastList'}>
                         <ul id='listContainer'>
@@ -131,8 +131,6 @@ export default class Conditions extends Component {
                         </ul>
                     </div>
                 )
-            }
-
         })
 
         return (
@@ -144,133 +142,136 @@ export default class Conditions extends Component {
                     borderRadius: '5px',
                     border: '1px solid rgba(0,0,0,0.3)',
                     boxShadow: '0px 3px 3px 0px rgba(0,0,0,0.3)'
-        }}>
+                }}>
                     <CardHeader
-                    style={{
-                    width: '100%',
-                    background: '#E9F7FA',
-                    padding: '10px',
-                    borderBottom: '1px solid rgba(0,0,0,0.3)',
-                    borderTopLeftRadius: '5px',
-                    borderTopRightRadius: '5px',
-                    fontFamily: 'Roboto',
-                    textTransform: 'uppercase',
-                }}
-                    title="Conditions">
-                </CardHeader>
+                        style={{
+                            width: '100%',
+                            background: '#E9F7FA',
+                            padding: '10px',
+                            borderBottom: '1px solid rgba(0,0,0,0.3)',
+                            borderTopLeftRadius: '5px',
+                            borderTopRightRadius: '5px',
+                            fontFamily: 'Roboto',
+                            textTransform: 'uppercase',
+                            fontSize: '1em'
+                        }}
+                        title="Conditions">
+                    </CardHeader>
                     <CardContent
                         style={{
                             padding: 10
-                    }}
+                        }}
                     >
-                    {conditionList}
-                </CardContent>
-                {/* ////////////////////////////////////// */}
+                        {conditionList}
+                    </CardContent>
+                    {/* ////////////////////////////////////// */}
 
-                {/* ///////////////////PastConditions///////////////// */}
-                <div >
-                    <ExpansionPanel>
-                        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                            <Typography
-                                style={{
+                    {/* ///////////////////PastConditions///////////////// */}
+                    <div >
+                        <ExpansionPanel>
+                            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                                <Typography
+                                    style={{
                                         fontSize: '0.9em',
+                                    }}
+                                >Past Conditions</Typography>
+                            </ExpansionPanelSummary>
+                            <ExpansionPanelDetails
+                                style={{
+                                    display: 'flex',
+                                    flexDirection: 'column'
                                 }}
-                            >Past Conditions</Typography>
-                        </ExpansionPanelSummary>
-                        <ExpansionPanelDetails
-                            style={{
-                                display: 'flex',
-                                flexDirection: 'column'
-                            }}
-                        >
-                            {pastConditionList}
-                        </ExpansionPanelDetails>
-                    </ExpansionPanel>
-                </div>
-
-                {/* ///////////////////////////////////////////////////// */}
-
-                {/* /////////////////Add Button//////////////// */}
-                <Button
-                    style={{
-                        width: '100%',
-                        borderRadius: 0,
-                        borderTop: '1px solid rgba(0,0,0,0.3)',
-                        borderRight: '1px solid rgba(0,0,0,0.3)'
-                    }}
-                    onClick={this.handleClickOpenAdd}
-                >
-                    Add
-                        <Add style={{
-                        marginLeft: '5px'
-                    }} />
-                </Button>
-
-                <Dialog
-                    open={this.state.openAdd}
-                    onClose={this.handleCloseAdd}
-                    aria-labelledby="confirmation-dialog-title"
-                >
-                    <DialogTitle id="form-dialog-title">Add Conditions</DialogTitle>
-                    <ConditionSelector patient_id={this.props.patient_id} getConditions={this.getPatientConditions} />
-                </Dialog>
-
-                {/* ///////////////////Delete Button///////////////////// */}
-                <Button
-                    style={{
-                        width: '100%',
-                        borderRadius: 0,
-                        borderTop: '1px solid rgba(0,0,0,0.3)',
-                        borderRight: '1px solid rgba(0,0,0,0.3)'
-                    }}
-                    onClick={this.handleClickOpenDelete}>
-                    Delete
-                        <Delete style={{
-                        marginLeft: '5px'
-                    }} />
-                </Button>
-                </Card>
-            <div>
-                <Dialog
-                    open={this.state.openDelete}
-                    onClose={this.handleCloseDelete}
-                    aria-labelledby="form-dialog-title"
-                >
-                    <DialogTitle id="form-dialog-title">Delete Conditions</DialogTitle>
-                    <div>
-                        <List>
-                            {this.state.patientConditions.map((el, i) => {
-                                if (!el.deleted)
-                                    return (
-                                        <ListItem key={i}>
-                                            <ListItemText
-                                                primary={el.condition_name}
-                                            />
-                                            <ListItemSecondaryAction>
-                                                <IconButton
-                                                    aria-label="Delete"
-                                                    onClick={() => {
-                                                        // console.log(el)
-                                                        this.updateCondition(el.patient_condition_id)
-                                                    }
-                                                    }
-                                                >
-                                                    <Delete />
-                                                </IconButton>
-                                            </ListItemSecondaryAction>
-                                        </ListItem>
-                                    )
-                            }
-                            )}
-                        </List>
+                            >
+                                {pastConditionList}
+                            </ExpansionPanelDetails>
+                        </ExpansionPanel>
                     </div>
-                    <DialogActions>
-                        <Button onClick={this.handleCloseDelete} color="primary">
-                            Close
+
+                    {/* ///////////////////////////////////////////////////// */}
+
+                    {/* /////////////////Add Button//////////////// */}
+                    <Button
+                        style={{
+                            display: 'block-inline',
+                            minWidth: '50%',
+                            borderRadius: 0,
+                            // borderTop: '1px solid rgba(0,0,0,0.3)',
+                            borderRight: '1px solid rgba(0,0,0,0.3)'
+                        }}
+                        onClick={this.handleClickOpenAdd}
+                    >
+                        Add
+                        <Add style={{
+                            marginLeft: '5px'
+                        }} />
+                    </Button>
+
+                    <Dialog
+                        open={this.state.openAdd}
+                        onClose={this.handleCloseAdd}
+                        aria-labelledby="confirmation-dialog-title"
+                    >
+                        <DialogTitle id="form-dialog-title">Add Conditions</DialogTitle>
+                        <ConditionSelector patient_id={this.props.patient_id} getConditions={this.getPatientConditions} />
+                    </Dialog>
+
+                    {/* ///////////////////Delete Button///////////////////// */}
+                    <Button
+                        style={{
+                            minWidth: '50%',
+                            borderRadius: 0
+                            // borderTop: '1px solid rgba(0,0,0,0.3)',
+                            // borderRight: '1px solid rgba(0,0,0,0.3)'
+                        }}
+                        onClick={this.handleClickOpenDelete}>
+                        Delete
+                        <Delete style={{
+                            marginLeft: '5px'
+                        }} />
+                    </Button>
+                </Card>
+                <div>
+                    <Dialog
+                        open={this.state.openDelete}
+                        onClose={this.handleCloseDelete}
+                        aria-labelledby="form-dialog-title"
+                    >
+                        <DialogTitle id="form-dialog-title">Delete Conditions</DialogTitle>
+                        <div>
+                            <List>
+                                {this.state.patientConditions
+                                    .filter(el => !el.deleted)
+                                    .map((el, i) => {
+                                        return (
+                                            <ListItem key={i}>
+                                                <ListItemText
+                                                    primary={el.condition_name}
+                                                />
+                                                <ListItemSecondaryAction>
+                                                    <IconButton
+                                                        aria-label="Delete"
+                                                        onClick={() => {
+                                                            // console.log(el)
+                                                            this.updateCondition(el.patient_condition_id)
+                                                        }
+                                                        }
+                                                    >
+                                                        <Delete />
+                                                    </IconButton>
+                                                </ListItemSecondaryAction>
+                                            </ListItem>
+                                        )
+                                    }
+                                    )}
+                            </List>
+                        </div>
+                        <DialogActions>
+                            <Button onClick={this.handleCloseDelete} color="primary">
+                                Close
                                 </Button>
-                    </DialogActions>
-                </Dialog>
-            </div>
+                        </DialogActions>
+                    </Dialog>
+                </div>
             </div >
 
         )
