@@ -1,12 +1,22 @@
-#conditionText{
+#conditionTextHead{
     padding: 0px;
     margin: 0px;
     display: flex;
-	flex-direction: column;
+	justify-content: flex-start;
+	align-items: flex-start;
+    font-weight: bold;
+    /* display: list-item;
+    list-style-type: disc; */
+}
+#conditionText{
+    display: flex;
+
+}
+#listContainer>ul#conditionListHead{
+    display: flex;
+	/* flex-direction: column; */
 	flex-wrap: nowrap;
 	justify-content: flex-start;
 	align-items: flex-start;
-    align-content: stretch;
-    /* display: list-item;
-    list-style-type: disc; */
+	align-content: stretch;
 }

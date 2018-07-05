@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import moment from 'moment';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
+// import { ToastContainer } from 'react-toastify';
 import MedicationSelector from './MedicationSelector';
 import '../Conditions/Conditions.css';
 
@@ -108,8 +109,6 @@ export default class Medications extends Component {
     };
 
     render() {
-        const { value, ...other } = this.props;
-
         let medicationsList = this.state.patientMedications.map((el, i) => {
             if (!el.deleted) {
                 // console.log(el)
@@ -171,9 +170,7 @@ export default class Medications extends Component {
                                 <Typography >Past Medications</Typography>
                             </ExpansionPanelSummary>
                             <ExpansionPanelDetails>
-                                <Typography>
                                     {pastMedicationsList}
-                                </Typography>
                             </ExpansionPanelDetails>
                         </ExpansionPanel>
                     </div>
@@ -256,7 +253,7 @@ export default class Medications extends Component {
                         </div>
                         <DialogActions>
                             <Button onClick={this.handleCloseDelete} color="primary">
-                                Cancel
+                                Close
                                 </Button>
                         </DialogActions>
                     </Dialog>

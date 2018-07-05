@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
+import {  toast } from 'react-toastify';
+// import { ToastContainer } from 'react-toastify';
 import FamilyHistorySelector from './FamilyHistorySelector';
 import '../Conditions/Conditions.css';
 
@@ -18,7 +19,6 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import IconButton from '@material-ui/core/IconButton';
-import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 
 
@@ -145,8 +145,7 @@ export default class FamilyHistory extends Component {
     }
 
     render() {
-        console.log(this.state.realtionship)
-
+        // console.log(this.state.realtionship)
         let hxList = this.state.patientHx.map((el, i) => {
             return (
                 <div key={el.family_history_id + 'list'}>
@@ -214,7 +213,7 @@ export default class FamilyHistory extends Component {
                             borderRight: '1px solid rgba(0,0,0,0.3)'
                         }}
                         onClick={this.handleClickOpenEdit}>
-                        Update
+                        Edit
                         <Edit style={{
                             marginLeft: '5px'
                         }} />
@@ -306,11 +305,8 @@ export default class FamilyHistory extends Component {
                         </div>
                         <DialogActions>
                             <Button onClick={this.handleCloseEdit} color="primary">
-                                Cancel
+                                Close
                                 </Button>
-                            {/* <Button onClick={this.updateHx} color="primary">
-                                Update
-                                </Button> */}
                         </DialogActions>
                     </Dialog>
                 </div>

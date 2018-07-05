@@ -108,7 +108,6 @@ export default class Allergies extends Component {
     };
 
     render() {
-        const { value, ...other } = this.props;
 
         let allergyList = this.state.patientAllergies.map((el, i) => {
             if (!el.deleted) {
@@ -168,9 +167,7 @@ export default class Allergies extends Component {
                                 <Typography >Past Allergies</Typography>
                             </ExpansionPanelSummary>
                             <ExpansionPanelDetails>
-                                <Typography>
                                     {pastAllergyList}
-                                </Typography>
                             </ExpansionPanelDetails>
                         </ExpansionPanel>
                     </div>
@@ -253,7 +250,7 @@ export default class Allergies extends Component {
                         </div>
                         <DialogActions>
                             <Button onClick={this.handleCloseDelete} color="primary">
-                                Cancel
+                                Close
                                 </Button>
                         </DialogActions>
                     </Dialog>

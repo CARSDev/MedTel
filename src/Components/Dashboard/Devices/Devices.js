@@ -168,9 +168,7 @@ export default class Devices extends Component {
                                 <Typography >Past Devices</Typography>
                             </ExpansionPanelSummary>
                             <ExpansionPanelDetails>
-                                <Typography>
-                                    {pastDeviceList}
-                                </Typography>
+                                {pastDeviceList}
                             </ExpansionPanelDetails>
                         </ExpansionPanel>
                     </div>
@@ -253,7 +251,7 @@ export default class Devices extends Component {
                         </div>
                         <DialogActions>
                             <Button onClick={this.handleCloseDelete} color="primary">
-                                Cancel
+                                Close
                                 </Button>
                         </DialogActions>
                     </Dialog>

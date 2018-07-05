@@ -1,7 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
-import moment from 'moment';
+import { toast } from 'react-toastify';
 
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';

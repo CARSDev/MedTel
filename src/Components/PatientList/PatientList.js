@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
+// import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AddPatient from './AddPatient';
 import Button from '@material-ui/core/Button'
@@ -74,37 +75,24 @@ export default class PatientList extends Component {
                         // console.log(el.patient_id)
                         return true;
                     }
-                    else {
-                        return false;
-                    }
-                    break;
                 case 'patient_full_name':
                     if (el.patient_full_name.includes(this.state.search)) {
                         return true;
-                    } else {
-                        return false;
                     }
-                    break;
                 case 'patient_phone_number':
                     if (el.patient_phone_number.includes(this.state.search)) {
                         return true;
-                    } else {
-                        return false;
                     }
-                    break;
                 case 'patient_email':
                     if (el.patient_email.includes(this.state.search)) {
                         return true;
-                    } else {
-                        return false;
                     }
-                    break;
                 default:
                     return true;
             }
         }).map((el, i) => {
             return (
-                <Link to={`/dashboard/${el.patient_id}`} key={el}>
+                <Link to={`/dashboard/${el.patient_id}`} key={el.patient_id + 'display'}>
                     <div className="patientsList">
                     <ul>
                         <li><p>{el.patient_id}</p><br />

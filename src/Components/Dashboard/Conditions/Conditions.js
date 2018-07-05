@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import moment from 'moment';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
+// import { ToastContainer } from 'react-toastify';
 import ConditionSelector from './ConditionSelector';
 import './Conditions.css';
 
@@ -103,15 +104,14 @@ export default class Conditions extends Component {
     };
 
     render() {
-        const { value, ...other } = this.props;
 
         let conditionList = this.state.patientConditions.map((el, i) => {
             if (!el.deleted) {
                 // console.log(el)
                 return (
-                    <div key={el.patient_condition_id}>
+                    <div key={el.patient_condition_id+'conList'}>
                         <ul>
-                            <li id='conditionText'>{el.condition_name}</li>
+                            <li id='conditionTextHead'>{el.condition_name}</li>
                             <li id='conditionText'>{moment(el.condition_date_diagnosed).format('MM-DD-YYYY')}</li>
                             <br />
                         </ul>
@@ -123,11 +123,12 @@ export default class Conditions extends Component {
         let pastConditionList = this.state.patientConditions.map((el, i) => {
             if (el.deleted) {
                 return (
-                    <div key={el.patient_condition_id}>
+                    <div key={el.patient_condition_id+'conPastList'} id='listContainer'>
                         <ul>
-                            <li id='conditionText'>{el.condition_name}</li>
+                            <li id='conditionTextHead'>
+                                {el.condition_name}</li>
                             <li id='conditionText'>{moment(el.condition_date_diagnosed).format('MM-DD-YYYY')}</li>
-                            <br />
+                            <br/>
                         </ul>
                     </div>
                 )
@@ -162,10 +163,11 @@ export default class Conditions extends Component {
                             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                                 <Typography >Past Conditions</Typography>
                             </ExpansionPanelSummary>
-                            <ExpansionPanelDetails>
-                                <Typography>
+                            <ExpansionPanelDetails style={{
+                                display: 'flex',
+                                flexDirection: 'column'
+                            }}>
                                     {pastConditionList}
-                                </Typography>
                             </ExpansionPanelDetails>
                         </ExpansionPanel>
                     </div>
@@ -248,7 +250,7 @@ export default class Conditions extends Component {
                         </div>
                         <DialogActions>
                             <Button onClick={this.handleCloseDelete} color="primary">
-                                Cancel
+                                Close
                                 </Button>
                         </DialogActions>
                     </Dialog>
