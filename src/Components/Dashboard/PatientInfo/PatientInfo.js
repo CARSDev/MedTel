@@ -2,14 +2,17 @@ import React, { Component } from "react";
 import axios from "axios";
 import moment from "moment";
 import ExpandMore from "@material-ui/icons/ExpandMore";
-import ExpandLess from "@material-ui/icons/ExpandLess";
+import Edit from "@material-ui/icons/Edit";
+import EditInfo from './EditInfo'
 import "./PatientInfo.css";
 
 class PatientInfo extends Component {
   constructor() {
     super();
     this.state = {
-      id: 1,
+      id: null,
+      patient_first_name: '',
+      patient_last_name: '',
       patient_full_name: "",
       patient_picture: "",
       patient_age: null,
@@ -40,8 +43,13 @@ class PatientInfo extends Component {
         patient_visit_reason: null
       },
       measurementResults: [],
-      toggle: true
+      toggle: true,
+      open: false
     };
+  }
+
+  componentDidMount() {
+    this.getPatient()
   }
 
   componentDidUpdate(prevProps) {
@@ -64,6 +72,8 @@ class PatientInfo extends Component {
     // let id = 1;
     axios.get(`/patient/${id}`).then(res => {
       let {
+        patient_first_name,
+        patient_last_name,
         patient_full_name,
         patient_picture,
         gender_name,
@@ -79,6 +89,8 @@ class PatientInfo extends Component {
         patient_emergency_contact_number2
       } = res.data[0];
       this.setState({
+        patient_first_name,
+        patient_last_name,
         patient_full_name,
         patient_picture,
         patient_gender: gender_name,
@@ -98,9 +110,7 @@ class PatientInfo extends Component {
 
   getMeasurements() {
     let { id } = this.state;
-    // let id = 1;
     axios.get(`/patient/measurements/${id}`).then(res => {
-      // console.log(res.data, "measurements");
       let heightTest =
         res.data.find(result => {
           return result.test_name === "height in inches";
@@ -157,9 +167,101 @@ class PatientInfo extends Component {
     });
   }
 
-  render() {
-    // console.log(this.state.toggle);
+  inputHandler = (e, property) => {
+    this.setState({
+      [property]: e.target.value
+    });
+  };
+
+  editPatient = () => {
+    let birthday = moment.utc(this.state.birthday).format();
+    let id = this.props.patient_id
     let {
+      patient_first_name,
+      patient_last_name,
+      patient_birthday,
+      patient_gender,
+      patient_height,
+      patient_weight,
+      patient_address,
+      patient_phone_number,
+      patient_email,
+      patient_emergency_contact_name,
+      patient_emergency_contact_relationship,
+      patient_emergency_contact_number,
+      patient_emergency_contact_name2,
+      patient_emergency_contact_relationship2,
+      patient_emergency_contact_number2
+    } = this.state;
+    let info = {
+      patient_first_name,
+      patient_last_name,
+      patient_birthday,
+      patient_gender,
+      patient_height,
+      patient_weight,
+      patient_address,
+      patient_phone_number,
+      patient_email,
+      patient_emergency_contact_name,
+      patient_emergency_contact_relationship,
+      patient_emergency_contact_number,
+      patient_emergency_contact_name2,
+      patient_emergency_contact_relationship2,
+      patient_emergency_contact_number2
+    };
+    axios.put(`/patient/${id}`, info).then(() => {
+      this.resetState();
+      this.getPatient();
+      this.getMeasurements();
+      this.handleClose();
+    });
+  };
+
+  resetState = () => {
+    this.setState({
+      firstName: "",
+      lastName: "",
+      birthday: null,
+      gender: "",
+      height: null,
+      weight: null,
+      address: "",
+      phone: "",
+      email: "",
+      emergencyName: "",
+      emergencyNumber: "",
+      emergencyRelationship: "",
+      emergencyName2: "",
+      emergencyNumber2: "",
+      emergencyRelationship2: ""
+    });
+  };
+
+  handleClickOpen = () => {
+    this.setState({ open: true });
+  };
+
+  handleClose = () => {
+    this.setState({ open: false });
+  };
+
+  handleDateChange = date => {
+    this.setState({ patient_birthday: date });
+  };
+
+  render() {
+    // console.log(this.state);
+    let {
+      patient_first_name,
+      patient_last_name,
+      patient_gender,
+      patient_height,
+      patient_weight,
+      patient_address,
+      patient_birthday,
+      patient_phone_number,
+      patient_email,
       patient_emergency_contact_name,
       patient_emergency_contact_relationship,
       patient_emergency_contact_number,
@@ -175,7 +277,17 @@ class PatientInfo extends Component {
           </div>
           <div className="row1right">
             <div className="name">
-              <h3>{this.state.patient_full_name}</h3>
+              <h3>{`${patient_first_name} ${patient_last_name}`}</h3>
+              <div className="editB">
+                <Edit onClick={() => {
+                  this.handleClickOpen()
+                }}
+                  style={{
+                    color: "#5A5A5A"
+                  }}
+                />
+                <EditInfo open={this.state.open} handleClickOpen={this.handleClickOpen} handleClose={this.handleClose} firstName={patient_first_name} lastName={patient_last_name} gender={patient_gender} height={patient_height} weight={patient_weight} address={patient_address} phone={patient_phone_number} email={patient_email} contact1Name={patient_emergency_contact_name} contact1Number={patient_emergency_contact_number} contact1Relationship={patient_emergency_contact_relationship} contact2Name={patient_emergency_contact_name2} contact2Number={patient_emergency_contact_number2} contact2Relationship={patient_emergency_contact_relationship2} birthday={patient_birthday} inputHandler={this.inputHandler} editPatient={this.editPatient} handleDateChange={this.handleDateChange}/>
+              </div>
             </div>
             <div className="row1info">
               <div className="identifiers">
@@ -191,7 +303,7 @@ class PatientInfo extends Component {
                   {moment(this.state.patient_birthday).format("MM/DD/YYYY")}{" "}
                 </div>
                 <div className="gender">
-                  Gender: {this.state.patient_gender}
+                  Gender: {patient_gender === 1 ? 'Male' : 'Female'}
                 </div>
               </div>
               <div className="measurements">
@@ -212,10 +324,11 @@ class PatientInfo extends Component {
             </div>
             <div className="iconContainer">
               <div className="arrowUp">
-                <ExpandMore style={{
-                  color: '#5A5A5A'
-                }}
-                  className={!this.state.toggle ? "arrowUp":''}
+                <ExpandMore
+                  style={{
+                    color: "#5A5A5A"
+                  }}
+                  className={!this.state.toggle ? "arrowUp" : ""}
                   onClick={() => {
                     this.toggleFn();
                   }}
@@ -241,7 +354,7 @@ class PatientInfo extends Component {
             </div>
           </div>
         </div>
-        <div className='hiddenTabWrapper'>
+        <div className="hiddenTabWrapper">
           <div className={this.state.toggle ? "hiddenTab" : "hidden"}>
             <hr />
             <div className="row2">
@@ -284,35 +397,6 @@ class PatientInfo extends Component {
             </div>
           </div>
         </div>
-
-        {/* <div className="row3"> */}
-        {/* <div className="appt 1">
-            {this.state.upcoming_appt1 ? (
-              <div>
-              {this.state.upcoming_appt1.employee_full_name}
-                {moment(this.state.upcoming_appt1.patient_visit_date).format(
-                  "MM/DD/YYYY H:mm A"
-                )}{" "}
-                <br /> {this.state.upcoming_appt1.patient_visit_reason}{" "}
-              </div>
-            ) : (
-              "None"
-            )}
-          </div> */}
-        {/* <div className="appt 2">
-            {this.state.upcoming_appt2 ? (
-              <div>
-                {this.state.upcoming_appt2.employee_full_name}
-                {moment(this.state.upcoming_appt2.patient_visit_date).format(
-                  "MM/DD/YYYY H:mm A"
-                )}{" "}
-                <br /> {this.state.upcoming_appt2.patient_visit_reason}{" "}
-              </div>
-            ) : (
-              "None"
-            )}
-          </div> */}
-        {/* </div> */}
       </div>
     );
   }

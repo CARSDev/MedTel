@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import moment from 'moment';
+
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -15,8 +15,9 @@ import Dialog from '@material-ui/core/Dialog';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import Radio from '@material-ui/core/Radio';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import TextField from '@material-ui/core/TextField';
 
-class DeviceDialogRaw extends React.Component {
+class FamilyHistoryDialogRaw extends React.Component {
     radioGroup = null;
 
     constructor(props) {
@@ -24,8 +25,9 @@ class DeviceDialogRaw extends React.Component {
 
         this.state = {
             value: this.props.value,
-            devices: [],
-            deviceId: 4,
+            conditions: [],
+            conditionId: 8,
+            relationship: ''
         };
     }
 
@@ -36,12 +38,12 @@ class DeviceDialogRaw extends React.Component {
     }
 
     componentDidMount() {
-        axios.get(`/devices`).then(res => {
+        axios.get(`/conditions`).then(res => {
             this.setState({
-                devices: res.data
+                conditions: res.data
             })
-            toast.success("Successfully got Devices", { position: toast.POSITION.BOTTOM_RIGHT })
-        }).catch(() => toast.error("Failed to Fetch Devices", { position: toast.POSITION.BOTTOM_RIGHT }))
+            toast.success("Successfully got Conditions", { position: toast.POSITION.BOTTOM_RIGHT })
+        }).catch(() => toast.error("Failed to Fetch Conditions", { position: toast.POSITION.BOTTOM_RIGHT }))
     }
 
     handleEntering = () => {
@@ -53,25 +55,37 @@ class DeviceDialogRaw extends React.Component {
     };
 
     handleOk = () => {
-        this.props.onClose(this.state.value, this.state.deviceId);
+        if (this.state.relationship !== '') { 
+            this.props.onClose(
+                this.state.value,
+                this.state.conditionId,
+                this.state.relationship);
+        } else {
+            alert('Please add a relationship to patient.')
+        }
     };
 
     handleChange = (event, value) => {
-        let deviceElement = this.state.devices.find((el) => {
-            if (value === el.medical_device_name) {
+        let conditionElement = this.state.conditions.find((el) => {
+            if (value === el.condition_name) {
                 return true;
             }
         })
         this.setState({
             value,
-            deviceId: deviceElement.medical_device_id
+            conditionId: conditionElement.condition_id
         });
     };
+    handleText(input) {
+        this.setState({
+            relationship: input
+        })
+    }
 
     render() {
         const { value, ...other } = this.props;
         // console.log(this.state.value)
-        // console.log(this.state.deviceId)
+        // console.log(this.state.condition_id)
         return (
             <Dialog
                 disableBackdropClick
@@ -81,25 +95,33 @@ class DeviceDialogRaw extends React.Component {
                 aria-labelledby="confirmation-dialog-title"
                 {...other}
             >
-                <DialogTitle id="confirmation-dialog-title">Medical Devices</DialogTitle>
+                <DialogTitle id="confirmation-dialog-title">Family History Condition</DialogTitle>
                 <DialogContent>
                     <RadioGroup
                         ref={node => {
                             this.radioGroup = node;
                         }}
-                        aria-label="medical device"
-                        name="medical device"
+                        aria-label="family history condition"
+                        name="family history condition"
                         value={this.state.value}
                         onChange={this.handleChange}
                     >
-                        {this.state.devices.map(option => (
+                        {this.state.conditions.map(option => (
                             <FormControlLabel
-                                value={option.medical_device_name}
-                                key={option.medical_device_id}
+                                value={option.condition_name}
+                                key={option.condition_id}
                                 control={<Radio />}
-                                label={option.medical_device_name} />
+                                label={option.condition_name} />
                         ))}
                     </RadioGroup>
+                    <TextField
+                        required
+                        id="required"
+                        label="Required"
+                        // defaultValue="Relation to Patient"
+                        onChange={(e) => this.handleText(e.target.value)}
+                        margin="normal"
+                    />
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={this.handleCancel} color="primary">
@@ -114,7 +136,7 @@ class DeviceDialogRaw extends React.Component {
     }
 }
 
-DeviceDialogRaw.propTypes = {
+FamilyHistoryDialogRaw.propTypes = {
     onClose: PropTypes.func,
     value: PropTypes.string,
 };
@@ -131,22 +153,22 @@ const styles = theme => ({
     },
 });
 
-class DeviceDialog extends React.Component {
+class FamilyHistoryDialog extends React.Component {
     button = null;
 
     state = {
         open: false,
-        value: 'Adjustable Gastric Band'
+        value: 'Allergies'
     };
 
     handleClickListItem = () => {
         this.setState({ open: true });
     };
 
-    handleClose = (value, deviceId) => {
+    handleClose = (value, conditionId, relationship) => {
         this.setState({ value, open: false });
-        axios.post(`/device/${this.props.patient_id}`, { medical_device_id: deviceId, medical_device_date_administered: moment.utc(new Date()).format() }).then(() => {
-            this.props.getDevices()
+        axios.post(`/hx/${this.props.patient_id}`, { condition_id: conditionId, family_history_relationship: relationship}).then(res => {
+            this.props.getHx()
         })
     };
 
@@ -159,13 +181,13 @@ class DeviceDialog extends React.Component {
                         button
                         divider
                         aria-haspopup="true"
-                        aria-controls="medical-device-menu"
-                        aria-label="Medical device"
+                        aria-controls="condition-menu"
+                        aria-label="Condition"
                         onClick={this.handleClickListItem}
                     >
-                        <ListItemText primary="Device" secondary={this.state.value} />
+                        <ListItemText primary="Condition" secondary={this.state.value} />
                     </ListItem>
-                    <DeviceDialogRaw
+                    <FamilyHistoryDialogRaw
                         classes={{
                             paper: classes.paper,
                         }}
@@ -179,8 +201,8 @@ class DeviceDialog extends React.Component {
     }
 }
 
-DeviceDialog.propTypes = {
+FamilyHistoryDialog.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(DeviceDialog);
+export default withStyles(styles)(FamilyHistoryDialog);
