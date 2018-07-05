@@ -149,8 +149,8 @@ export default class FamilyHistory extends Component {
         let hxList = this.state.patientHx.map((el, i) => {
             return (
                 <div key={el.family_history_id + 'list'}>
-                    <ul>
-                        <li id='conditionText'>{el.condition_name}</li>
+                    <ul id='listContainer'>
+                        <li id='conditionTextHead'>{el.condition_name}</li>
                         <li id='conditionText'>{el.family_history_relationship}</li>
                         <br />
                     </ul>

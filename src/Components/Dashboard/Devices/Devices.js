@@ -115,8 +115,8 @@ export default class Devices extends Component {
                 // console.log(el)
                 return (
                     <div key={el.patient_medical_device_id}>
-                        <ul>
-                            <li id='conditionText'>{el.medical_device_name}</li>
+                        <ul id='listContainer'>
+                            <li id='conditionTextHead'>{el.medical_device_name}</li>
                             <li id='conditionText'>{moment(el.medical_device_date_administered).format('MM-DD-YYYY')}</li>
                             <br />
                         </ul>
@@ -129,8 +129,8 @@ export default class Devices extends Component {
             if (el.deleted) {
                 return (
                     <div key={el.patient_medical_device_id}>
-                        <ul>
-                            <li id='conditionText'>{el.medical_device_name}</li>
+                        <ul id='listContainer'>
+                            <li id='conditionTextHead'>{el.medical_device_name}</li>
                             <li id='conditionText'>{moment(el.medical_device_date_diagnosed).format('MM-DD-YYYY')}</li>
                             <br />
                         </ul>
@@ -167,7 +167,12 @@ export default class Devices extends Component {
                             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                                 <Typography >Past Devices</Typography>
                             </ExpansionPanelSummary>
-                            <ExpansionPanelDetails>
+                            <ExpansionPanelDetails
+                                style={{
+                                    display: 'flex',
+                                    flexDirection: 'column'
+                                }}
+                            >
                                 {pastDeviceList}
                             </ExpansionPanelDetails>
                         </ExpansionPanel>

@@ -110,7 +110,7 @@ export default class Conditions extends Component {
                 // console.log(el)
                 return (
                     <div key={el.patient_condition_id+'conList'}>
-                        <ul>
+                        <ul id='listContainer'>
                             <li id='conditionTextHead'>{el.condition_name}</li>
                             <li id='conditionText'>{moment(el.condition_date_diagnosed).format('MM-DD-YYYY')}</li>
                             <br />
@@ -123,8 +123,8 @@ export default class Conditions extends Component {
         let pastConditionList = this.state.patientConditions.map((el, i) => {
             if (el.deleted) {
                 return (
-                    <div key={el.patient_condition_id+'conPastList'} id='listContainer'>
-                        <ul>
+                    <div key={el.patient_condition_id+'conPastList'}>
+                        <ul id='listContainer'>
                             <li id='conditionTextHead'>
                                 {el.condition_name}</li>
                             <li id='conditionText'>{moment(el.condition_date_diagnosed).format('MM-DD-YYYY')}</li>
@@ -163,10 +163,12 @@ export default class Conditions extends Component {
                             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                                 <Typography >Past Conditions</Typography>
                             </ExpansionPanelSummary>
-                            <ExpansionPanelDetails style={{
+                            <ExpansionPanelDetails
+                                style={{
                                 display: 'flex',
                                 flexDirection: 'column'
-                            }}>
+                                }}
+                            >
                                     {pastConditionList}
                             </ExpansionPanelDetails>
                         </ExpansionPanel>

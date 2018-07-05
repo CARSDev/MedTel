@@ -114,8 +114,8 @@ export default class Allergies extends Component {
                 // console.log(el)
                 return (
                     <div key={el.patient_allergy_id}>
-                        <ul>
-                            <li id='conditionText'>{el.allergy_name}</li>
+                        <ul id='listContainer'>
+                            <li id='conditionTextHead'>{el.allergy_name}</li>
                             <li id='conditionText'>{moment(el.allergy_date_diagnosed).format('MM-DD-YYYY')}</li>
                             <br />
                         </ul>
@@ -128,8 +128,8 @@ export default class Allergies extends Component {
             if (el.deleted) {
                 return (
                     <div key={el.patient_allergy_id}>
-                        <ul>
-                            <li id='conditionText'>{el.allergy_name}</li>
+                        <ul id='listContainer'>
+                            <li id='conditionTextHead'>{el.allergy_name}</li>
                             <li id='conditionText'>{moment(el.allergy_date_diagnosed).format('MM-DD-YYYY')}</li>
                             <br />
                         </ul>
@@ -166,7 +166,12 @@ export default class Allergies extends Component {
                             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                                 <Typography >Past Allergies</Typography>
                             </ExpansionPanelSummary>
-                            <ExpansionPanelDetails>
+                            <ExpansionPanelDetails
+                                style={{
+                                    display: 'flex',
+                                    flexDirection: 'column'
+                                }}
+                            >
                                     {pastAllergyList}
                             </ExpansionPanelDetails>
                         </ExpansionPanel>

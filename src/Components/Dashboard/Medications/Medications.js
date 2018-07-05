@@ -114,11 +114,11 @@ export default class Medications extends Component {
                 // console.log(el)
                 return (
                     <div key={el.patient_medication_id+'current'}>
-                        <ul>
-                            <li id='conditionText'>{el.medication_name}</li>
+                        <ul id='listContainer'>
+                            <li id='conditionTextHead'>{el.medication_name}</li>
                             <li id='conditionText'>{moment(el.medication_date_prescribed).format('MM-DD-YYYY')}
                             </li>
-                            <li id='conditionText'>{el.medication_side_effects}</li> 
+                            {/* <li id='conditionText'>{el.medication_side_effects}</li>  */}
                             <br />
                         </ul>
                     </div>
@@ -130,10 +130,10 @@ export default class Medications extends Component {
             if (el.deleted) {
                 return (
                     <div key={el.patient_medication_id + 'past'}>
-                        <ul>
-                            <li id='conditionText'>{el.medication_name}</li>
+                        <ul id='listContainer'>
+                            <li id='conditionTextHead'>{el.medication_name}</li>
                             <li id='conditionText'>{moment(el.medication_date_prescribed).format('MM-DD-YYYY')}</li>
-                            <li id='conditionText'>{el.medication_side_effects}</li> 
+                            {/* <li id='conditionText'>{el.medication_side_effects}</li>  */}
                             <br />
                         </ul>
                     </div>
@@ -169,7 +169,12 @@ export default class Medications extends Component {
                             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                                 <Typography >Past Medications</Typography>
                             </ExpansionPanelSummary>
-                            <ExpansionPanelDetails>
+                            <ExpansionPanelDetails
+                                style={{
+                                    display: 'flex',
+                                    flexDirection: 'column'
+                                }}
+                            >
                                     {pastMedicationsList}
                             </ExpansionPanelDetails>
                         </ExpansionPanel>
