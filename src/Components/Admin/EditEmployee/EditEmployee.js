@@ -1,4 +1,4 @@
-import React, { Fragment, Component } from 'react';
+import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom'
 import axios from 'axios';
 import Button from '@material-ui/core/Button';
@@ -12,9 +12,6 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Input from '@material-ui/core/Input';
 import FormControl from '@material-ui/core/FormControl';
-import { DatePicker } from 'material-ui-pickers';
-import ChevronLeft from '@material-ui/icons/ChevronLeft';
-import ChevronRight from '@material-ui/icons/ChevronRight';
 
 
 class EditEmployee extends Component {
@@ -52,7 +49,7 @@ class EditEmployee extends Component {
     }
 
     submit = () => {
-        let { first, last, picture, role, username, password, email } = this.state
+        let { first, last, picture, role, username, email } = this.state
         let id = this.props.employee.employee_id
         axios.put(`/employee/${id}`, { first, last, picture, role, username, email }).then(this.props.history.go(0))
         this.props.handleClose()

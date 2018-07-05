@@ -1,4 +1,4 @@
-import React, { Fragment, Component } from 'react';
+import React, { Component } from 'react';
 import {withRouter} from 'react-router-dom'
 import axios from 'axios';
 import Button from '@material-ui/core/Button';
@@ -12,10 +12,6 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Input from '@material-ui/core/Input';
 import FormControl from '@material-ui/core/FormControl';
-import { DatePicker } from 'material-ui-pickers';
-import ChevronLeft from '@material-ui/icons/ChevronLeft';
-import ChevronRight from '@material-ui/icons/ChevronRight';
-
 
 class AddEmployee extends Component {
     constructor() {

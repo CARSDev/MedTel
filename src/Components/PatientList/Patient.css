@@ -1,0 +1,21 @@
+.patient{
+    display: grid;
+    width: 100%;
+    grid-template-columns: 1fr 2fr 2fr 3fr;
+}
+
+.onePtInfo:nth-child(odd){
+        background: #E9F7FA;
+}
+
+
+.tableCell{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
