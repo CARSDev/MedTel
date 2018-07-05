@@ -1,14 +1,15 @@
-const bcrypt= require('bcryptjs')
+const bcrypt = require('bcryptjs')
+const { requireAdmin } = require('../middlewares')
 
 module.exports = function addShanEndpointsTo(app) {
     app.get('/schedule/:morning/:night', getSchedule)
     app.post('/appointment', addAppointment)
     app.put('/appointment', editAppointment)
     app.delete('/appointment/:id', deleteAppointment)
-    app.get('/employees', getEmployees)
-    app.post('/employee', addEmployee)
-    app.put('/employee/:id', updateEmployee)
-    app.delete('/employee/:id', deleteEmployee)
+    app.get('/employees', requireAdmin, getEmployees)
+    app.post('/employee', requireAdmin, addEmployee)
+    app.put('/employee/:id', requireAdmin, updateEmployee)
+    app.delete('/employee/:id', requireAdmin,  deleteEmployee)
 
 }
 
