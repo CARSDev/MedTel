@@ -49,8 +49,8 @@ export default class Devices extends Component {
     radioGroup = null;
 
     componentDidMount() {
-        this.getPatientDevices()
-        this.getDevicesList()
+        // this.getPatientDevices()
+        // this.getDevicesList()
     }
 
     componentDidUpdate(prevProps) {

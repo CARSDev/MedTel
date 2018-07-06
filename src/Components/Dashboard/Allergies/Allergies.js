@@ -49,8 +49,8 @@ export default class Allergies extends Component {
     radioGroup = null;
 
     componentDidMount() {
-        this.getPatientAllergies()
-        this.getAllergiesList()
+        // this.getPatientAllergies()
+        // this.getAllergiesList()
     }
 
     componentDidUpdate(prevProps) {

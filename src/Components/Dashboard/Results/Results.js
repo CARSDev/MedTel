@@ -9,8 +9,8 @@ export default class Results extends Component {
     return (
       <div className = "results">
             <Labs patient_id={this.props.patient_id}/>
-            <Imaging patient_id={this.props.patient_id}/>
             <Reported patient_id={this.props.patient_id}/>
+            <Imaging patient_id={this.props.patient_id}/>
             
       </div>
     )

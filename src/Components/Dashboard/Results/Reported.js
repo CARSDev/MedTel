@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import ExpandMore from "@material-ui/icons/ExpandMore";
-import LabResult from './LabResult'
+import ReportedResult from './ReportedResult'
 import _ from 'lodash'
 import './Results.css'
 
@@ -12,6 +12,8 @@ export default class Reported extends Component {
     this.state = {
       results: []
     }
+
+    this.openParentTab = false
   }
 
   componentDidUpdate(prevProps) {
@@ -30,18 +32,29 @@ export default class Reported extends Component {
   }
 
   changeHidden = () => {
-    if (document.getElementById('reportedAccordian').classList[0] === 'resultsAccordian') {
-      document.getElementById('reportedAccordian').className = "addMargin resultsAccordian"
-      document.getElementById('reportedHidden').className = "hiddenTab hidden"
-      document.getElementById('reportedArrow').className = "iconContainer arrowUp"
-    } else {
-      document.getElementById('reportedAccordian').className = "resultsAccordian"
-      document.getElementById('reportedHidden').className = "hidden"
+    let parentDropdown = document.getElementById('reportedDropdown')
+    if (this.openParentTab) {
       document.getElementById('reportedArrow').className = "iconContainer"
+      document.getElementById('reportedAccordian').className = "resultsAccordian"
+      parentDropdown.style.maxHeight = 0
+    } else {
+      document.getElementById('reportedArrow').className = "iconContainer arrowUp"
+      document.getElementById('reportedAccordian').className = "addMargin resultsAccordian"
+      parentDropdown.style.maxHeight = `${parentDropdown.scrollHeight}px`
     }
+    this.openParentTab = !this.openParentTab
   }
 
   render() {
+
+    let { results } = this.state;
+    let tests = _.uniq(results.map(x => x.test_id))
+    let individualTests = tests.map((test, i) => {
+      let data = results.filter(x => x.test_id === test)
+      return (
+        <ReportedResult data={data} key={`${i}ReportedData`} id={`${i+1}reportedData`} />
+      )
+    })
 
     return (
       <div className="resultsAccordian" id="reportedAccordian" >
@@ -51,8 +64,8 @@ export default class Reported extends Component {
           <div className="iconContainer" id="reportedArrow"><ExpandMore onClick={this.changeHidden} /></div>
         </div>
 
-        <div className="hidden" id="reportedHidden">
-          
+        <div className="parentDropdown" id="reportedDropdown">
+          {individualTests}
         </div>
 
       </div>

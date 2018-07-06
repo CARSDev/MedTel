@@ -12,6 +12,8 @@ export default class Imaging extends Component {
     this.state = {
       results: []
     }
+
+    this.openParentTab = false
   }
 
   componentDidUpdate(prevProps) {
@@ -30,18 +32,24 @@ export default class Imaging extends Component {
   }
 
   changeHidden = () => {
-    if (document.getElementById('imagingAccordian').classList[0] === 'resultsAccordian') {
-      document.getElementById('imagingAccordian').className = "addMargin resultsAccordian"
-      document.getElementById('imagingHidden').className = "hiddenTab hidden"
-      document.getElementById('imagingArrow').className = "iconContainer arrowUp"
-    } else {
-      document.getElementById('imagingAccordian').className = "resultsAccordian"
-      document.getElementById('imagingHidden').className = "hidden"
+    let parentDropdown = document.getElementById('imagingDropdown')
+    if (this.openParentTab) {
       document.getElementById('imagingArrow').className = "iconContainer"
+      document.getElementById('imagingAccordian').className = "resultsAccordian"
+      parentDropdown.style.maxHeight = 0
+    } else {
+      document.getElementById('imagingArrow').className = "iconContainer arrowUp"
+      document.getElementById('imagingAccordian').className = "addMargin resultsAccordian"
+      parentDropdown.style.maxHeight = `${parentDropdown.scrollHeight}px`
     }
+    this.openParentTab = !this.openParentTab
   }
 
   render() {
+
+    let { results } = this.state
+
+    console.log(this.state.results)
     return (
       <div className="resultsAccordian" id="imagingAccordian" >
 
@@ -50,7 +58,7 @@ export default class Imaging extends Component {
           <div className="iconContainer" id="imagingArrow"><ExpandMore onClick={this.changeHidden} /></div>
         </div>
 
-        <div className="hidden" id="imagingHidden">
+        <div className="parentDropdown" id="imagingDropdown">
           Hidden
         </div>
 
