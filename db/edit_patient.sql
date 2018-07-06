@@ -1,6 +1,7 @@
 UPDATE patients
 SET patient_first_name = $1,
     patient_last_name = $2,
+    patient_full_name = $17,
     patient_birthday = $3,
     patient_gender = $4,
     patient_address = $7,
