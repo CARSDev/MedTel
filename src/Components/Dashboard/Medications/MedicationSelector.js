@@ -26,7 +26,7 @@ class MedicationDialogRaw extends React.Component {
         this.state = {
             value: this.props.value,
             medications: [],
-            medicationId: 1,
+            medicationId: 0,
             sideEffect: ''
         };
     }
@@ -157,7 +157,7 @@ class MedicationDialog extends React.Component {
 
     state = {
         open: false,
-        value: 'Albuterol'
+        value: 'Click to Add'
     };
 
     handleClickListItem = () => {
@@ -170,6 +170,9 @@ class MedicationDialog extends React.Component {
         // console.log(rxdate)
         axios.post(`/med/${this.props.patient_id}`, { medication_id: medicationId, medication_date_prescribed: rxdate, medication_side_effect: sideEffect }).then(() => {
             this.props.getMedications()
+        })
+        this.setState({
+            value: 'Click to Add'
         })
     };
 

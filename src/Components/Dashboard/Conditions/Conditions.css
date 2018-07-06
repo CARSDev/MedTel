@@ -2,7 +2,8 @@
     padding-bottom: 5px;
     margin-right: auto;
     display: flex;
-    font-weight: bold;
+    font-size: 14px;
+    /* font-weight: bold; */
     /* display: list-item;
     list-style-type: disc; */
 }
@@ -22,3 +23,6 @@ ExpansionPanelDetails>div{
     flex: 0 50%;
 }
 
+.titleHeader{
+    font-size: 1em;
+}

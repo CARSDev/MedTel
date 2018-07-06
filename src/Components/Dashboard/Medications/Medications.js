@@ -49,11 +49,6 @@ export default class Medications extends Component {
     }
     radioGroup = null;
 
-    componentDidMount() {
-        this.getPatientMedications()
-        this.getMedicationsList()
-    }
-
     componentDidUpdate(prevProps) {
         if (prevProps !== this.props) {
             this.getPatientMedications()
@@ -109,11 +104,12 @@ export default class Medications extends Component {
     };
 
     render() {
-        let medicationsList = this.state.patientMedications.map((el, i) => {
-            if (!el.deleted) {
+        let medicationsList = this.state.patientMedications
+            .filter(el => !el.deleted)
+            .map((el, i) => {
                 // console.log(el)
                 return (
-                    <div key={el.patient_medication_id+'current'}>
+                    <div key={el.patient_medication_id + 'current'}>
                         <ul id='listContainer'>
                             <li id='conditionTextHead'>{el.medication_name}</li>
                             <li id='conditionText'>{moment(el.medication_date_prescribed).format('MM-DD-YYYY')}
@@ -123,11 +119,10 @@ export default class Medications extends Component {
                         </ul>
                     </div>
                 )
-            }
-
-        })
-        let pastMedicationsList = this.state.patientMedications.map((el, i) => {
-            if (el.deleted) {
+            })
+        let pastMedicationsList = this.state.patientMedications
+            .filter(el => !el.deleted)
+            .map((el, i) => {
                 return (
                     <div key={el.patient_medication_id + 'past'}>
                         <ul id='listContainer'>
@@ -138,27 +133,41 @@ export default class Medications extends Component {
                         </ul>
                     </div>
                 )
-            }
-
-        })
+            })
 
         return (
             <div>
                 {/* <ToastContainer /> */}
                 {/* ////////////Card Header/Content///////////////// */}
                 <Card style={{
-                    marginTop: '20px'
+                    marginTop: '20px',
+                    borderRadius: '5px',
+                    border: '1px solid rgba(0,0,0,0.3)',
+                    boxShadow: '0px 3px 3px 0px rgba(0,0,0,0.3)'
                 }}>
                     <CardHeader style={{
                         width: '100%',
-                        background: '#EBF7F6',
-                        borderRadius: 0,
-                        borderTop: '1px solid rgba(0,0,0,0.3)',
-                        borderRight: '1px solid rgba(0,0,0,0.3)'
+                        background: '#E9F7FA',
+                        padding: 1,
+                        margin: 0,
+                        borderBottom: '1px solid rgba(0,0,0,0.3)',
+                        borderTopLeftRadius: '5px',
+                        borderTopRightRadius: '5px',
+                        fontFamily: 'Roboto',
+                        textTransform: 'uppercase'
                     }}
-                        title="Medications">
+                        title={<span
+                            style={{
+                                fontSize: '0.7em',
+                                padding: '0px',
+                            }}
+                        >Medications</span>}>
                     </CardHeader>
-                    <CardContent>
+                    <CardContent
+                        style={{
+                            padding: 10
+                        }}
+                    >
                         {medicationsList}
                     </CardContent>
                     {/* ////////////////////////////////////// */}
@@ -167,7 +176,11 @@ export default class Medications extends Component {
                     <div >
                         <ExpansionPanel>
                             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                                <Typography >Past Medications</Typography>
+                                <Typography
+                                    style={{
+                                        fontSize: '0.9em',
+                                    }}
+                                >Past Medications</Typography>
                             </ExpansionPanelSummary>
                             <ExpansionPanelDetails
                                 style={{
@@ -175,7 +188,7 @@ export default class Medications extends Component {
                                     flexDirection: 'column'
                                 }}
                             >
-                                    {pastMedicationsList}
+                                {pastMedicationsList}
                             </ExpansionPanelDetails>
                         </ExpansionPanel>
                     </div>
@@ -185,10 +198,10 @@ export default class Medications extends Component {
                     {/* /////////////////Add Button//////////////// */}
                     <Button
                         style={{
-                            width: '100%',
+                            display: 'block-inline',
+                            minWidth: '50%',
                             borderRadius: 0,
-                            borderTop: '1px solid rgba(0,0,0,0.3)',
-                            borderRight: '1px solid rgba(0,0,0,0.3)'
+                            borderRight: '1px solid rgba(0,0,0,0.3)',
                         }}
                         onClick={this.handleClickOpenAdd}
                     >
@@ -210,10 +223,8 @@ export default class Medications extends Component {
                     {/* ///////////////////Delete Button///////////////////// */}
                     <Button
                         style={{
-                            width: '100%',
-                            borderRadius: 0,
-                            borderTop: '1px solid rgba(0,0,0,0.3)',
-                            borderRight: '1px solid rgba(0,0,0,0.3)'
+                            minWidth: '50%',
+                            borderRadius: 0
                         }}
                         onClick={this.handleClickOpenDelete}>
                         Delete
@@ -231,29 +242,31 @@ export default class Medications extends Component {
                         <DialogTitle id="form-dialog-title">Delete Medications</DialogTitle>
                         <div>
                             <List>
-                                {this.state.patientMedications.map((el, i) => {
-                                    if (!el.deleted)
-                                        return (
-                                            <ListItem key={el.patient_medication_id + 'list'}>
-                                                <ListItemText
-                                                    primary={el.medication_name}
-                                                />
-                                                <ListItemSecondaryAction>
-                                                    <IconButton
-                                                        aria-label="Delete"
-                                                        onClick={() => {
-                                                            // console.log(el)
-                                                            this.updateMedication(el.patient_medication_id)
-                                                        }
-                                                        }
-                                                    >
-                                                        <Delete />
-                                                    </IconButton>
-                                                </ListItemSecondaryAction>
-                                            </ListItem>
-                                        )
-                                }
-                                )}
+                                {this.state.patientMedications
+                                    .filter(el => !el.deleted)
+                                    .map((el, i) => {
+                                        if (!el.deleted)
+                                            return (
+                                                <ListItem key={el.patient_medication_id + 'list'}>
+                                                    <ListItemText
+                                                        primary={el.medication_name}
+                                                    />
+                                                    <ListItemSecondaryAction>
+                                                        <IconButton
+                                                            aria-label="Delete"
+                                                            onClick={() => {
+                                                                // console.log(el)
+                                                                this.updateMedication(el.patient_medication_id)
+                                                            }
+                                                            }
+                                                        >
+                                                            <Delete />
+                                                        </IconButton>
+                                                    </ListItemSecondaryAction>
+                                                </ListItem>
+                                            )
+                                    }
+                                    )}
                             </List>
                         </div>
                         <DialogActions>

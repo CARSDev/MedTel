@@ -46,12 +46,6 @@ export default class Allergies extends Component {
         this.getAllergiesList = this.getAllergiesList.bind(this);
         this.updateAllergy = this.updateAllergy.bind(this);
     }
-    radioGroup = null;
-
-    componentDidMount() {
-        this.getPatientAllergies()
-        this.getAllergiesList()
-    }
 
     componentDidUpdate(prevProps) {
         if (prevProps !== this.props) {
@@ -144,18 +138,33 @@ export default class Allergies extends Component {
                 {/* <ToastContainer /> */}
                 {/* ////////////Card Header/Content///////////////// */}
                 <Card style={{
-                    marginTop: '20px'
+                    marginTop: '20px',
+                    borderRadius: '5px',
+                    border: '1px solid rgba(0,0,0,0.3)',
+                    boxShadow: '0px 3px 3px 0px rgba(0,0,0,0.3)'
                 }}>
                     <CardHeader style={{
                         width: '100%',
-                        background: '#EBF7F6',
-                        borderRadius: 0,
-                        borderTop: '1px solid rgba(0,0,0,0.3)',
-                        borderRight: '1px solid rgba(0,0,0,0.3)'
+                        background: '#E9F7FA',
+                        padding: 1,
+                        margin: 0,
+                        borderBottom: '1px solid rgba(0,0,0,0.3)',
+                        borderTopLeftRadius: '5px',
+                        borderTopRightRadius: '5px',
+                        fontFamily: 'Roboto',
+                        textTransform: 'uppercase',
                     }}
-                        title="Allergies">
+                        title={<span
+                            style={{
+                                fontSize: '0.7em',
+                                padding: '0px',
+                            }}>Allergies</span>}>
                     </CardHeader>
-                    <CardContent>
+                    <CardContent
+                        style={{
+                            padding: 10
+                        }}
+                    >
                         {allergyList}
                     </CardContent>
                     {/* ////////////////////////////////////// */}
@@ -164,7 +173,11 @@ export default class Allergies extends Component {
                     <div >
                         <ExpansionPanel>
                             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                                <Typography >Past Allergies</Typography>
+                                <Typography
+                                    style={{
+                                        fontSize: '0.9em',
+                                    }}
+                                >Past Allergies</Typography>
                             </ExpansionPanelSummary>
                             <ExpansionPanelDetails
                                 style={{
@@ -182,10 +195,10 @@ export default class Allergies extends Component {
                     {/* /////////////////Add Button//////////////// */}
                     <Button
                         style={{
-                            width: '100%',
+                            display: 'block-inline',
+                            minWidth: '50%',
                             borderRadius: 0,
-                            borderTop: '1px solid rgba(0,0,0,0.3)',
-                            borderRight: '1px solid rgba(0,0,0,0.3)'
+                            borderRight: '1px solid rgba(0,0,0,0.3)',
                         }}
                         onClick={this.handleClickOpenAdd}
                     >
@@ -207,10 +220,8 @@ export default class Allergies extends Component {
                     {/* ///////////////////Delete Button///////////////////// */}
                     <Button
                         style={{
-                            width: '100%',
-                            borderRadius: 0,
-                            borderTop: '1px solid rgba(0,0,0,0.3)',
-                            borderRight: '1px solid rgba(0,0,0,0.3)'
+                            minWidth: '50%',
+                            borderRadius: 0
                         }}
                         onClick={this.handleClickOpenDelete}>
                         Delete

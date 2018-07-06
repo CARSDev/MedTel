@@ -26,7 +26,7 @@ class FamilyHistoryDialogRaw extends React.Component {
         this.state = {
             value: this.props.value,
             conditions: [],
-            conditionId: 8,
+            conditionId: 0,
             relationship: ''
         };
     }
@@ -158,7 +158,7 @@ class FamilyHistoryDialog extends React.Component {
 
     state = {
         open: false,
-        value: 'Allergies'
+        value: 'Click to Add'
     };
 
     handleClickListItem = () => {
@@ -169,6 +169,9 @@ class FamilyHistoryDialog extends React.Component {
         this.setState({ value, open: false });
         axios.post(`/hx/${this.props.patient_id}`, { condition_id: conditionId, family_history_relationship: relationship}).then(res => {
             this.props.getHx()
+        })
+        this.setState({
+            value: 'Click to Add'
         })
     };
 
