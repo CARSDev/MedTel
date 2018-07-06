@@ -137,7 +137,7 @@ class AllergiesDialog extends React.Component {
 
     state = {
         open: false,
-        value: 'Anticonvulsants'
+        value: 'Click to Add'
     };
 
     handleClickListItem = () => {
@@ -148,6 +148,9 @@ class AllergiesDialog extends React.Component {
         this.setState({ value, open: false });
         axios.post(`/allergy/${this.props.patient_id}`, { allergy_id: allergyId, allergy_date_diagnosed: moment.utc(new Date()).format() }).then(res => {
             this.props.getAllergies()
+        })
+        this.setState({
+            value: 'Click to Add'
         })
     };
 

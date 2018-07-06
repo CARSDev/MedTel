@@ -25,7 +25,7 @@ class DeviceDialogRaw extends React.Component {
         this.state = {
             value: this.props.value,
             devices: [],
-            deviceId: 4,
+            deviceId: 0,
         };
     }
 
@@ -136,7 +136,7 @@ class DeviceDialog extends React.Component {
 
     state = {
         open: false,
-        value: 'Adjustable Gastric Band'
+        value: 'Click to Add'
     };
 
     handleClickListItem = () => {
@@ -147,6 +147,9 @@ class DeviceDialog extends React.Component {
         this.setState({ value, open: false });
         axios.post(`/device/${this.props.patient_id}`, { medical_device_id: deviceId, medical_device_date_administered: moment.utc(new Date()).format() }).then(() => {
             this.props.getDevices()
+        })
+        this.setState({
+            value: 'Click to Add'
         })
     };
 
