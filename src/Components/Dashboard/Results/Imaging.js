@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import ExpandMore from "@material-ui/icons/ExpandMore";
-import LabResult from './LabResult'
-import _ from 'lodash'
+import ImagingResult from './ImagingResults'
 import './Results.css'
 
 export default class Imaging extends Component {
@@ -49,7 +48,12 @@ export default class Imaging extends Component {
 
     let { results } = this.state
 
-    console.log(this.state.results)
+    let imagingResults = results.map( (result, i) => {
+      return (
+        <ImagingResult data={result} key={`${i}imagingResult`} id={i + 1} />
+      )
+    } )
+
     return (
       <div className="resultsAccordian" id="imagingAccordian" >
 
@@ -59,7 +63,7 @@ export default class Imaging extends Component {
         </div>
 
         <div className="parentDropdown" id="imagingDropdown">
-          Hidden
+          {imagingResults}
         </div>
 
       </div>

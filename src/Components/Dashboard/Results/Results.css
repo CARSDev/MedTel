@@ -140,3 +140,15 @@
     padding: 5px 10px;
     border-right: 1px solid rgba(0,0,0,0.3);
 }
+
+.labDropdown > p {
+    font-family: 'Roboto';
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.labDropdown > img {
+    max-width: 600px;
+    max-height: 600px;
+    margin-bottom: 20px;
+}

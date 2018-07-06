@@ -10,6 +10,7 @@ export default class LabResult extends Component {
 
         this.openLabDropdown = false
     }
+    
     changeHidden = () => {
         let labDropdown = document.getElementById(`${this.props.id}labDropdown`)
         let parentDropdown = document.getElementById('labsDropdown')
