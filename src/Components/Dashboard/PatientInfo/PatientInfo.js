@@ -1,7 +1,14 @@
 import React, { Component } from "react";
 import axios from "axios";
 import moment from "moment";
-import ExpandMore from "@material-ui/icons/ExpandMore";
+import ExpandMore from
+  "@material-ui/icons/ExpandMore";
+import AccountBox from
+  "@material-ui/icons/AccountBox";
+import Group from
+  "@material-ui/icons/Group";
+import Domain from
+  "@material-ui/icons/Domain";
 import Edit from "@material-ui/icons/Edit";
 import EditInfo from "./EditInfo";
 import "./PatientInfo.css";
@@ -43,7 +50,7 @@ class PatientInfo extends Component {
         patient_visit_reason: null
       },
       measurementResults: [],
-      toggle: true,
+      toggle: false,
       open: false
     };
   }
@@ -365,13 +372,16 @@ class PatientInfo extends Component {
           <div className={this.state.toggle ? "hiddenTab" : "hidden"}>
             <hr />
             <div className="row2">
-              <div className="ptHeader">CONTACT INFO</div>
+              <div className="ptHeaders">CONTACT INFO</div>
               <hr />
               <div className="contactInfo">
-                <div className="address">
+                <div className="ptinfoicon">
+                  <Domain style={{height: 40, width: 40, color: 'EF652F'}}/>
+                </div> 
+                <div className="contact 1">
                   Address: <br /> {this.state.patient_address} <br />
                 </div>
-                <div className="phone">
+                <div className="contact 2">
                   Phone: {this.state.patient_phone_number} <br />
                   Email: {this.state.patient_email}
                 </div>
@@ -379,15 +389,15 @@ class PatientInfo extends Component {
             </div>
             <hr />
             <div className="emergencycontacts">
-              <div className='ptHeader'>EMERGENCY CONTACTS</div>
+              <div className='ptHeaders'>EMERGENCY CONTACTS</div>
               <hr />
               <div className="contacts">
+                <div className="ptinfoicon">
+                  <Group style={{height: 40, width: 40, color: '#3e8ec7'}}/>
+                </div>  
                 <div className="contact 1">
-                  <div>
                     {patient_emergency_contact_name} -  {patient_emergency_contact_relationship}<br />
                     {patient_emergency_contact_number} <br />
-                    
-                  </div>
                 </div>
                 {this.state.patient_emergency_contact_name2 ? (
                   <div className="contact 2">
