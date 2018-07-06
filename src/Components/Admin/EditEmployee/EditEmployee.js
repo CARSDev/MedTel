@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {withRouter} from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import axios from 'axios';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -13,7 +13,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Input from '@material-ui/core/Input';
 import FormControl from '@material-ui/core/FormControl';
 
-class AddEmployee extends Component {
+
+class EditEmployee extends Component {
     constructor() {
         super()
         this.state = {
@@ -23,7 +24,21 @@ class AddEmployee extends Component {
             role: '',
             username: '',
             password: '',
-            email:''
+            email: ''
+        }
+    }
+
+    componentDidUpdate(prevProps) {
+        const {employee} =this.props
+        if (prevProps !== this.props) {
+            this.setState({
+                first: employee.employee_first_name,
+                last: employee.employee_last_name,
+                picture: employee.employee_picture,
+                role: employee.role_id,
+                username: employee.employee_username,
+                email: employee.employee_email
+            })
         }
     }
 
@@ -34,8 +49,9 @@ class AddEmployee extends Component {
     }
 
     submit = () => {
-        let {first, last, picture, role, username, password, email} =this.state
-        axios.post('/employee', { first, last, picture, role, username, password, email }).then(this.props.history.go(0))
+        let { first, last, picture, role, username, email } = this.state
+        let id = this.props.employee.employee_id
+        axios.put(`/employee/${id}`, { first, last, picture, role, username, email }).then(this.props.history.go(0))
         this.props.handleClose()
     }
 
@@ -47,7 +63,7 @@ class AddEmployee extends Component {
                     onClose={this.props.handleClose}
                     aria-labelledby="form-dialog-title"
                 >
-                    <DialogTitle id="form-dialog-title">Add Employee</DialogTitle>
+                    <DialogTitle id="form-dialog-title">Edit Employee</DialogTitle>
 
                     <DialogContent>
 
@@ -58,6 +74,7 @@ class AddEmployee extends Component {
                             label="First Name"
                             type="name"
                             fullWidth
+                            value={this.state.first}
                             onChange={(e) => this.inputHandler(e, "first")}
                         />
 
@@ -67,6 +84,7 @@ class AddEmployee extends Component {
                             label="Last Name"
                             type="name"
                             fullWidth
+                            value={this.state.last}
                             onChange={(e) => this.inputHandler(e, "last")}
                         />
 
@@ -76,6 +94,7 @@ class AddEmployee extends Component {
                             label="Picture url"
                             type="picture"
                             fullWidth
+                            value={this.state.picture}
                             onChange={(e) => this.inputHandler(e, "picture")}
                         />
 
@@ -99,16 +118,8 @@ class AddEmployee extends Component {
                             label="username"
                             type="username"
                             fullWidth
+                            value={this.state.username}
                             onChange={(e) => this.inputHandler(e, "username")}
-                        />
-
-                        <TextField
-                            margin="normal"
-                            id="password"
-                            label="Password"
-                            type="password"
-                            fullWidth
-                            onChange={(e) => this.inputHandler(e, "password")}
                         />
 
                         <TextField
@@ -117,6 +128,7 @@ class AddEmployee extends Component {
                             label="Email"
                             type="email"
                             fullWidth
+                            value={this.state.email}
                             onChange={(e) => this.inputHandler(e, "email")}
                         />
 
@@ -128,7 +140,7 @@ class AddEmployee extends Component {
                             Cancel
                     </Button>
                         <Button onClick={this.submit} color="primary">
-                            Add
+                            Update
                     </Button>
                     </DialogActions>
 
@@ -138,4 +150,4 @@ class AddEmployee extends Component {
     }
 }
 
-export default withRouter(AddEmployee)
+export default withRouter(EditEmployee)

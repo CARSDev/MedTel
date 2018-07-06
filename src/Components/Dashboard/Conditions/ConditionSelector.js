@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
+import moment from 'moment';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -20,22 +21,21 @@ class ConfirmationDialogRaw extends React.Component {
 
     constructor(props) {
         super(props);
-        
+
         this.state = {
             value: this.props.value,
             conditions: [],
-            conditionId: 8,
+            conditionId: 0,
             time: ''
         };
     }
 
-    state = {};
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.value !== this.props.value) {
             this.setState({ value: nextProps.value });
         }
-      }
+    }
 
     componentDidMount() {
         axios.get(`/conditions`).then(res => {
@@ -58,12 +58,16 @@ class ConfirmationDialogRaw extends React.Component {
         this.props.onClose(this.state.value, this.state.conditionId);
     };
 
-    handleChange = (event, value) => {
+    handleChange = (event) => {
+        let value = event.target.value
         let conditionElement = this.state.conditions.find((el) => {
             if (value === el.condition_name) {
                 return true;
             }
         })
+        // console.log(this.state.conditions)
+        // console.log(value)
+
         this.setState({
             value,
             conditionId: conditionElement.condition_id
@@ -73,7 +77,7 @@ class ConfirmationDialogRaw extends React.Component {
     render() {
         const { value, ...other } = this.props;
         // console.log(this.state.value)
-        // console.log(this.state.condition_id)
+        // console.log(this.state.conditionId)
         return (
             <Dialog
                 disableBackdropClick
@@ -98,7 +102,7 @@ class ConfirmationDialogRaw extends React.Component {
                             <FormControlLabel
                                 value={option.condition_name}
                                 key={option.condition_id}
-                                control={<Radio/>}
+                                control={<Radio />}
                                 label={option.condition_name} />
                         ))}
                     </RadioGroup>
@@ -138,7 +142,7 @@ class ConfirmationDialog extends React.Component {
 
     state = {
         open: false,
-        value: 'Allergies'
+        value: 'Click to Add'
     };
 
     handleClickListItem = () => {
@@ -147,8 +151,11 @@ class ConfirmationDialog extends React.Component {
 
     handleClose = (value, conditionId) => {
         this.setState({ value, open: false });
-        axios.post(`/condition/${this.props.patient_id}`, { condition_id: conditionId, condition_date_diagnosed: new Date() }).then(res => {
+        axios.post(`/condition/${this.props.patient_id}`, { condition_id: conditionId, condition_date_diagnosed: moment.utc(new Date()).format() }).then(res => {
             this.props.getConditions()
+        })
+        this.setState({
+            value: 'Click to Add'
         })
     };
 
@@ -176,6 +183,7 @@ class ConfirmationDialog extends React.Component {
                         value={this.state.value}
                     />
                 </List>
+                
             </div>
         );
     }

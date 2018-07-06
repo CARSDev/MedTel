@@ -12,7 +12,7 @@ class Autosuggest extends Component {
             list: []
         }
     }
-
+    
     componentDidMount = () => {
         axios.get('/patients').then(res => {
             let list = res.data.map(val => {
@@ -21,14 +21,24 @@ class Autosuggest extends Component {
             })
             this.setState({ list })
         })
-        // console.log(this.props)
+    }
+    
+    componentWillReceiveProps(newProps) {
+        if (this.props.open && !newProps.open) {
+            this.setState({
+                chosenValue: '',
+                searchValue: '',
+                showDropdown: false,
+                list: []
+            })
+        }
     }
 
     chooseDropdownItem = (e, valueSelected, valueObject) => {
         e.preventDefault()
         this.setState({ showDropdown: false, searchValue: valueSelected })
-        // console.log(valueObject)
         this.props.getName(valueObject.patient_id)
+        console.log(this.state)
     }
 
     updateSearchValue = e => {
@@ -41,7 +51,6 @@ class Autosuggest extends Component {
     }
 
     render() {
-        // console.log(this.state.list)
         return (
             <div className='App'>
                 <ReactAutoSuggestDropdown

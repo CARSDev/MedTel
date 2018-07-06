@@ -78,8 +78,10 @@ export default class VisitDetails extends Component {
     render() {
         let { data } = this.props
         let date = moment(data.patient_visit_date).format('MM/DD/YYYY')
-        let lastInitial = data.employee_last_name.slice(0, 1);
-        let employeeName = `${data.employee_first_name} ${lastInitial}.`
+        // let lastInitial = data.employee_last_name.slice(0, 1);
+        // let employeeName = `${data.employee_first_name} ${lastInitial}.`
+        let firstInitial = data.employee_first_name.slice(0, 1);
+        let employeeName = `${firstInitial}. ${data.employee_last_name}`
     return (
         <div>
 
@@ -101,7 +103,7 @@ export default class VisitDetails extends Component {
                 <div className="dialogTitle">
                     
                     <h3>{date}</h3>
-                    <h3>Seen By: {employeeName}</h3>
+                    <h3>Provider: {employeeName}</h3>
 
                 </div>
                 

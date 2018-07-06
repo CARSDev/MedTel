@@ -17,20 +17,29 @@ class Nav extends Component {
 
   componentDidMount() {
     axios.get("/employee").then(res => {
-      // console.log(res.data)
-      let { employee_picture, employee_first_name } = res.data[0];
-      this.setState({
-        employee_picture: employee_picture,
-        employee_first_name: employee_first_name
-      });
+      let { employee_picture, employee_first_name, role_id } = res.data[0];
+      if (role_id === 1) {
+        this.setState({
+          showAdmin: true,
+          employee_picture: employee_picture,
+          employee_first_name: employee_first_name
+        }); 
+      } else {
+        this.setState({
+          employee_picture: employee_picture,
+          employee_first_name: employee_first_name
+        }); 
+      }
+      
     });
   }
 
-  toggleAdmin() {
-    this.setState({
-      showAdmin: !this.state.showAdmin
-    });
-  }
+
+  // toggleAdmin() {
+  //   this.setState({
+  //     showAdmin: !this.state.showAdmin
+  //   });
+  // }
 
   toggleDropdown() {
     this.setState({
@@ -38,12 +47,14 @@ class Nav extends Component {
     });
   }
 
+
+
   render() {
     // console.log(this.props)
     return <div className="mainNav">
         <div className="leftNav">
           <img className="logo" src="https://static1.squarespace.com/static/59ca534059cc68a3cdb78cbb/t/59ccbd7837c58187d283b471/1518603415416/" alt="" />
-          <button onClick={() => this.toggleAdmin()}>toggle</button>
+          {/* <button onClick={() => this.toggleAdmin()}>toggle</button> */}
         </div>
         <div className="centerNav">
           <Link to="/schedule">

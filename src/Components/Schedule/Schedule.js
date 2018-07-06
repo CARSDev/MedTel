@@ -15,7 +15,8 @@ export default class Schedule extends Component {
             date: new Date(),
             morning: moment(this.date).startOf('day')._d,
             night: moment(this.date).endOf('day')._d,
-            schedule: []
+            schedule: [],
+            open: false
         }
     }
 
@@ -84,7 +85,7 @@ export default class Schedule extends Component {
                     onChange={this.onChange}
                     value={date}
                 />
-                <Day date={date} morning={morning} schedule={schedule}/>
+                <Day date={date} morning={morning} schedule={schedule} getSchedule={this.getSchedule}/>
             </div>
         )
     }

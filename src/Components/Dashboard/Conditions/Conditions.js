@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import moment from 'moment';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
+// import { ToastContainer } from 'react-toastify';
 import ConditionSelector from './ConditionSelector';
 import './Conditions.css';
-
 
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
@@ -26,6 +26,11 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
+const styles = {
+    button: {
+        background: props => props.color,
+    },
+};
 
 export default class Conditions extends Component {
     constructor(props) {
@@ -103,55 +108,70 @@ export default class Conditions extends Component {
     };
 
     render() {
-        const { value, ...other } = this.props;
 
-        let conditionList = this.state.patientConditions.map((el, i) => {
-            if (!el.deleted) {
+        let conditionList = this.state.patientConditions
+            .filter(el => !el.deleted)
+            .map((el, i) => {
                 // console.log(el)
                 return (
-                    <div key={el.patient_condition_id}>
-                        <ul>
-                            <li id='conditionText'>{el.condition_name}</li>
-                            <li id='conditionText'>{moment(el.condition_date_diagnosed).format('MMM DD, YYYY')}</li>
+                    <div key={el.patient_condition_id + 'conList'}>
+                        <ul id='listContainer'>
+                            <li id='conditionTextHead'>{el.condition_name}</li>
+                            <li id='conditionText'>{moment(el.condition_date_diagnosed).format('MM-DD-YYYY')}</li>
                             <br />
                         </ul>
                     </div>
                 )
-            }
-
-        })
-        let pastConditionList = this.state.patientConditions.map((el, i) => {
-            if (el.deleted) {
+            })
+        let pastConditionList = this.state.patientConditions
+            .filter(el => !el.deleted)
+            .map((el, i) => {
                 return (
-                    <div key={el.patient_condition_id}>
-                        <ul>
-                            <li id='conditionText'>{el.condition_name}</li>
-                            <li id='conditionText'>{moment(el.condition_date_diagnosed).format('MMM DD, YYYY')}</li>
+                    <div key={el.patient_condition_id + 'conPastList'}>
+                        <ul id='listContainer'>
+                            <li id='conditionTextHead'>
+                                {el.condition_name}</li>
+                            <li id='conditionText'>{moment(el.condition_date_diagnosed).format('MM-DD-YYYY')}</li>
                             <br />
                         </ul>
                     </div>
                 )
-            }
-
-        })
+            })
 
         return (
             <div>
                 {/* <ToastContainer /> */}
                 {/* ////////////Card Header/Content///////////////// */}
                 <Card style={{
-                    marginTop: '20px'
+                    marginTop: '20px',
+                    borderRadius: '5px',
+                    border: '1px solid rgba(0,0,0,0.3)',
+                    boxShadow: '0px 3px 3px 0px rgba(0,0,0,0.3)',
                 }}>
-                    <CardHeader style={{
-                        width: '100%',
-                        background: '#EBF7F6',
-                        borderRadius: 0,
-                        borderTop: '1px solid rgba(0,0,0,0.3)',
-                        borderRight: '1px solid rgba(0,0,0,0.3)',
-                    }}
-                        title="Conditions">
+                    <CardHeader
+                        style={{
+                            width: '100%',
+                            background: '#E9F7FA',
+                            padding: 1,
+                            margin: 0,
+                            borderBottom: '1px solid rgba(0,0,0,0.3)',
+                            borderTopLeftRadius: '5px',
+                            borderTopRightRadius: '5px',
+                            fontFamily: 'Roboto',
+                            textTransform: 'uppercase'
+                        }}
+                        title={<span
+                            style={{
+                                fontSize: '0.7em',
+                                padding: '0px',
+                        }}
+                        >Conditions</span>}>
                     </CardHeader>
-                    <CardContent>
+                    <CardContent
+                        style={{
+                            padding: 10
+                        }}
+                    >
                         {conditionList}
                     </CardContent>
                     {/* ////////////////////////////////////// */}
@@ -159,13 +179,22 @@ export default class Conditions extends Component {
                     {/* ///////////////////PastConditions///////////////// */}
                     <div >
                         <ExpansionPanel>
-                            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                                <Typography >Past Conditions</Typography>
+                            <ExpansionPanelSummary
+                                expandIcon={<ExpandMoreIcon />}
+                            >
+                                <Typography
+                                    style={{
+                                        fontSize: '0.9em',
+                                    }}
+                                >Past Conditions</Typography>
                             </ExpansionPanelSummary>
-                            <ExpansionPanelDetails>
-                                <Typography>
-                                    {pastConditionList}
-                                </Typography>
+                            <ExpansionPanelDetails
+                                style={{
+                                    display: 'flex',
+                                    flexDirection: 'column'
+                                }}
+                            >
+                                {pastConditionList}
                             </ExpansionPanelDetails>
                         </ExpansionPanel>
                     </div>
@@ -175,9 +204,10 @@ export default class Conditions extends Component {
                     {/* /////////////////Add Button//////////////// */}
                     <Button
                         style={{
-                            width: '100%',
+                            display: 'block-inline',
+                            minWidth: '50%',
                             borderRadius: 0,
-                            borderTop: '1px solid rgba(0,0,0,0.3)',
+                            // borderTop: '1px solid rgba(0,0,0,0.3)',
                             borderRight: '1px solid rgba(0,0,0,0.3)'
                         }}
                         onClick={this.handleClickOpenAdd}
@@ -200,10 +230,10 @@ export default class Conditions extends Component {
                     {/* ///////////////////Delete Button///////////////////// */}
                     <Button
                         style={{
-                            width: '100%',
-                            borderRadius: 0,
-                            borderTop: '1px solid rgba(0,0,0,0.3)',
-                            borderRight: '1px solid rgba(0,0,0,0.3)'
+                            minWidth: '50%',
+                            borderRadius: 0
+                            // borderTop: '1px solid rgba(0,0,0,0.3)',
+                            // borderRight: '1px solid rgba(0,0,0,0.3)'
                         }}
                         onClick={this.handleClickOpenDelete}>
                         Delete
@@ -221,8 +251,9 @@ export default class Conditions extends Component {
                         <DialogTitle id="form-dialog-title">Delete Conditions</DialogTitle>
                         <div>
                             <List>
-                                {this.state.patientConditions.map((el, i) => {
-                                    if (!el.deleted)
+                                {this.state.patientConditions
+                                    .filter(el => !el.deleted)
+                                    .map((el, i) => {
                                         return (
                                             <ListItem key={i}>
                                                 <ListItemText
@@ -242,13 +273,13 @@ export default class Conditions extends Component {
                                                 </ListItemSecondaryAction>
                                             </ListItem>
                                         )
-                                }
-                                )}
+                                    }
+                                    )}
                             </List>
                         </div>
                         <DialogActions>
                             <Button onClick={this.handleCloseDelete} color="primary">
-                                Cancel
+                                Close
                                 </Button>
                         </DialogActions>
                     </Dialog>

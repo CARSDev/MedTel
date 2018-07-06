@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
+import moment from 'moment';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -25,7 +26,6 @@ class AllergiesDialogRaw extends React.Component {
             value: this.props.value,
             allergies: [],
             allergyId:11,
-            time: ''
         };
     }
 
@@ -137,7 +137,7 @@ class AllergiesDialog extends React.Component {
 
     state = {
         open: false,
-        value: 'Anticonvulsants'
+        value: 'Click to Add'
     };
 
     handleClickListItem = () => {
@@ -146,8 +146,11 @@ class AllergiesDialog extends React.Component {
 
     handleClose = (value, allergyId) => {
         this.setState({ value, open: false });
-        axios.post(`/allergy/${this.props.patient_id}`, { allergy_id: allergyId, allergy_date_diagnosed: new Date() }).then(res => {
+        axios.post(`/allergy/${this.props.patient_id}`, { allergy_id: allergyId, allergy_date_diagnosed: moment.utc(new Date()).format() }).then(res => {
             this.props.getAllergies()
+        })
+        this.setState({
+            value: 'Click to Add'
         })
     };
 
