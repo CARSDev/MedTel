@@ -23,6 +23,12 @@
         font-size: 1.25em;
 }
 
+.schedTimes h3{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .schedTimes h3:nth-child(odd){
     background: #E9F7FA;
 }
@@ -36,6 +42,8 @@
 .ptAndReason{
     width: 560px;
     display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .schedHeader{
@@ -47,9 +55,18 @@
 }
 #schedReason{
     width: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .schedContent{
     display: flex;
     flex-direction: row;
+}
+
+.schedName{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
