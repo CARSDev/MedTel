@@ -210,15 +210,11 @@ export default class Medications extends Component {
                             marginLeft: '5px'
                         }} />
                     </Button>
-
-                    <Dialog
+                    <MedicationSelector
+                        patient_id={this.props.patient_id}
+                        getMedications={this.getPatientMedications}
                         open={this.state.openAdd}
-                        onClose={this.handleCloseAdd}
-                        aria-labelledby="confirmation-dialog-title"
-                    >
-                        <DialogTitle id="form-dialog-title">Add Medications</DialogTitle>
-                        <MedicationSelector patient_id={this.props.patient_id} getMedications={this.getPatientMedications} />
-                    </Dialog>
+                        onClose={this.handleCloseAdd}/>
 
                     {/* ///////////////////Delete Button///////////////////// */}
                     <Button

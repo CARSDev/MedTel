@@ -82,9 +82,9 @@ export default class ConditionSelector extends Component {
         axios.post(`/condition/${this.props.patient_id}`, { condition_id: this.state.conditionId, condition_date_diagnosed: moment.utc(new Date()).format() }).then(res => {
             this.props.getConditions()
         })
-        this.setState({
-            value: 'Click to Add',
-        })
+        // this.setState({
+        //     value: 'Click to Add',
+        // })
     };
 
 
@@ -125,7 +125,7 @@ export default class ConditionSelector extends Component {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={this.props.onClose} color="primary">
-                        Cancel
+                        Close
                     </Button>
                     <Button onClick={this.handleClose} color="primary">
                         Ok

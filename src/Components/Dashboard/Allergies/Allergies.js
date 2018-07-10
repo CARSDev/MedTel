@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import moment from 'moment';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import AllergySelector from './AllergySelector';
 import '../Conditions/Conditions.css';
 
@@ -207,15 +207,12 @@ export default class Allergies extends Component {
                             marginLeft: '5px'
                         }} />
                     </Button>
-
-                    <Dialog
+                    <AllergySelector
+                        patient_id={this.props.patient_id}
+                        getAllergies={this.getPatientAllergies}
                         open={this.state.openAdd}
                         onClose={this.handleCloseAdd}
-                        aria-labelledby="confirmation-dialog-title"
-                    >
-                        <DialogTitle id="form-dialog-title">Add Allergies</DialogTitle>
-                        <AllergySelector patient_id={this.props.patient_id} getAllergies={this.getPatientAllergies} />
-                    </Dialog>
+                    />
 
                     {/* ///////////////////Delete Button///////////////////// */}
                     <Button

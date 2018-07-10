@@ -209,15 +209,12 @@ export default class Devices extends Component {
                             marginLeft: '5px'
                         }} />
                     </Button>
-
-                    <Dialog
+                    <DeviceSelector
+                        patient_id={this.props.patient_id}
+                        getDevices={this.getPatientDevices}
                         open={this.state.openAdd}
                         onClose={this.handleCloseAdd}
-                        aria-labelledby="confirmation-dialog-title"
-                    >
-                        <DialogTitle id="form-dialog-title">Add Devices</DialogTitle>
-                        <DeviceSelector patient_id={this.props.patient_id} getDevices={this.getPatientDevices} />
-                    </Dialog>
+                    />
 
                     {/* ///////////////////Delete Button///////////////////// */}
                     <Button
