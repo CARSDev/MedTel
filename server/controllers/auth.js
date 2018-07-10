@@ -5,7 +5,7 @@ module.exports = function addAuthEndpointsTo(app) {
     
     app.post('/auth/login', login);
 
-
+    app.get('/auth/logout', logout);
 }
 
 function addUser(req, res) {
@@ -36,7 +36,7 @@ function login(req, res) {
                 }
                 else if (result) {
                     req.db.read_user([employee_id]).then(user => {
-                        req.session.user = user.employee_id
+                        req.session.user = user[0].employee_id
                         user[0].employee_hashed_password = ''
                         res.status(200).send(user)
                     }).catch(err => {
@@ -45,4 +45,9 @@ function login(req, res) {
                 }
             })
         } )
+}
+
+function logout(req, res) {
+    req.session.destroy()
+    res.sendStatus(200)
 }
