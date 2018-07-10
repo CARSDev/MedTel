@@ -74,6 +74,8 @@ function editPatient(req, res) {
     patient_emergency_contact_relationship2,
     patient_emergency_contact_number2
   } = req.body;
+  // console.log(req.body)
+  let patient_full_name = `${patient_first_name} ${patient_last_name}`
   req.db
     .edit_patient([
       patient_first_name,
@@ -91,7 +93,8 @@ function editPatient(req, res) {
       patient_emergency_contact_name2,
       patient_emergency_contact_relationship2,
       patient_emergency_contact_number2,
-      id
+      id,
+      patient_full_name
     ])
     .then(() => {
       res.status(200).send();

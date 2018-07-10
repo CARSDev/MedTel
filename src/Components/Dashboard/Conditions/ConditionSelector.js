@@ -79,7 +79,7 @@ class ConfirmationDialogRaw extends React.Component {
         // console.log(this.state.value)
         // console.log(this.state.conditionId)
         return (
-            <Dialog
+            <Dialog 
                 disableBackdropClick
                 disableEscapeKeyDown
                 maxWidth="xs"
@@ -87,7 +87,9 @@ class ConfirmationDialogRaw extends React.Component {
                 aria-labelledby="confirmation-dialog-title"
                 {...other}
             >
-                <DialogTitle id="confirmation-dialog-title">Conditions</DialogTitle>
+                <DialogTitle id="confirmation-dialog-title"
+                
+                >Conditions</DialogTitle>
                 <DialogContent>
                     <RadioGroup
                         ref={node => {

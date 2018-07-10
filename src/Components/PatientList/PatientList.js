@@ -81,7 +81,7 @@ export default class PatientList extends Component {
                             marginTop: 15,
                             marginLeft: 10
                         }} onClick={this.allowSearch} />
-                        <p>Pt Id</p>
+                        <p>Id</p>
                         <p>Name</p>
                         <p>Phone</p>
                         <p>Email</p>

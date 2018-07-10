@@ -1,12 +1,13 @@
 .mainPatientInfo {
-  background: linear-gradient(#f7fcfd, #e9f7fa);
+  /* background: linear-gradient(#f7fcfd, #e9f7fa); */
   /* height: 35vh; */
+  background: white;
   width: 100%;
   border: 1px solid #bfcbcd;
   border-radius: 3px;
   box-shadow: 2px 2px 5px -2px #404445;
   box-sizing: border-box;
-  font-size: 18px;
+  font-size: 100%;
 }
 
 .row1 {
@@ -17,15 +18,17 @@
 }
 
 .ptpic {
-
+  margin: 4px;
 }
 
 .ptpic img {
-  height: 150px;
-  width: 150px;
+  height: 100px;
+  width: 100px;
   background-color: rgb(92, 247, 151);
   border: 1px solid #bfcbcd;
   border-radius: 5px;
+  margin-top: 9px;
+  margin-left: 13px;
 }
 
 .row1right {
@@ -35,12 +38,14 @@
 
 .name {
   text-align: left;
+  font-weight: bold;
   margin-left: 10px;
-  font-size: 24px;
-  color: #25a9a0;
+  font-size: 28px;
+  color: #25A9A0;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  letter-spacing: 1.5px;
 }
 
 .editB {
@@ -55,14 +60,14 @@
 }
 
 .editB:hover {
-  background: rgba(0,0,0,0.08);
+  background: rgba(0, 0, 0, 0.08);
   transition: ease-in-out all 0.2s;
 }
 
 .row1info {
   display: flex;
   justify-content: space-evenly;
-  line-height: 1.3;
+  line-height: 1;
 }
 
 .identifiers {
@@ -73,7 +78,8 @@
 }
 
 .identifiers div {
-  margin: 10px;
+  margin-top: 10px;
+  margin-left: 30px;
 }
 
 .measurements {
@@ -84,14 +90,17 @@
 }
 
 .measurements div {
-  margin: 10px;
+  margin-top: 10px;
+  margin-left: 40px;
+
 }
 
-.iconContainer{
+.iconWrapper {
   border-radius: 50%;
   /* height: 36px; */
   /* width: 5%; */
   display: flex;
+  /* margin-left: 265px; */
   justify-content: center;
   align-items: center;
   cursor: pointer;
@@ -99,9 +108,11 @@
   /* margin-left: 20%; */
 }
 
-.arrowUp{
+.arrowUp {
   transform: rotate(180deg);
   transition: ease-in-out all 1s;
+  display: flex;
+  justify-content: space-around;
 }
 
 .arrowDown {
@@ -118,8 +129,8 @@ hr {
   border: 0;
   height: 1px;
   background: #bfcbcd;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin-top: 0px;
+  margin-bottom: 0px;
 }
 
 .row2 {
@@ -127,15 +138,37 @@ hr {
 }
 .contactInfo {
   display: flex;
-  justify-content: space-between;
-  margin-left: 5%;
-  margin-right: 5%;
-}
-
-.row2 div {
+  justify-content: space-evenly;
+  align-items: center;
+  margin: 10px 5%;
   text-align: left;
   line-height: 2;
   font-size: 16px;
+}
+
+.ptinfoicon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 30px;
+  width: 30px;
+  margin-left: 2%;
+}
+
+/* .row2 div {
+  text-align: left;
+  line-height: 2;
+  font-size: 16px;
+} */
+
+.ptHeaders {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 100%;
+  background: #E9F7FA;
+  height: 35px;
+  color: black;
 }
 
 .contacts {
@@ -143,6 +176,8 @@ hr {
   justify-content: space-between;
   align-items: center;
   font-size: 16px;
+  margin: 10px 5%;
+
 }
 
 .contact {
@@ -150,18 +185,26 @@ hr {
   line-height: 2;
   width: 50%;
   display: flex;
-  justify-content: space-around;
+  /* justify-content: center; */
+  margin-left: 10%;
 }
 
-.hidden{
+
+
+.hidden {
   max-height: 0px;
   overflow: hidden;
   opacity: 0;
   transition: linear all 0.2s;
 }
 
-.hiddenTab{
+.hiddenTab {
   max-height: 400px;
   opacity: 1;
   transition: linear all 0.2s;
+}
+
+h3 {
+  /* margin: auto; */
+  margin-left: 20px;
 }
