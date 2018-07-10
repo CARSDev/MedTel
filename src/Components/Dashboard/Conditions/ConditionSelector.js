@@ -101,7 +101,9 @@ export default class ConditionSelector extends Component {
                 aria-labelledby="confirmation-dialog-title"
                 {...other}
             >
-                <DialogTitle id="confirmation-dialog-title">Conditions</DialogTitle>
+                <DialogTitle id="confirmation-dialog-title"
+                
+                >Conditions</DialogTitle>
                 <DialogContent>
                     <RadioGroup
                         ref={node => {

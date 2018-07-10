@@ -6,20 +6,18 @@
     width: 100%;
     box-sizing: border-box;
     background: #fff;
-    /* border-top-left-radius: 5px; */
-    /* border-top-right-radius: 5px; */
     border: 1px solid rgba(0,0,0,0.3);
     -webkit-box-shadow: 0px 3px 3px 0px rgba(0,0,0,0.3);
     -moz-box-shadow: 0px 3px 3px 0px rgba(0,0,0,0.3);
     box-shadow: 0px 3px 3px 0px rgba(0,0,0,0.3);
-    transition: ease-in-out all 0.1s;
     margin-bottom: -3px; 
+    transition: ease-in-out all 0.1s;
 }
 
 .addMargin{
     margin: 20px 0px;
-    transition: ease-in-out all 0.1s;
     background: #E9F7FA;
+    transition: ease-in-out all 0.1s;
 }
 
 .visibleTab{
@@ -57,27 +55,19 @@
     transition: ease-in-out all 0.1s;
 }
 
-
-
 .iconContainer:hover{
     background: rgba(0,0,0,0.08);
     transition: ease-in-out all 0.2s;
 }
 
-.hidden{
-    max-height: 0px;
+.parentDropdown{
     overflow: hidden;
-    opacity: 0;
     transition: ease-in-out all 0.1s;
+    max-height: 0;
+    background: #fff;
 }
 
-.hiddenTab{
-    max-height: 300px;
-    opacity: 1;
-    transition: ease-in-out all 0.1s;
-}
-
-.individualVisibleTab{
+.labTab{
     padding: 10px 17px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -85,37 +75,80 @@
     background: #fff;
 }
 
-.individualVisibleTab h3{
+.labTab h3{
     text-transform: capitalize;
 }
 
-.individualHiddenTab{
+.labDropdown{
     background: #fff;
-    padding: 10px;
-    border-bottom: 1px solid rgba(0,0,0,0.3);
-    max-height: 50px;
-}
-
-.hiddenIndividual{
+    padding: 0px 20px;
+    transition: ease-in-out all 0.1s;
     max-height: 0;
     overflow: hidden;
-    padding: 0px;
-    border: 0;
 }
 
-.individualTabCellL, .individualTabCellM, .individualTabCellR{
+.labsGraph{
+    padding: 20px 0px;
+}
+
+.labCellL, .labCellM, .labCellR{
     display: flex;
     align-items: center;
 }
 
-.individualTabCellL{
+.labCellL{
     justify-content: flex-start;
 }
 
-.individualTabCellM{
+.labCellM{
     justify-content: center;
 }
 
-.individualTabCellR{
+.labCellR{
     justify-content: flex-end;
+}
+
+.labHeader{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    background: #E9F7FA;
+    border: 1px solid rgba(0,0,0,0.3);
+    border-right: 0;
+}
+
+.headerCell{
+    padding: 5px 10px;
+    border-right: 1px solid rgba(0,0,0,0.3);
+    box-sizing: border-box;
+}
+
+.labRow{
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border: 1px solid rgba(0,0,0,0.3);
+    border-top: 0;
+    border-right: 0;
+}
+
+.labRow:nth-child(2){
+    background: #f6f6f6;
+}
+
+.rowCell{
+    box-sizing: border-box;
+    padding: 5px 10px;
+    border-right: 1px solid rgba(0,0,0,0.3);
+}
+
+.labDropdown > p {
+    font-family: 'Roboto';
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.labDropdown > img {
+    max-width: 600px;
+    max-height: 600px;
+    margin-bottom: 20px;
 }

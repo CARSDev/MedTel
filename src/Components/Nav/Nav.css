@@ -8,6 +8,8 @@
   height: 55px;
   background: linear-gradient(#84b7db, #3e8ec7 ) ;
   color: #F6F6F6;
+  box-shadow: 2px 2px 5px -2px #404445;
+  z-index: 500;
 }
 
 .leftNav {
