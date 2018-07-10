@@ -181,6 +181,9 @@ export default class Conditions extends Component {
                         <ExpansionPanel>
                             <ExpansionPanelSummary
                                 expandIcon={<ExpandMoreIcon />}
+                                style={{
+                                    borderTop: 0
+                                }}
                             >
                                 <Typography
                                     style={{

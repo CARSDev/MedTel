@@ -125,7 +125,8 @@ CREATE TABLE patient_visits(
 
 CREATE TABLE available_tests(
     test_id SERIAL PRIMARY KEY,
-    test_name VARCHAR(250)
+    test_name VARCHAR(250),
+    is_imaging BOOLEAN
 );
 
 CREATE TABLE lab_results(

@@ -10,10 +10,14 @@ export default class Labs extends Component {
     super()
 
     this.state = {
-      results: []
+      results: [],
     }
-  }
+    
+    this.openParentTab = false
 
+  }
+  
+  
   componentDidUpdate(prevProps) {
     if (prevProps !== this.props) {
       this.getLabResults()
@@ -30,37 +34,40 @@ export default class Labs extends Component {
   }
 
   changeHidden = () => {
-    if (document.getElementById('labsAccordian').classList[0] === 'resultsAccordian') {
-      document.getElementById('labsAccordian').className = "addMargin resultsAccordian"
-      document.getElementById('labsHidden').className = "hiddenTab hidden"
-      document.getElementById('labsArrow').className = "iconContainer arrowUp"
-    } else {
-      document.getElementById('labsAccordian').className = "resultsAccordian"
-      document.getElementById('labsHidden').className = "hidden"
+    let parentDropdown = document.getElementById('labsDropdown')
+    if (this.openParentTab) {
       document.getElementById('labsArrow').className = "iconContainer"
+      document.getElementById('labsAccordian').className = "resultsAccordian"
+      parentDropdown.style.maxHeight = 0
+    } else {
+      parentDropdown.style.maxHeight = `${parentDropdown.scrollHeight}px`
+      document.getElementById('labsArrow').className = "iconContainer arrowUp"
+      document.getElementById('labsAccordian').className = "resultsAccordian addMargin"
     }
+    this.openParentTab = !this.openParentTab
   }
   
   render() {
 
+    
     let { results } = this.state;
     let tests = _.uniq(results.map(x => x.test_id))
     let individualTests = tests.map( (test, i) => {
       let data = results.filter(x => x.test_id === test)
       return (
-        <LabResult data={data} key={i} id={i+1}/>
+        <LabResult data={data} key={`${i}labResults`} id={i+1}/>
       )
     })
 
     return (
       <div className="resultsAccordian" id="labsAccordian" >
         
-        <div className="visibleTab" onClick={this.changeHidden}>
+        <div className="visibleTab" >
           <h3>Labs & Vitals</h3>
-          <div className="iconContainer" id="labsArrow"><ExpandMore /></div>
+          <div className="iconContainer" id="labsArrow"><ExpandMore onClick={this.changeHidden}/></div>
         </div>
 
-        <div className="hidden" id="labsHidden">
+        <div className="parentDropdown" id="labsDropdown">
           {individualTests}
         </div>
 

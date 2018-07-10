@@ -122,11 +122,11 @@ VALUES
 (1, 1, 1, null, 'Twisted Ankle', '2018-07-10T15:00:00.000Z');
 
 INSERT INTO available_tests
-(test_name)
+(test_name, is_boolean)
 VALUES
-('height in inches'),
-('weight in pounds'),
-('chest x-ray');
+('height in inches', false),
+('weight in pounds', false),
+('chest x-ray', true);
 
 INSERT INTO lab_results
 (test_id, patient_id, lab_result)

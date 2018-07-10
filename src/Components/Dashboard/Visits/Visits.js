@@ -45,7 +45,7 @@ export default class Visits extends Component {
         } )
     return (
       <div className = "visits">
-            <div className="visitsHeader">Recent Visits</div>
+            <div className="visitsHeader">Visits</div>
             <div className="visitsContent">{visits}</div>
             <div className="visitsButtons">
                 <Link to = '/schedule'>
@@ -59,18 +59,6 @@ export default class Visits extends Component {
                     }} />
                 </Button>
                 </Link>    
-                {/* <Button style={{
-                    width: '100%',
-                    borderRadius: 0,
-                    borderTop: '1px solid rgba(0,0,0,0.3)',
-                }}>
-                    Edit
-                    <Edit style={{
-                        height: '18px',
-                        width: '18px',
-                        marginLeft: '5px'
-                    }} />
-                </Button> */}
             </div>
       </div>
     )
