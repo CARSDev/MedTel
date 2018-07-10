@@ -49,6 +49,7 @@ export default class Labs extends Component {
   
   render() {
 
+    
     let { results } = this.state;
     let tests = _.uniq(results.map(x => x.test_id))
     let individualTests = tests.map( (test, i) => {

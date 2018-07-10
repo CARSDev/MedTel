@@ -32,7 +32,6 @@ export default class ImagingResults extends Component {
     }
     
     render() {
-        console.log(this.props.data)
     return (
       <div>
             <div className="labAccordion">
