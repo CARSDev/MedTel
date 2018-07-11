@@ -1,13 +1,8 @@
-import React from 'react';
+import React, {Component} from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import moment from 'moment';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -16,16 +11,17 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import Radio from '@material-ui/core/Radio';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
-class DeviceDialogRaw extends React.Component {
+export default class DeviceSelectorextends extends Component {
     radioGroup = null;
 
     constructor(props) {
         super(props);
 
         this.state = {
-            value: this.props.value,
+            value: '',
             devices: [],
             deviceId: 0,
+            open: false
         };
     }
 
@@ -49,15 +45,19 @@ class DeviceDialogRaw extends React.Component {
     };
 
     handleCancel = () => {
-        this.props.onClose(this.props.value);
+        this.setState({
+            open: true
+        });
     };
 
     handleOk = () => {
-        this.props.onClose(this.state.value, this.state.deviceId);
+        this.onClose();
     };
 
-    handleChange = (event, value) => {
-        let deviceElement = this.state.devices.find((el) => {
+    handleChange = (event) => {
+        let value = event.target.value
+        let deviceElement = this.state.devices
+            .find((el) => {
             if (value === el.medical_device_name) {
                 return true;
             }
@@ -67,14 +67,22 @@ class DeviceDialogRaw extends React.Component {
             deviceId: deviceElement.medical_device_id
         });
     };
+    handleClickListItem = () => {
+        this.setState({ open: true });
+    };
 
+    handleClose = (value) => {
+        this.setState({ value, open: false });
+        axios.post(`/device/${this.props.patient_id}`, { medical_device_id: this.state.deviceId, medical_device_date_administered: moment.utc(new Date()).format() }).then(() => {
+            this.props.getDevices()
+        })
+    };
     render() {
         const { value, ...other } = this.props;
         // console.log(this.state.value)
         // console.log(this.state.deviceId)
         return (
             <Dialog
-                disableBackdropClick
                 disableEscapeKeyDown
                 maxWidth="xs"
                 onEntering={this.handleEntering}
@@ -102,10 +110,10 @@ class DeviceDialogRaw extends React.Component {
                     </RadioGroup>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={this.handleCancel} color="primary">
-                        Cancel
+                    <Button onClick={this.props.onClose} color="primary">
+                        Close
                     </Button>
-                    <Button onClick={this.handleOk} color="primary">
+                    <Button onClick={this.handleClose} color="primary">
                         Ok
                     </Button>
                 </DialogActions>
@@ -114,76 +122,3 @@ class DeviceDialogRaw extends React.Component {
     }
 }
 
-DeviceDialogRaw.propTypes = {
-    onClose: PropTypes.func,
-    value: PropTypes.string,
-};
-
-const styles = theme => ({
-    root: {
-        width: '100%',
-        maxWidth: 360,
-        backgroundColor: theme.palette.background.paper,
-    },
-    paper: {
-        width: '80%',
-        maxHeight: 435,
-    },
-});
-
-class DeviceDialog extends React.Component {
-    button = null;
-
-    state = {
-        open: false,
-        value: 'Click to Add'
-    };
-
-    handleClickListItem = () => {
-        this.setState({ open: true });
-    };
-
-    handleClose = (value, deviceId) => {
-        this.setState({ value, open: false });
-        axios.post(`/device/${this.props.patient_id}`, { medical_device_id: deviceId, medical_device_date_administered: moment.utc(new Date()).format() }).then(() => {
-            this.props.getDevices()
-        })
-        this.setState({
-            value: 'Click to Add'
-        })
-    };
-
-    render() {
-        const { classes } = this.props;
-        return (
-            <div className={classes.root}>
-                <List>
-                    <ListItem
-                        button
-                        divider
-                        aria-haspopup="true"
-                        aria-controls="medical-device-menu"
-                        aria-label="Medical device"
-                        onClick={this.handleClickListItem}
-                    >
-                        <ListItemText primary="Device" secondary={this.state.value} />
-                    </ListItem>
-                    <DeviceDialogRaw
-                        classes={{
-                            paper: classes.paper,
-                        }}
-                        open={this.state.open}
-                        onClose={this.handleClose}
-                        value={this.state.value}
-                    />
-                </List>
-            </div>
-        );
-    }
-}
-
-DeviceDialog.propTypes = {
-    classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles)(DeviceDialog);

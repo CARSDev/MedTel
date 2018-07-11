@@ -211,15 +211,12 @@ export default class FamilyHistory extends Component {
                             marginLeft: '5px'
                         }} />
                     </Button>
-
-                    <Dialog
+                    <FamilyHistorySelector
+                        patient_id={this.props.patient_id}
+                        getHx={this.getPatientHx}
                         open={this.state.openAdd}
                         onClose={this.handleCloseAdd}
-                        aria-labelledby="confirmation-dialog-title"
-                    >
-                        <DialogTitle id="form-dialog-title">Add to Family History</DialogTitle>
-                        <FamilyHistorySelector patient_id={this.props.patient_id} getHx={this.getPatientHx} />
-                    </Dialog>
+                    />
 
                     {/* ///////////////////Update Button///////////////////// */}
                     <Button
