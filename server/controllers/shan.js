@@ -43,8 +43,12 @@ function deleteAppointment(req, res) {
 }
 
 function getEmployees(req, res) {
-    req.db.get_employees().then(emps =>
-    res.status(200).send(emps))
+    req.db.get_employees().then(emps => {   
+        for (i = 0; i < emps.length; i++){
+            emps[i].employee_hashed_password = null
+        }
+        res.status(200).send(emps)
+    })
 }
 
 function addEmployee(req, res) {

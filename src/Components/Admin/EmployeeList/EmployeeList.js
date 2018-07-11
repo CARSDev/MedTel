@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import Employee from './Employee'
 import './EmployeeList.css'
-import Edit from '@material-ui/icons/Edit'
-import Delete from '@material-ui/icons/Delete'
 import Search from '@material-ui/icons/Search'
 
 
@@ -25,18 +23,19 @@ export default class EmployeeList extends Component {
             this.setState({ employees: res.data })
         })
     }
-
+    
     filterHandler(searchString) {
         this.setState({
             search: searchString.toLowerCase()
         })
     }
-
+    
     allowSearch =()=> {
         this.setState({searchable:!this.state.searchable})
     }
-
+    
     render() {
+        console.log(this.state.employees)
         const { employees, search } = this.state
         return (
             <div className='employeeList' >
