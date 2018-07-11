@@ -241,7 +241,6 @@ export default class Medications extends Component {
                                 {this.state.patientMedications
                                     .filter(el => !el.deleted)
                                     .map((el, i) => {
-                                        if (!el.deleted)
                                             return (
                                                 <ListItem key={el.patient_medication_id + 'list'}>
                                                     <ListItemText

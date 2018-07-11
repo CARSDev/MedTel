@@ -2,12 +2,7 @@ import React, {Component} from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import moment from 'moment';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -61,14 +56,15 @@ export default class DeviceSelectorextends extends Component {
 
     handleChange = (event) => {
         let value = event.target.value
-        let deviceElement = this.state.devices.find((el) => {
+        let deviceElement = this.state.devices
+            .find((el) => {
             if (value === el.medical_device_name) {
                 return true;
             }
         })
         this.setState({
             value,
-            deviceId: deviceElement.medical_device_id
+            deviceId: deviceElement[0].medical_device_id
         });
     };
     handleClickListItem = () => {

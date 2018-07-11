@@ -102,7 +102,6 @@ export default class Conditions extends Component {
     };
 
     render() {
-
         let conditionList = this.state.patientConditions
             .filter(el => !el.deleted)
             .map((el, i) => {
