@@ -37,7 +37,7 @@ function getPatients(req, res) {
             res.status(200).send(patients)
             
         } )
-        .catch((e) => { console.log(e); res.status(500).send("Couldn't get all_patients") });
+        .catch((e) => { res.status(500).send("Couldn't get all_patients") });
 }
 
 /////////////Conditions//////////////////////
@@ -51,7 +51,7 @@ function getPatientConditions(req, res) {
             res.status(200).send(conditions)
 
         })
-        .catch((e) => { console.log(e); res.status(500).send("Couldn't get get_patient_conditions") });
+        .catch((e) => { res.status(500).send("Couldn't get get_patient_conditions") });
 }
 
 function getConditions(req, res) {
@@ -60,7 +60,7 @@ function getConditions(req, res) {
             res.status(200).send(conditions)
 
         })
-        .catch((e) => { console.log(e); res.status(500).send("Couldn't get get_conditions") });
+        .catch((e) => { res.status(500).send("Couldn't get get_conditions") });
 }
 
 function addCondition(req, res) {
@@ -73,20 +73,19 @@ function addCondition(req, res) {
             res.status(200).send(conditions)
 
         })
-        .catch((e) => { console.log(e); res.status(500).send("Couldn't get get_conditions") });
+        .catch((e) => { res.status(500).send("Couldn't get get_conditions") });
 }
 
 function updateCondition(req, res) {
     // console.log('hit update condition')
     const { params } = req;
-    console.log(params.id)
     
     req.db.update_patient_condition([params.id])
         .then((conditions) => {
             res.status(200).send(conditions)
 
         })
-        .catch((e) => { console.log(e); res.status(500).send("Couldn't get update_patient_conditions") });
+        .catch((e) => { res.status(500).send("Couldn't get update_patient_conditions") });
 }
 /////////////////Allergies///////////////////
 function getPatientAllergies(req, res) {
@@ -99,7 +98,7 @@ function getPatientAllergies(req, res) {
             res.status(200).send(allergies)
 
         })
-        .catch((e) => { console.log(e); res.status(500).send("Couldn't get get_patient_allergies") });
+        .catch((e) => { res.status(500).send("Couldn't get get_patient_allergies") });
 }
 
 function getAllergies(req, res) {
@@ -108,7 +107,7 @@ function getAllergies(req, res) {
             res.status(200).send(allergies)
 
         })
-        .catch((e) => { console.log(e); res.status(500).send("Couldn't get get_allergies") });
+        .catch((e) => { res.status(500).send("Couldn't get get_allergies") });
 }
 
 function addAllergy(req, res) {
@@ -121,7 +120,7 @@ function addAllergy(req, res) {
             res.status(200).send(allergies)
 
         })
-        .catch((e) => { console.log(e); res.status(500).send("Couldn't get get_allergies") });
+        .catch((e) => { res.status(500).send("Couldn't get get_allergies") });
 }
 
 function updateAllergy(req, res) {
@@ -134,7 +133,7 @@ function updateAllergy(req, res) {
             res.status(200).send(allergies)
 
         })
-        .catch((e) => { console.log(e); res.status(500).send("Couldn't get update_patient_allergies") });
+        .catch((e) => { res.status(500).send("Couldn't get update_patient_allergies") });
 }
 
 /////////////////Devices///////////////////
@@ -148,7 +147,7 @@ function getPatientDevices(req, res) {
             res.status(200).send(devices)
 
         })
-        .catch((e) => { console.log(e); res.status(500).send("Couldn't get get_patient_devices") });
+        .catch((e) => { res.status(500).send("Couldn't get get_patient_devices") });
 }
 
 function getDevices(req, res) {
@@ -157,7 +156,7 @@ function getDevices(req, res) {
             res.status(200).send(devices)
 
         })
-        .catch((e) => { console.log(e); res.status(500).send("Couldn't get get_devices") });
+        .catch((e) => { res.status(500).send("Couldn't get get_devices") });
 }
 
 function addDevice(req, res) {
@@ -170,7 +169,7 @@ function addDevice(req, res) {
             res.status(200).send(devices)
 
         })
-        .catch((e) => { console.log(e); res.status(500).send("Couldn't get get_devices") });
+        .catch((e) => { res.status(500).send("Couldn't get get_devices") });
 }
 
 function updateDevice(req, res) {
@@ -183,7 +182,7 @@ function updateDevice(req, res) {
             res.status(200).send(devices)
 
         })
-        .catch((e) => { console.log(e); res.status(500).send("Couldn't get update_patient_devices") });
+        .catch((e) => { res.status(500).send("Couldn't get update_patient_devices") });
 }
 /////////////////Medications///////////////////
 function getPatientMedications(req, res) {
@@ -196,7 +195,7 @@ function getPatientMedications(req, res) {
             res.status(200).send(medications)
 
         })
-        .catch((e) => { console.log(e); res.status(500).send("Couldn't get get_patient_medications") });
+        .catch((e) => { res.status(500).send("Couldn't get get_patient_medications") });
 }
 
 function getMedications(req, res) {
@@ -205,7 +204,7 @@ function getMedications(req, res) {
             res.status(200).send(medications)
 
         })
-        .catch((e) => { console.log(e); res.status(500).send("Couldn't get get_medications") });
+        .catch((e) => { res.status(500).send("Couldn't get get_medications") });
 }
 
 function addMedication(req, res) {
@@ -218,7 +217,7 @@ function addMedication(req, res) {
             res.status(200).send()
 
         })
-        .catch((e) => { console.log(e); res.status(500).send("Couldn't get get_medications") });
+        .catch((e) => { res.status(500).send("Couldn't get get_medications") });
 }
 
 function updateMedication(req, res) {
@@ -231,7 +230,7 @@ function updateMedication(req, res) {
             res.status(200).send()
 
         })
-        .catch((e) => { console.log(e); res.status(500).send("Couldn't get update_patient_medications") });
+        .catch((e) => { res.status(500).send("Couldn't get update_patient_medications") });
 }
 /////////////////Family History///////////////////
 function getPatientHx(req, res) {
@@ -242,7 +241,7 @@ function getPatientHx(req, res) {
         .then((history) => {
             res.status(200).send(history)
         })
-        .catch((e) => { console.log(e); res.status(500).send("Couldn't get get_patient_hx") });
+        .catch((e) => { res.status(500).send("Couldn't get get_patient_hx") });
 }
 
 function addHx(req, res) {
@@ -254,7 +253,7 @@ function addHx(req, res) {
         .then(() => {
             res.status(200).send()
         })
-        .catch((e) => { console.log(e); res.status(500).send("Couldn't get get_hx") });
+        .catch((e) => { res.status(500).send("Couldn't get get_hx") });
 }
 
 function updateHx(req, res) {
@@ -266,5 +265,5 @@ function updateHx(req, res) {
         .then(() => {
             res.status(200).send()
         })
-        .catch((e) => { console.log(e); res.status(500).send("Couldn't get update_patient_hx") });
+        .catch((e) => { res.status(500).send("Couldn't get update_patient_hx") });
 }

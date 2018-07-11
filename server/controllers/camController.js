@@ -9,7 +9,7 @@ module.exports = function addCamEndpointsTo(app) {
 function getEmployee(req, res) {
   // console.log('backend hit')
   req.db
-    .get_employee_info([req.user.employee_id])
+    .get_employee_info([req.user[0].employee_id])
     .then(info => {
       res.status(200).send(info);
     })
@@ -100,7 +100,6 @@ function editPatient(req, res) {
       res.status(200).send();
     })
     .catch((err) => {
-      console.log(err)
       res.status(500).send(err);
     });
 }

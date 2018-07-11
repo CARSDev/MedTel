@@ -67,7 +67,6 @@ class Day extends Component {
 
     handleClickOpen = (time) => {
         this.setState({ open: true, selectedTime: time });
-        console.log(time)
     };
 
     handleClickOpenEdit = (val) => {
@@ -101,7 +100,6 @@ class Day extends Component {
         }).then(() => {
             this.setState({selectedTime:'', selectedID:'', reason:''})
             this.props.getSchedule()
-            console.log(this.state)
         })
     }
 
@@ -113,7 +111,6 @@ class Day extends Component {
     }
 
     submitDelete = (id) => {
-        console.log(id)
         axios.delete(`/appointment/${id}`).then(res => {
             this.setState({ openEdit: false })
         }).then(this.props.getSchedule())
