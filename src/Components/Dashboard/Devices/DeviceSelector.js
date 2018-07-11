@@ -64,7 +64,7 @@ export default class DeviceSelectorextends extends Component {
         })
         this.setState({
             value,
-            deviceId: deviceElement[0].medical_device_id
+            deviceId: deviceElement.medical_device_id
         });
     };
     handleClickListItem = () => {
