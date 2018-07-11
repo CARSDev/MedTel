@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import moment from 'moment';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import AllergySelector from './AllergySelector';
 import '../Conditions/Conditions.css';
 
@@ -103,8 +103,9 @@ export default class Allergies extends Component {
 
     render() {
 
-        let allergyList = this.state.patientAllergies.map((el, i) => {
-            if (!el.deleted) {
+        let allergyList = this.state.patientAllergies
+            .filter(el => !el.deleted)
+            .map((el, i) => {
                 // console.log(el)
                 return (
                     <div key={el.patient_allergy_id}>
@@ -115,11 +116,10 @@ export default class Allergies extends Component {
                         </ul>
                     </div>
                 )
-            }
-
         })
-        let pastAllergyList = this.state.patientAllergies.map((el, i) => {
-            if (el.deleted) {
+        let pastAllergyList = this.state.patientAllergies
+            .filter(el => !el.deleted)
+            .map((el, i) => {
                 return (
                     <div key={el.patient_allergy_id}>
                         <ul id='listContainer'>
@@ -129,8 +129,6 @@ export default class Allergies extends Component {
                         </ul>
                     </div>
                 )
-            }
-
         })
 
         return (
@@ -207,15 +205,12 @@ export default class Allergies extends Component {
                             marginLeft: '5px'
                         }} />
                     </Button>
-
-                    <Dialog
+                    <AllergySelector
+                        patient_id={this.props.patient_id}
+                        getAllergies={this.getPatientAllergies}
                         open={this.state.openAdd}
                         onClose={this.handleCloseAdd}
-                        aria-labelledby="confirmation-dialog-title"
-                    >
-                        <DialogTitle id="form-dialog-title">Add Allergies</DialogTitle>
-                        <AllergySelector patient_id={this.props.patient_id} getAllergies={this.getPatientAllergies} />
-                    </Dialog>
+                    />
 
                     {/* ///////////////////Delete Button///////////////////// */}
                     <Button
@@ -239,8 +234,9 @@ export default class Allergies extends Component {
                         <DialogTitle id="form-dialog-title">Delete Allergies</DialogTitle>
                         <div>
                             <List>
-                                {this.state.patientAllergies.map((el, i) => {
-                                    if (!el.deleted)
+                                {this.state.patientAllergies
+                                    .filter(el => !el.deleted)
+                                    .map((el, i) => {
                                         return (
                                                 <ListItem key={el.patient_allergy_id + 'list'}>
                                                 <ListItemText

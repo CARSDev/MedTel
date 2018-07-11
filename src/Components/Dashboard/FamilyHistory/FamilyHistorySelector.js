@@ -1,13 +1,8 @@
-import React from 'react';
+import React, {Component} from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -17,17 +12,18 @@ import Radio from '@material-ui/core/Radio';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import TextField from '@material-ui/core/TextField';
 
-class FamilyHistoryDialogRaw extends React.Component {
+export default class FamilyHistorySelector extends Component {
     radioGroup = null;
 
     constructor(props) {
         super(props);
 
         this.state = {
-            value: this.props.value,
+            value: '',
             conditions: [],
             conditionId: 0,
-            relationship: ''
+            relationship: '',
+            open: false
         };
     }
 
@@ -51,12 +47,14 @@ class FamilyHistoryDialogRaw extends React.Component {
     };
 
     handleCancel = () => {
-        this.props.onClose(this.props.value);
+        this.setState({
+            open: true
+        });
     };
 
     handleOk = () => {
         if (this.state.relationship !== '') { 
-            this.props.onClose(
+            this.handleClose(
                 this.state.value,
                 this.state.conditionId,
                 this.state.relationship);
@@ -65,7 +63,8 @@ class FamilyHistoryDialogRaw extends React.Component {
         }
     };
 
-    handleChange = (event, value) => {
+    handleChange = (event) => {
+        let value = event.target.value
         let conditionElement = this.state.conditions.find((el) => {
             if (value === el.condition_name) {
                 return true;
@@ -76,11 +75,23 @@ class FamilyHistoryDialogRaw extends React.Component {
             conditionId: conditionElement.condition_id
         });
     };
+
     handleText(input) {
         this.setState({
             relationship: input
         })
-    }
+    };
+
+    handleClickListItem = () => {
+        this.setState({ open: true });
+    };
+
+    handleClose = (value, conditionId, relationship) => {
+        this.setState({ value, open: false });
+        axios.post(`/hx/${this.props.patient_id}`, { condition_id: conditionId, family_history_relationship: relationship }).then(res => {
+            this.props.getHx()
+        })
+    };
 
     render() {
         const { value, ...other } = this.props;
@@ -88,7 +99,6 @@ class FamilyHistoryDialogRaw extends React.Component {
         // console.log(this.state.condition_id)
         return (
             <Dialog
-                disableBackdropClick
                 disableEscapeKeyDown
                 maxWidth="xs"
                 onEntering={this.handleEntering}
@@ -124,8 +134,8 @@ class FamilyHistoryDialogRaw extends React.Component {
                     />
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={this.handleCancel} color="primary">
-                        Cancel
+                    <Button onClick={this.props.onClose} color="primary">
+                        Close
                     </Button>
                     <Button onClick={this.handleOk} color="primary">
                         Ok
@@ -136,76 +146,3 @@ class FamilyHistoryDialogRaw extends React.Component {
     }
 }
 
-FamilyHistoryDialogRaw.propTypes = {
-    onClose: PropTypes.func,
-    value: PropTypes.string,
-};
-
-const styles = theme => ({
-    root: {
-        width: '100%',
-        maxWidth: 360,
-        backgroundColor: theme.palette.background.paper,
-    },
-    paper: {
-        width: '80%',
-        maxHeight: 435,
-    },
-});
-
-class FamilyHistoryDialog extends React.Component {
-    button = null;
-
-    state = {
-        open: false,
-        value: 'Click to Add'
-    };
-
-    handleClickListItem = () => {
-        this.setState({ open: true });
-    };
-
-    handleClose = (value, conditionId, relationship) => {
-        this.setState({ value, open: false });
-        axios.post(`/hx/${this.props.patient_id}`, { condition_id: conditionId, family_history_relationship: relationship}).then(res => {
-            this.props.getHx()
-        })
-        this.setState({
-            value: 'Click to Add'
-        })
-    };
-
-    render() {
-        const { classes } = this.props;
-        return (
-            <div className={classes.root}>
-                <List>
-                    <ListItem
-                        button
-                        divider
-                        aria-haspopup="true"
-                        aria-controls="condition-menu"
-                        aria-label="Condition"
-                        onClick={this.handleClickListItem}
-                    >
-                        <ListItemText primary="Condition" secondary={this.state.value} />
-                    </ListItem>
-                    <FamilyHistoryDialogRaw
-                        classes={{
-                            paper: classes.paper,
-                        }}
-                        open={this.state.open}
-                        onClose={this.handleClose}
-                        value={this.state.value}
-                    />
-                </List>
-            </div>
-        );
-    }
-}
-
-FamilyHistoryDialog.propTypes = {
-    classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles)(FamilyHistoryDialog);
