@@ -49,6 +49,7 @@
 .schedHeader{
     display: flex;
     flex-direction: row;
+    margin-left: 20px;
 }
 .schedHeader h1{
     width: 200px;
@@ -63,6 +64,7 @@
 .schedContent{
     display: flex;
     flex-direction: row;
+    margin-right: 20px;
 }
 
 .schedName{
