@@ -17,7 +17,7 @@ function addUser(req, res) {
         bcrypt.hash(password, salt, function (err, hash) {
             req.db.register_user([first_name, last_name, `${first_name} ${last_name}`, role_id, email, username, hash]).then(()=> {
                 res.status(200).send()
-            }).catch(e => { console.log(e) });
+            }).catch(e => { res.status(500).send(e) });
         })
     })
 

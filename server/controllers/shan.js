@@ -53,7 +53,6 @@ function addEmployee(req, res) {
     bcrypt.genSalt(10, function (err, salt) {
         bcrypt.hash(password, salt, function (err, hash) {
             // console.log(hash)
-            console.log(full, first, last, picture, role, username, hash, email)
             req.db.add_employee([full, first, last, picture, role, username, hash, email]).then(()=>res.status(200).send())
         })
     })

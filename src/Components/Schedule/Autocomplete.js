@@ -38,7 +38,6 @@ class Autosuggest extends Component {
         e.preventDefault()
         this.setState({ showDropdown: false, searchValue: valueSelected })
         this.props.getName(valueObject.patient_id)
-        console.log(this.state)
     }
 
     updateSearchValue = e => {
