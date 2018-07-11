@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import moment from 'moment';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
+// import { ToastContainer } from 'react-toastify';
 import DeviceSelector from './DeviceSelector';
 import '../Conditions/Conditions.css';
 
@@ -102,10 +103,9 @@ export default class Devices extends Component {
     };
 
     render() {
-        const { value, ...other } = this.props;
-
-        let deviceList = this.state.patientDevices.map((el, i) => {
-            if (!el.deleted) {
+        let deviceList = this.state.patientDevices
+            .filter(el => !el.deleted)
+            .map((el, i) => {
                 // console.log(el)
                 return (
                     <div key={el.patient_medical_device_id}>
@@ -116,11 +116,10 @@ export default class Devices extends Component {
                         </ul>
                     </div>
                 )
-            }
-
         })
-        let pastDeviceList = this.state.patientDevices.map((el, i) => {
-            if (el.deleted) {
+        let pastDeviceList = this.state.patientDevices
+            .filter(el => !el.deleted)
+            .map((el, i) => {
                 return (
                     <div key={el.patient_medical_device_id}>
                         <ul id='listContainer'>
@@ -130,8 +129,6 @@ export default class Devices extends Component {
                         </ul>
                     </div>
                 )
-            }
-
         })
 
         return (
@@ -209,15 +206,12 @@ export default class Devices extends Component {
                             marginLeft: '5px'
                         }} />
                     </Button>
-
-                    <Dialog
+                    <DeviceSelector
+                        patient_id={this.props.patient_id}
+                        getDevices={this.getPatientDevices}
                         open={this.state.openAdd}
                         onClose={this.handleCloseAdd}
-                        aria-labelledby="confirmation-dialog-title"
-                    >
-                        <DialogTitle id="form-dialog-title">Add Devices</DialogTitle>
-                        <DeviceSelector patient_id={this.props.patient_id} getDevices={this.getPatientDevices} />
-                    </Dialog>
+                    />
 
                     {/* ///////////////////Delete Button///////////////////// */}
                     <Button
@@ -241,8 +235,9 @@ export default class Devices extends Component {
                         <DialogTitle id="form-dialog-title">Delete Devices</DialogTitle>
                         <div>
                             <List>
-                                {this.state.patientDevices.map((el, i) => {
-                                    if (!el.deleted)
+                                {this.state.patientDevices
+                                    .filter(el => !el.deleted)
+                                    .map((el, i) => {
                                         return (
                                             <ListItem key={`${i}Devices`}>
                                                 <ListItemText

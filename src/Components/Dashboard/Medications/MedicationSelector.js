@@ -1,13 +1,8 @@
-import React from 'react';
+import React, {Component} from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import moment from 'moment';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -15,19 +10,19 @@ import Dialog from '@material-ui/core/Dialog';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import Radio from '@material-ui/core/Radio';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import TextField from '@material-ui/core/TextField';
 
-class MedicationDialogRaw extends React.Component {
+export default class MedicationDialogRaw extends Component {
     radioGroup = null;
 
     constructor(props) {
         super(props);
 
         this.state = {
-            value: this.props.value,
+            value: '',
             medications: [],
             medicationId: 0,
-            sideEffect: ''
+            // sideEffect: '',
+            open: false
         };
     }
 
@@ -52,18 +47,17 @@ class MedicationDialogRaw extends React.Component {
     };
 
     handleCancel = () => {
-        this.props.onClose(this.props.value);
+        this.setState({
+            open: true
+        });
     };
 
     handleOk = () => {
-        this.props.onClose(
-            this.state.value,
-            this.state.medicationId,
-            this.state.sideEffect
-        );
+        this.onClose();
     };
 
-    handleChange = (event, value) => {
+    handleChange = (event) => {
+        let value = event.target.value
         let medicationElement = this.state.medications.find((el) => {
             if (value === el.medication_name) {
                 return true;
@@ -74,11 +68,20 @@ class MedicationDialogRaw extends React.Component {
             medicationId: medicationElement.medication_id
         });
     };
-    handleText(input) {
-        this.setState({
-            sideEffect: input
+
+    handleClickListItem = () => {
+        this.setState({ open: true });
+    };
+
+    handleClose = (value) => {
+        this.setState({ value, open: false });
+        let rxdate = moment.utc(new Date()).format()
+        // console.log(rxdate)
+        axios.post(`/med/${this.props.patient_id}`, { medication_id: this.state.medicationId, medication_date_prescribed: rxdate }).then(() => {
+            this.props.getMedications()
         })
-    }
+    };
+
 
     render() {
         const { value, ...other } = this.props;
@@ -86,7 +89,6 @@ class MedicationDialogRaw extends React.Component {
         // console.log(this.state.medication_id)
         return (
             <Dialog
-                disableBackdropClick
                 disableEscapeKeyDown
                 maxWidth="xs"
                 onEntering={this.handleEntering}
@@ -112,21 +114,12 @@ class MedicationDialogRaw extends React.Component {
                                 label={option.medication_name} />
                         ))}
                     </RadioGroup>
-                    <TextField
-                        required
-                        id="required"
-                        label="Required"
-                        defaultValue="Side Effect"
-                        onChange={(e)=>this.handleText(e.target.value)}
-                        // className={classes.textField}
-                        margin="normal"
-                    />
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={this.handleCancel} color="primary">
-                        Cancel
+                    <Button onClick={this.props.onClose} color="primary">
+                        Close
                     </Button>
-                    <Button onClick={this.handleOk} color="primary">
+                    <Button onClick={this.handleClose} color="primary">
                         Ok
                     </Button>
                 </DialogActions>
@@ -135,78 +128,3 @@ class MedicationDialogRaw extends React.Component {
     }
 }
 
-MedicationDialogRaw.propTypes = {
-    onClose: PropTypes.func,
-    value: PropTypes.string,
-};
-
-const styles = theme => ({
-    root: {
-        width: '100%',
-        maxWidth: 360,
-        backgroundColor: theme.palette.background.paper,
-    },
-    paper: {
-        width: '80%',
-        maxHeight: 435,
-    },
-});
-
-class MedicationDialog extends React.Component {
-    button = null;
-
-    state = {
-        open: false,
-        value: 'Click to Add'
-    };
-
-    handleClickListItem = () => {
-        this.setState({ open: true });
-    };
-
-    handleClose = (value, medicationId, sideEffect) => {
-        this.setState({ value, open: false });
-        let rxdate = moment.utc(new Date()).format()
-        // console.log(rxdate)
-        axios.post(`/med/${this.props.patient_id}`, { medication_id: medicationId, medication_date_prescribed: rxdate, medication_side_effect: sideEffect }).then(() => {
-            this.props.getMedications()
-        })
-        this.setState({
-            value: 'Click to Add'
-        })
-    };
-
-    render() {
-        const { classes } = this.props;
-        return (
-            <div className={classes.root}>
-                <List>
-                    <ListItem
-                        button
-                        divider
-                        aria-haspopup="true"
-                        aria-controls="medication-menu"
-                        aria-label="Medication"
-                        onClick={this.handleClickListItem}
-                    >
-                        <ListItemText primary="Medication" secondary={this.state.value} />
-                    </ListItem>
-                    <MedicationDialogRaw
-                        classes={{
-                            paper: classes.paper,
-                        }}
-                        open={this.state.open}
-                        onClose={this.handleClose}
-                        value={this.state.value}
-                    />
-                </List>
-            </div>
-        );
-    }
-}
-
-MedicationDialog.propTypes = {
-    classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles)(MedicationDialog);

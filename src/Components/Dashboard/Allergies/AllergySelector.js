@@ -1,13 +1,8 @@
-import React from 'react';
+import React, {Component} from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import moment from 'moment';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -16,16 +11,17 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import Radio from '@material-ui/core/Radio';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
-class AllergiesDialogRaw extends React.Component {
+export default class AllergySelector extends Component {
     radioGroup = null;
 
     constructor(props) {
         super(props);
 
         this.state = {
-            value: this.props.value,
+            value: '',
             allergies: [],
-            allergyId:11,
+            allergyId: 0,
+            open: false
         };
     }
 
@@ -50,14 +46,17 @@ class AllergiesDialogRaw extends React.Component {
     };
 
     handleCancel = () => {
-        this.props.onClose(this.props.value);
+        this.setState({
+            open: true
+        });
     };
 
     handleOk = () => {
         this.props.onClose(this.state.value, this.state.allergyId);
     };
 
-    handleChange = (event, value) => {
+    handleChange = (event) => {
+        let value = event.target.value
         let allergyElement = this.state.allergies.find((el) => {
             if (value === el.allergy_name) {
                 return true;
@@ -69,13 +68,23 @@ class AllergiesDialogRaw extends React.Component {
         });
     };
 
+    handleClickListItem = () => {
+        this.setState({ open: true });
+    };
+
+    handleClose = (value) => {
+        this.setState({ value, open: false });
+        axios.post(`/allergy/${this.props.patient_id}`, { allergy_id: this.state.allergyId, allergy_date_diagnosed: moment.utc(new Date()).format() }).then(()=> {
+            this.props.getAllergies()
+        })
+    };
+
     render() {
         const { value, ...other } = this.props;
         // console.log(this.state.value)
         // console.log(this.state.allergy_id)
         return (
             <Dialog
-                disableBackdropClick
                 disableEscapeKeyDown
                 maxWidth="xs"
                 onEntering={this.handleEntering}
@@ -103,10 +112,10 @@ class AllergiesDialogRaw extends React.Component {
                     </RadioGroup>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={this.handleCancel} color="primary">
-                        Cancel
+                    <Button onClick={this.props.onClose} color="primary">
+                        Close
                     </Button>
-                    <Button onClick={this.handleOk} color="primary">
+                    <Button onClick={this.handleClose} color="primary">
                         Ok
                     </Button>
                 </DialogActions>
@@ -114,77 +123,3 @@ class AllergiesDialogRaw extends React.Component {
         );
     }
 }
-
-AllergiesDialogRaw.propTypes = {
-    onClose: PropTypes.func,
-    value: PropTypes.string,
-};
-
-const styles = theme => ({
-    root: {
-        width: '100%',
-        maxWidth: 360,
-        backgroundColor: theme.palette.background.paper,
-    },
-    paper: {
-        width: '80%',
-        maxHeight: 435,
-    },
-});
-
-class AllergiesDialog extends React.Component {
-    button = null;
-
-    state = {
-        open: false,
-        value: 'Click to Add'
-    };
-
-    handleClickListItem = () => {
-        this.setState({ open: true });
-    };
-
-    handleClose = (value, allergyId) => {
-        this.setState({ value, open: false });
-        axios.post(`/allergy/${this.props.patient_id}`, { allergy_id: allergyId, allergy_date_diagnosed: moment.utc(new Date()).format() }).then(res => {
-            this.props.getAllergies()
-        })
-        this.setState({
-            value: 'Click to Add'
-        })
-    };
-
-    render() {
-        const { classes } = this.props;
-        return (
-            <div className={classes.root}>
-                <List>
-                    <ListItem
-                        button
-                        divider
-                        aria-haspopup="true"
-                        aria-controls="allergy-menu"
-                        aria-label="Allergy"
-                        onClick={this.handleClickListItem}
-                    >
-                        <ListItemText primary="Allergy" secondary={this.state.value} />
-                    </ListItem>
-                    <AllergiesDialogRaw
-                        classes={{
-                            paper: classes.paper,
-                        }}
-                        open={this.state.open}
-                        onClose={this.handleClose}
-                        value={this.state.value}
-                    />
-                </List>
-            </div>
-        );
-    }
-}
-
-AllergiesDialog.propTypes = {
-    classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles)(AllergiesDialog);

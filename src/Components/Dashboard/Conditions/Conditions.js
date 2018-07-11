@@ -26,12 +26,6 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-const styles = {
-    button: {
-        background: props => props.color,
-    },
-};
-
 export default class Conditions extends Component {
     constructor(props) {
         super(props)
@@ -108,7 +102,6 @@ export default class Conditions extends Component {
     };
 
     render() {
-
         let conditionList = this.state.patientConditions
             .filter(el => !el.deleted)
             .map((el, i) => {
@@ -220,15 +213,10 @@ export default class Conditions extends Component {
                             marginLeft: '5px'
                         }} />
                     </Button>
-
-                    <Dialog
+                        <ConditionSelector
                         open={this.state.openAdd}
                         onClose={this.handleCloseAdd}
-                        aria-labelledby="confirmation-dialog-title"
-                    >
-                        <DialogTitle id="form-dialog-title">Add Conditions</DialogTitle>
-                        <ConditionSelector patient_id={this.props.patient_id} getConditions={this.getPatientConditions} />
-                    </Dialog>
+                            patient_id={this.props.patient_id} getConditions={this.getPatientConditions} />
 
                     {/* ///////////////////Delete Button///////////////////// */}
                     <Button
