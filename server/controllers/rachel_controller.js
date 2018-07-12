@@ -79,7 +79,7 @@ function addCondition(req, res) {
 function updateCondition(req, res) {
     // console.log('hit update condition')
     const { params } = req;
-    console.log(params.id)
+    // console.log(params.id)
     
     req.db.update_patient_condition([params.id])
         .then((conditions) => {

@@ -80,6 +80,8 @@ export default class FamilyHistorySelector extends Component {
         this.setState({
             relationship: input
         })
+        // console.log(input)
+        // console.log(this.state.relationship)
     };
 
     handleClickListItem = () => {
