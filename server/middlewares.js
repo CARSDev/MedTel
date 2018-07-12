@@ -28,7 +28,7 @@ exports.default = function addMiddlewaresTo(app) {
         if (user_id) {
             req.db.read_user([user_id])
                 .then(user => {
-                    req.user = user;
+                    req.user = user[0];
                     next();
                 })
                 .catch(err => {
@@ -60,9 +60,9 @@ exports.default = function addMiddlewaresTo(app) {
 
 //REQUIRE ADMIN
 exports.requireAdmin = function requireAdmin(req, res, next) {
+    console.log(req.user)
     if (!req.session.user ||
         !req.user || req.user.role_id !== 1) {
-        res.status(403).json("forbidden")
-        next()    ;
+        res.status(403).json("forbidden");
     } else next();
 }
