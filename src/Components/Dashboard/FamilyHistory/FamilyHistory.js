@@ -48,7 +48,6 @@ export default class FamilyHistory extends Component {
         this.handleCondition = this.handleCondition.bind(this);
         this.handleRelationship = this.handleRelationship.bind(this);
     }
-    radioGroup = null;
 
     componentDidUpdate(prevProps) {
         if (prevProps !== this.props) {

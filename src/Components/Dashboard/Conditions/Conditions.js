@@ -45,7 +45,6 @@ export default class Conditions extends Component {
         this.getConditionsList = this.getConditionsList.bind(this);
         this.updateCondition = this.updateCondition.bind(this);
     }
-    radioGroup = null;
 
     componentDidUpdate(prevProps) {
         if (prevProps !== this.props) {
@@ -82,22 +81,22 @@ export default class Conditions extends Component {
         this.getPatientConditions();
     }
 
-    handleClickOpenDelete = () => {
+    handleClickOpenDelete() {
         this.setState({ openDelete: true });
     };
 
-    handleCloseDelete = () => {
+    handleCloseDelete(){
         this.setState({
             openDelete: false,
 
         });
     };
 
-    handleClickOpenAdd = () => {
+    handleClickOpenAdd(){
         this.setState({ openAdd: true });
     };
 
-    handleCloseAdd = () => {
+    handleCloseAdd(){
         this.setState({ openAdd: false });
     };
 
