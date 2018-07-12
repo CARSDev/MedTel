@@ -24,7 +24,7 @@ class Employee extends Component {
     
     delete = () => {
         let id = this.props.employee.employee_id
-        if (window.confirm('Are you sure you want to delete this condition?')) {
+        if (window.confirm('Are you sure you want to delete this employee?')) {
             axios.delete(`/employee/${id}`).then(this.props.history.go(0))
         }
     }

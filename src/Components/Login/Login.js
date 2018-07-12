@@ -65,7 +65,7 @@ class Login extends Component {
                 }}
                 />
               <h2>Perfect Metrics... Perfect Growth</h2>
-              <h4>All medical professionals want to grow quickly and steeply, then drop back to almost where they started, and then shoot off to unlimited profits. Our metrics GUARANTEE you that trajectory.</h4>
+              <h4 className="alignLeft">All medical professionals want to grow quickly and steeply, then drop back to almost where they started, and then shoot off to unlimited profits. Our metrics GUARANTEE you that trajectory.</h4>
             </div>
             
             </div>
@@ -104,7 +104,7 @@ class Login extends Component {
                 </div>
 
                 <div className="circleButton" onClick={this.login}>
-                  <PlayArrow
+                  <PlayArrow  
                     style={{
                       color: "#fff",
                       height: '36px',

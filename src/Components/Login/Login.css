@@ -50,6 +50,10 @@
     text-align: right;
 }
 
+.alignLeft{
+    text-align: left;
+}
+
 .metricsGrid{
     display: grid;
     grid-template-columns: 1fr 1fr;
