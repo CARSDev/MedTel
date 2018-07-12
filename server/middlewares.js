@@ -60,8 +60,9 @@ exports.default = function addMiddlewaresTo(app) {
 
 //REQUIRE ADMIN
 exports.requireAdmin = function requireAdmin(req, res, next) {
-    if (//!req.session.user ||
+    if (!req.session.user ||
         !req.user || req.user.role_id !== 1) {
-        res.status(403).json("forbidden");
+        res.status(403).json("forbidden")
+        next()    ;
     } else next();
 }

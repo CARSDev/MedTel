@@ -53,6 +53,7 @@ function getEmployees(req, res) {
 
 function addEmployee(req, res) {
     let { first, last, picture, role, username, password, email } = req.body
+    console.log(first, last, picture, role, username, password, email)
     let full = `${first} ${last}`
     bcrypt.genSalt(10, function (err, salt) {
         bcrypt.hash(password, salt, function (err, hash) {
