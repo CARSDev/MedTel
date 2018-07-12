@@ -13,8 +13,8 @@ class Login extends Component {
     super()
 
     this.state = {
-      username: '',
-      password: ''
+      username: 'testaccount',
+      password: '123testing'
     }
   }
   
@@ -90,7 +90,7 @@ class Login extends Component {
                       color: '#3E8EC7'
                     }}
                   />
-                  <input type="username" placeholder="Username" onChange={ (e) => this.updateInput(e, 'username') }/>
+                  <input type="username" placeholder="Username" value={this.state.username} onChange={ (e) => this.updateInput(e, 'username') }/>
                 </div>
 
                 <div className="loginPassword">
@@ -100,7 +100,7 @@ class Login extends Component {
                       color: '#3E8EC7'
                     }}
                   />
-                  <input type="password" placeholder="Password" onChange={(e) => this.updateInput(e, 'password')}/>
+                  <input type="password" placeholder="Password" value={this.state.password} onChange={(e) => this.updateInput(e, 'password')}/>
                 </div>
 
                 <div className="circleButton" onClick={this.login}>

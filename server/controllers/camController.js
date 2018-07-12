@@ -12,7 +12,6 @@ function getEmployee(req, res) {
 .get_employee_info([req.session.user])
     .then(info => {
       info[0].employee_hashed_password = null
-      console.log('💋', info)
       res.status(200).send(info);
     })
     .catch(() => {
