@@ -4,10 +4,11 @@ import Lock from '@material-ui/icons/Lock'
 import Person from '@material-ui/icons/Person'
 import Grade from '@material-ui/icons/Grade'
 import ShowChart from '@material-ui/icons/ShowChart'
-// import CountUp, {startAnimation} from 'react-countup'
+import axios from 'axios'
+import { withRouter } from "react-router-dom";
 import './Login.css'
 
-export default class Login extends Component {
+class Login extends Component {
   constructor() {
     super()
 
@@ -22,6 +23,15 @@ export default class Login extends Component {
       [property]: e.target.value
     })
   }
+
+  login = () => {
+    axios.post('/auth/login', { username: this.state.username, password: this.state.password })
+      .then(res => {
+        if (res.status === 200) {
+          this.props.history.push('/schedule')
+        }
+      })
+  }
   
   render() {
     return (
@@ -32,64 +42,6 @@ export default class Login extends Component {
           
           <div className="loginLeftContent">
             
-            {/* <div className="metricsGrid" id="metricsGrid">
-
-              <div className="metric one">
-                <CountUp
-                  start={0}
-                  end={21543}
-                  duration={3}
-                  className="counterNumber"
-                  useEasing={true}
-                  ref={(countUp) => {
-                    this.myCountUp1 = countUp
-                  }}
-                />
-                <p>Monthly Users</p>
-              </div>
-              <div className="metric two">
-                <CountUp
-                  start={0}
-                  end={68}
-                  duration={3}
-                  className="counterNumber"
-                  useEasing={true}
-                  ref={(countUp) => {
-                    this.myCountUp2 = countUp
-                  }}
-                />
-                <p>Awards Won</p>
-              </div>
-
-              <div className="metric three">
-                <CountUp
-                  start={0}
-                  end={99999}
-                  duration={3}
-                  className="counterNumber"
-                  useEasing={true}
-                  ref={(countUp) => {
-                    this.myCountUp3 = countUp
-                  }}
-                />
-                <p>Lives Saved</p>
-              </div>
-
-              <div className="metric four">
-                <CountUp
-                  start={0}
-                  end={1}
-                  duration={3}
-                  className="counterNumber"
-                  useEasing={true}
-                  ref={(countUp) => {
-                    this.myCountUp4 = countUp
-                  }}
-                />
-                <p>Websites Built</p>
-              </div>
-            </div> */}
-
             <div className="contentCard">
               <Grade
                 style={{
@@ -113,7 +65,7 @@ export default class Login extends Component {
                 }}
                 />
               <h2>Perfect Metrics... Perfect Growth</h2>
-              <h4>All medical professionals want to grow quickly and steeply, then drop back to almost where they started, and then shoot off to unlimited profits. Our metrics GUARANTEE you that trajectory.</h4>
+              <h4 className="alignLeft">All medical professionals want to grow quickly and steeply, then drop back to almost where they started, and then shoot off to unlimited profits. Our metrics GUARANTEE you that trajectory.</h4>
             </div>
             
             </div>
@@ -151,8 +103,8 @@ export default class Login extends Component {
                   <input type="password" placeholder="Password" onChange={(e) => this.updateInput(e, 'password')}/>
                 </div>
 
-                <div className="circleButton">
-                  <PlayArrow
+                <div className="circleButton" onClick={this.login}>
+                  <PlayArrow  
                     style={{
                       color: "#fff",
                       height: '36px',
@@ -174,3 +126,5 @@ export default class Login extends Component {
     )
   }
 }
+
+export default withRouter(Login)

@@ -7,6 +7,11 @@ import "./Nav.css";
 class Nav extends Component {
   constructor() {
     super();
+
+    axios.get('/employee').catch(() => {
+      this.props.history.push('/')
+    })
+
     this.state = {
       showAdmin: false,
       showDropdown: false,
@@ -30,8 +35,16 @@ class Nav extends Component {
           employee_first_name: employee_first_name
         }); 
       }
-      
-    });
+    })
+  }
+
+  logout = () => {
+    axios.get('/auth/logout')
+      .then(res => {
+        if (res.status === 200) {
+          this.props.history.push('/')
+        }
+      })
   }
 
 
@@ -97,7 +110,8 @@ class Nav extends Component {
           <img className="profImg" src={this.state.employee_picture} alt="" />
           <p className="navname">{this.state.employee_first_name}</p>
           <div className="vr" />
-          <Link to='/'><p className='centerB'>Logout</p></Link>
+          {/* <Link to='/'><p className='centerB'>Logout</p></Link> */}
+        <p className='centerB' onClick={this.logout}>Logout</p>
         </div>
       </div>;
   }

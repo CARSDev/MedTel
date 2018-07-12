@@ -5,7 +5,7 @@ module.exports = function addAuthEndpointsTo(app) {
     
     app.post('/auth/login', login);
 
-
+    app.get('/auth/logout', logout);
 }
 
 function addUser(req, res) {
@@ -17,7 +17,7 @@ function addUser(req, res) {
         bcrypt.hash(password, salt, function (err, hash) {
             req.db.register_user([first_name, last_name, `${first_name} ${last_name}`, role_id, email, username, hash]).then(()=> {
                 res.status(200).send()
-            }).catch(e => { console.log(e) });
+            }).catch(e => { res.status(500).send(e) });
         })
     })
 
@@ -36,7 +36,7 @@ function login(req, res) {
                 }
                 else if (result) {
                     req.db.read_user([employee_id]).then(user => {
-                        req.session.user = user.employee_id
+                        req.session.user = user[0].employee_id
                         user[0].employee_hashed_password = ''
                         res.status(200).send(user)
                     }).catch(err => {
@@ -45,4 +45,9 @@ function login(req, res) {
                 }
             })
         } )
+}
+
+function logout(req, res) {
+    req.session.destroy()
+    res.sendStatus(200)
 }

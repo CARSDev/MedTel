@@ -9,8 +9,10 @@ module.exports = function addCamEndpointsTo(app) {
 function getEmployee(req, res) {
   // console.log('backend hit')
   req.db
-    .get_employee_info([req.user.employee_id])
+.get_employee_info([req.session.user])
     .then(info => {
+      info[0].employee_hashed_password = null
+      console.log('💋', info)
       res.status(200).send(info);
     })
     .catch(() => {
@@ -100,7 +102,6 @@ function editPatient(req, res) {
       res.status(200).send();
     })
     .catch((err) => {
-      console.log(err)
       res.status(500).send(err);
     });
 }
