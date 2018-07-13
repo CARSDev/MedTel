@@ -10,3 +10,10 @@
 .dashboardLeftColumn{
     padding-right: 20px;
 }
+
+.halfAndHalf{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 20px;
+}
