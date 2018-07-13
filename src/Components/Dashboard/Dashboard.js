@@ -34,15 +34,17 @@ export default class Dashboard extends Component {
         
         <div className="dashboardLeftColumn">
           <PatientInfo patient_id={this.state.patient_id} />
-          <Results patient_id={this.state.patient_id}/>
+          <Results patient_id={this.state.patient_id} />
+          <div className='halfAndHalf'>
+            <Devices patient_id={this.state.patient_id} />
+            <Medications patient_id={this.state.patient_id} />
+          </div>
         </div>
         
         <div className="dashboardRightColumn">
           <Visits patient_id={this.state.patient_id}/>
           <Conditions patient_id={this.state.patient_id} />
           <Allergies patient_id={this.state.patient_id} />
-          <Devices patient_id={this.state.patient_id} />
-          <Medications patient_id={this.state.patient_id} />
           <FamilyHistory patient_id={this.state.patient_id} />
         </div>
      
